@@ -1,61 +1,62 @@
 const express = require('express');
 const router = express.Router();
+const {
+    getPostsByUsers
+} = require('../helpers/dataHelpers');
 
-module.exports = (db) => {
-  /* GET users listing. */
-  router.get('/', (req, res) => {
-    
-    const query = {
-      text: 'SELECT * FROM users;'
-    };
+module.exports = ({
+    getUsers,
+    getUserByEmail,
+    addUser,
+    getUsersPosts
+}) => {
+    /* GET users listing. */
+    router.get('/users', (req, res) => {
+        getUsers()
+            .then((users) => res.json(users))
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
 
-    db.query(query)
-      .then(result => res.json(result))
-      .catch(err => console.log(err));
+    router.get('/posts', (req, res) => {
+        getUsersPosts()
+            .then((usersPosts) => {
+                const formattedPosts = getPostsByUsers(usersPosts);
+                res.json(formattedPosts);
+            })
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
 
-  });
+    router.post('/', (req, res) => {
 
-  // ASYNC AWAIT INSTEAD OF .THEN
-  // router.get('/', async (req, res) => {
-    
-  //   const query = {
-  //     text: 'SELECT * FROM users;'
-  //   };
+        const {
+            first_name,
+            last_name,
+            email,
+            password
+        } = req.body;
 
-  //   try {
-  //     const users = await db.query(query);
-  //     res.json(users);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
+        getUserByEmail(email)
+            .then(user => {
 
+                if (user) {
+                    res.json({
+                        msg: 'Sorry, a user account with this email already exists'
+                    });
+                } else {
+                    return addUser(first_name, last_name, email, password)
+                }
 
-  // });
+            })
+            .then(newUser => res.json(newUser))
+            .catch(err => res.json({
+                error: err.message
+            }));
 
+    })
 
-  router.post('/', (req, res) => {
-
-    // extract the data from req.body
-    const {name, email, password} = req.body;
-
-    console.log({name}, {email},{password});
-
-    // create an insert query in the db
-
-    const query = {
-      text: `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *;`,
-      values: [name, email, password]
-    };
-
-    db
-      .query(query)
-      .then(result => res.json(result[0]))
-      .catch(err => console.log(err));
-
-    // return the newly created user back
-
-
-  });
-
-  return router;
+    return router;
 };
