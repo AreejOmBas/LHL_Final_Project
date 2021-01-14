@@ -1,5 +1,7 @@
 import React from 'react';
 import useApplicationData from './hooks/useApplicationData';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
 import './App.css';
 
 function App() {
@@ -11,12 +13,11 @@ const userList = state.users.map(user => <li>{user.name} {user.email}</li>)
 
   return (
     <>
-    <h1>Users</h1>
-
-    <ul>
-      {userList}
-    </ul>
-
+    <Header />
+    <main className="layout">
+    
+    </main>
+    <Footer/>
     </>
     );
 }
