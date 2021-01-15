@@ -2,38 +2,33 @@ footer {
   background-color: #735742ff;
   color: #ffffff;
   padding: 20px 20px 0px 20px;
- font-size: 25px;
+  font-size: 25px;
   flex-shrink: 0;
 }
- 
 
-
-footer .socialIcons .row{
-  
-   justify-content: flex-end; 
+footer .socialIcons .row {
+  justify-content: flex-end;
 }
-footer .links{
+footer .links {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-
 footer a {
   text-decoration: none;
-  color:#ffffff;
+  color: #ffffff;
 }
 
 footer a:hover {
-  
-  color:#ffffff;
+  color: #ffffff;
 }
 
-footer .links ul{
-list-style-type: none;
+footer .links ul {
+  list-style-type: none;
 }
 
-footer .fab{
+footer .fab {
   margin: 10px;
   color: #735742ff;
   border: 15px solid white;
@@ -47,20 +42,18 @@ footer .copyRight {
   align-items: flex-end;
 }
 
-@media only screen and (max-width:982px){
+@media only screen and (max-width: 982px) {
   footer .links {
-   align-items: center;
-   order:2;
-}
-footer .row{
-  justify-content: center;
-}
-footer .socialIcons{
-  align-self: center;
-}
-footer .socialIcons .row{
-  justify-content:center;
-  
-}
-
+    align-items: center;
+    order: 2;
+  }
+  footer .row {
+    justify-content: center;
+  }
+  footer .socialIcons {
+    align-self: center;
+  }
+  footer .socialIcons .row {
+    justify-content: center;
+  }
 }

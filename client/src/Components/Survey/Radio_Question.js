@@ -18,6 +18,7 @@ export default function RadioQuestion(props) {
           name={props.id}
           checked = {answer === "Yes"}
           onChange={(event) => setAnswer(event.target.value)}
+          required
         />
         <Form.Check
           type="radio"
