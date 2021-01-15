@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Cedar house Survey",
+  "name": "Cedar house Survey",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,9 +8,9 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "cedarHouse_logo_icon.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x93"
     },
     {
       "src": "logo512.png",

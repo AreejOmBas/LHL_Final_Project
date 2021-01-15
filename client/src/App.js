@@ -1,8 +1,11 @@
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import './App.css';
 
 import React, { useState } from 'react'
 import useApplicationData from './hooks/useApplicationData'
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
+import LoginForm from './Components/LoginForm'
+import RegisterForm from './Components/RegisterForm'
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
@@ -42,7 +45,11 @@ export default function App () {
   }
 
   return (
-      <div className="App">
+     
+    <>
+    <Header />
+    <main className="layout">
+    <div className="App">
         {(user.email !== '')
           ? (
             <div className ="Welcome">
@@ -57,8 +64,11 @@ export default function App () {
 
 
             )}
+                </div>
 
-    </div>
-
-  )
+    </main>
+    <Footer/>
+    </>
+    );
 }
+
