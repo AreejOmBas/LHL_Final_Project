@@ -19,21 +19,11 @@ export default function App () {
 
   const Register = details => {
     console.log(details)
-    if (details.email === adminUser.email && details.password == adminUser.password) {
-      console.log('logged in')
-      setUser({
-        email: details.name
-      })
-    } else {
-      console.log('Not match')
-      setError('Error')
-    }
   }
-
 
   const Login = details => {
     console.log(details)
-    if (details.email === adminUser.email && details.password == adminUser.password) {
+    if (details.email === adminUser.email && details.password === adminUser.password) {
       console.log('logged in')
       setUser({
         email: details.name

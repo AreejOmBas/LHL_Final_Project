@@ -1,26 +1,22 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const useApplicationData = () => {
-
-  const [state, setState] = useState({users: []});
+  const [state, setState] = useState({ users: [] })
 
   useEffect(() => {
-
     axios({
       method: 'GET',
-      url: '/users' 
+      url: '/users'
     })
-    .then(result => setState(prev => ({...prev, users: result.data})))
-    .catch(err => console.log(err));
-
+      .then(result => setState(prev => ({ ...prev, users: result.data })))
+      .catch(err => console.log(err))
   }, [])
 
   return {
-    state, 
+    state,
     setState
   }
-
 }
 
-export default useApplicationData;
+export default useApplicationData
