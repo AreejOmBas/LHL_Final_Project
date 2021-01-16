@@ -75,7 +75,7 @@ export default function LoginForm (props) {
             />
           </Form.Group>
 
-          <Button className="btn-lg btn-dark btn-block" type="submit">
+          <Button className="btn-lg btn-dark btn-block btn-login" type="submit">
             Sign up
           </Button>
         </div>
