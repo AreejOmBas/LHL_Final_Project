@@ -1,0 +1,11 @@
+article.radio-q {
+
+  margin: 15px 0 15px 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+label.radio-label{
+  margin-left: 25px;
+}

@@ -1,6 +1,48 @@
-.row .selected {
+.range-q {
+
+  margin: 15px 0 15px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #f3f0ed; */
+  padding: 10px;
+  /* box-shadow: 2px 2px 3px grey; */
+
+}
+.range-group-btn{
+  width:100%;
+  padding: 16px;
+}
+.range-btn-row{
+  width:100%;
+  justify-content: space-between;
+}
+
+.range-btn{
+  border: 1px solid #735742ff;
+  flex-grow: 1;
+  margin:5px;
+}
+.range-btn:not(:disabled):not(.disabled):active {
+  background-color: #b1a096;;
+}
+
+ .selected,.selected:focus ,.selected:not(:disabled):not(.disabled):active{
 
   border: 1px solid #735742ff;
-  box-shadow: 2px 3px #b99c7d;
+  box-shadow: 2px 3px 2px 0 #b1a096;
+  flex-grow: 2;
+  margin:5px;
+  background-color: #254A4Cff;
+  color: white;
+}
 
+.range-btn-row .range-btn{
+  border: 2px solid #735742ff;
+  /* margin: 10px; */
+}
+
+.range-btn-row .range-btn:hover{
+  background-color: #DBCCC2;
 }

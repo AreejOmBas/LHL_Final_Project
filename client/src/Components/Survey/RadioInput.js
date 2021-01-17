@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
+import './RadioInput.css'
 
 
 export default function RadioInput(props) {
@@ -7,29 +7,27 @@ export default function RadioInput(props) {
   return (
 
 
-    <section key={props.id} className="survey_question">
+    <article className="radio-q">
+
       <p className="question-field" > {props.question} </p>
-      {props.options.map(option => {
+      {props.options.map((option, index) => {
 
         return (
 
-          <Form.Check
-            type="radio"
-            id={props.id}
-            label={option}
-            value={option}
-            name={props.id}
-
-            onChange={event => props.handelChange(event, props.id)}
-            required
-          />
+          <label key={index} className="radio-label">
+            <input name="q1" required="" type="radio" id={props.id} className="form-check-input"
+              name={props.id} value={option}
+              onChange={event => props.handelChange(event, props.id)}
+              required />
+            {option}
+          </label>
         );
       })}
 
-    </section>
 
 
 
+    </article>
 
 
 

@@ -46,7 +46,7 @@ export default function LoginForm (props) {
         value={details.password}/>
     </Form.Group>
 
-    <Button className="btn-lg btn-dark btn-block" type="submit">Log in</Button>
+    <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Log in</Button>
     <div className="form-group col text-right">
     <a href="forgot-password" className="">Forgot Password?</a>
     </div>

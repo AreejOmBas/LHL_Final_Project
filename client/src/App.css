@@ -1,5 +1,4 @@
 
-
 .login-form {
 width : 40%;
 height : 100%;
@@ -30,7 +29,7 @@ margin: 15px;
 
 }
 
-.btn-block {
+.btn-login {
   background-color: #725744;
   margin: 15px;
 

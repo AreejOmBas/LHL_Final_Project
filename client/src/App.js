@@ -1,17 +1,19 @@
+import React, { useState } from 'react';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import Survey from './Components/Survey';
+
 import './App.css';
 
-import React, { useState } from 'react'
-import useApplicationData from './hooks/useApplicationData'
-import LoginForm from './Components/LoginForm'
-import RegisterForm from './Components/RegisterForm'
+import useApplicationData from './hooks/useApplicationData';
+import LoginForm from './Components/LoginForm';
+import RegisterForm from './Components/RegisterForm';
 
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-
-import Button from 'react-bootstrap/Button'
 
 export default function App () {
+
   const adminUser = {
     email: 'admin@admin.com',
     password: 'admin'
@@ -49,7 +51,7 @@ export default function App () {
     <>
     <Header />
     <main className="layout">
-    <div className="App">
+    {/* <div className="App">
         {(user.email !== '')
           ? (
             <div className ="Welcome">
@@ -64,9 +66,10 @@ export default function App () {
 
 
             )}
-                </div>
-
+                </div> */}
+        <Survey/>
     </main>
+   
     <Footer/>
     </>
     );
