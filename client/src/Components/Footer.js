@@ -24,7 +24,7 @@ export default function Footer() {
           <Col className="socialIcons" lg={6} >
             <Row xs={12} md={6}>
 
-              <a href="https://www.facebook.com/CedarHouseLCC"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.facebook.com/CedarHouseLCC"><i className="fab fa-facebook-f"></i></a>
               <a href="https://www.twitter.com/CedarHouseLCC"><i className="fab fa-twitter"></i> </a>
               <a href="https://www.instagram.com/cedarhouselifechangecenter"><i className="fab fa-instagram"></i> </a>
 
