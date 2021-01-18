@@ -1,12 +1,15 @@
 import React , {useState} from 'react'
-
-import RadioQuestion from './RadioInput';
-import RangeInput from './RangeInput'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import RadioQuestion from './RadioInput';
+import RangeInput from './RangeInput';
+import TextInput from './TextInput';
+
+
+
 import './Survey.css';
-import './RangeInput.css';
+
 
 
 
@@ -30,7 +33,9 @@ const questions = [
     id: 'q1',
     question: "Have you stayed sober since completing treatment?",
     type: 'radio',
-    answers:["yes","no"]
+    answers:["yes","no"],
+    hasFollowUp: 'q6',
+    isFollowUp:false
   },
   {
     id: 'q2',
@@ -69,7 +74,13 @@ const questions = [
     question: "Do you have any additional comments to share with us?",
     type: 'text',
     
-  }
+  },
+  {
+    id:'q8',
+    question:"Are you currently on track or do you need assistance?",
+    answers:['Yes I am on track', 'No I need assistance'],
+    isFollowUp:true
+ }
 ]
 
 export default function Survey(props) {
@@ -79,6 +90,7 @@ export default function Survey(props) {
 
   const [surveyResponse,setSurveyResponse] = useState({});
   const [selectedRange,setSelectedRange] = useState();
+  const [showFollowUpQ,setFollowUpQ] = useState(true);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -95,7 +107,10 @@ export default function Survey(props) {
    
     const value = event.target.value;
     console.log(value,event.target)
-    setSurveyResponse({...surveyResponse, [id]:value})
+
+   
+    setSurveyResponse({...surveyResponse, [id]:value});
+
     
 
   }
@@ -113,7 +128,7 @@ export default function Survey(props) {
 
     <main className="survey-main">
       <h1>Cedar House survey</h1>
-      
+      <h3> Pleas help us to follow your achievements and help you when you need to </h3>
       <Form noValidate validated={validated} 
         onSubmit={handleSubmit}>
 
@@ -121,12 +136,19 @@ export default function Survey(props) {
          id={questions[0].id} options={questions[0].answers} 
          handelChange = {handelRadioInput}  />
 
+         {showFollowUpQ && <RadioQuestion question={questions[7].question}
+         id={questions[7].id} options={questions[7].answers} 
+         handelChange = {handelRadioInput}  />}
+
         <RadioQuestion question={questions[1].question}
          id={questions[1].id} options={questions[1].answers} 
          handelChange = {handelRadioInput}  />
 
          <RangeInput  id= {questions[5].id} question= {questions[5].question} handelClick = {handelRangeButtonClick} options = {[1,2,3,4,5]}  selected={selectedRange}  />
          {/* */}
+
+         <TextInput question={questions[6].question} />
+
          <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
 
         

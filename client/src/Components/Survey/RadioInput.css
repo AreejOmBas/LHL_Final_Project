@@ -4,6 +4,7 @@ article.radio-q {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  flex-grow: 2;
 }
 
 label.radio-label{
