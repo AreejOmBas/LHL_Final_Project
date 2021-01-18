@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";
-import "../App.css";
+import "./form.css";
+import { BrowserRouter as Router, Route, Link,Switch } from 'react-router-dom';
+
 
 export default function LoginForm (props) {
-  const [details, setDetails] = useState({ email: '', password: '' });
+  const [registerInformation, setregisterInformation] = useState
+  ({ FirstName:'',LastName:'',Renterpassword:'',date:'', email: '', password: '' });
   const { Register, error } = props;
 
   const submitHandler = (e) => {
     e.preventDefault();
-    Register(details);
+    Register(registerInformation);
   };
 
   return (
@@ -27,9 +30,9 @@ export default function LoginForm (props) {
               id="FirstName"
               placeholder="First Name"
               onChange={(e) =>
-                setDetails({ ...details, FirstName: e.target.value })
+                setregisterInformation({ ...registerInformation, FirstName: e.target.value })
               }
-              value={details.FirstName}
+              value={registerInformation.FirstName}
             />
           </Form.Group>
 
@@ -41,9 +44,9 @@ export default function LoginForm (props) {
               id="LastName"
               placeholder="Last Name"
               onChange={(e) =>
-                setDetails({ ...details, LastName: e.target.value })
+                setregisterInformation({ ...registerInformation, LastName: e.target.value })
               }
-              value={details.LastName}
+              value={registerInformation.LastName}
             />
           </Form.Group>
 
@@ -55,9 +58,9 @@ export default function LoginForm (props) {
               id="email"
               placeholder="Email or Phone Number"
               onChange={(e) =>
-                setDetails({ ...details, email: e.target.value })
+                setregisterInformation({ ...registerInformation, email: e.target.value })
               }
-              value={details.email}
+              value={registerInformation.email}
             />
           </Form.Group>
 
@@ -69,15 +72,46 @@ export default function LoginForm (props) {
               id="password"
               placeholder="Password"
               onChange={(e) =>
-                setDetails({ ...details, password: e.target.value })
+                setregisterInformation({ ...registerInformation, password: e.target.value })
               }
-              value={details.password}
+              value={registerInformation.password}
             />
           </Form.Group>
 
-          <Button className="btn-lg btn-dark btn-block" type="submit">
+          <Form.Group>
+            <Form.Control
+              className="form-control form-control-lg"
+              type="password"
+              name="Renterpassword"
+              id="Renterpassword"
+              placeholder="Renter Password"
+              onChange={(e) =>
+                setregisterInformation({ ...registerInformation, renterpassword: e.target.value })
+              }
+              value={registerInformation.password}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Control
+              className="form-control form-control-lg"
+              type="date"
+              name="date"
+              id="date"
+              placeholder="Renter Password"
+              onChange={(e) =>
+                setregisterInformation({ ...registerInformation, date: e.target.value })
+              }
+              value={registerInformation.password}
+            />
+          </Form.Group>
+
+          <Button className="btn-lg btn-dark btn-block btn-login" type="submit">
             Sign up
           </Button>
+          <div className="form-group col text-right">
+          <Link to="/login" className="link-text">You are a member?</Link>                
+          </div>
         </div>
       </Form>
     </center>

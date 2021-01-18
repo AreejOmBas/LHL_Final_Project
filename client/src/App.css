@@ -1,5 +1,5 @@
 
-.login-form {
+/* .login-form {
 width : 40%;
 height : 100%;
 
@@ -27,16 +27,9 @@ margin: 15px;
   font-style: normal;
   margin: 15px;
 
-}
+} */
 
 .btn-login {
   background-color: #725744;
   margin: 15px;
-
-}
-
-.form-control{
-  color: #725744;
-margin: 15px;
-
 }
