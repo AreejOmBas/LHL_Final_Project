@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import "./form.css";
 import { BrowserRouter as Router, Route, Link,Switch } from 'react-router-dom';
 
+
 export default function LoginForm (props) {
   const [registerInformation, setregisterInformation] = useState
   ({ FirstName:'',LastName:'',Renterpassword:'',date:'', email: '', password: '' });

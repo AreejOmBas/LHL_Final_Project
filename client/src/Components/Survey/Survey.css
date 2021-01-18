@@ -1,0 +1,13 @@
+.survey-main{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.survey-main form .btn-login{
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}

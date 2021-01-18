@@ -3,14 +3,17 @@ import React, { useState } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
+import Survey from './Components/Survey';
+import LoginForm from './Components/LoginForm';
+import RegisterForm from './Components/RegisterForm';
+import ForgetPassword from './Components/ForgetPassword';
+
 import Footer from './Components/Footer';
+import Nav from './Components/Nav';
+
 import LandingPage from './Components/LandingPage';
 import { BrowserRouter as Router, Route, Link,Switch } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap'
-import LoginForm from './Components/LoginForm'
-import RegisterForm from './Components/RegisterForm'
-import ForgetPassword from './Components/ForgetPassword'
-import Nav from './Components/Nav';
+
 
 
 
@@ -71,7 +74,7 @@ export default function App () {
                 </div>
         </main>
   </Router>
-
+    <div className="push" ></div>
     <Footer/>
     </>
     );
