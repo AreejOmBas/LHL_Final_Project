@@ -1,5 +1,17 @@
 .App {
   text-align: center;
+
+
+.login-form {
+width : 40%;
+height : 100%;
+
+} 
+
+.form-inner{
+  display :flex;
+  flex-direction:  column ;
+
 }
 
 .App-logo {
@@ -22,6 +34,11 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+.btn-block {
+  background-color: #725744;
+  margin: 15px;
+
 }
 
 .App-link {

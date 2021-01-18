@@ -3,6 +3,7 @@
 }
 html, body {
   height: 100%;
+  margin:0;
 }
 body {
   
@@ -15,10 +16,14 @@ body {
   flex-direction: column;
 }
 
+
 .layout {
-  min-height: 100vh;
   flex: 1 0 auto;
+   /* min-height: 100vh; */
+  
+
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
