@@ -1,13 +1,13 @@
 * {
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   height: 100%;
 }
 body {
-  
-  
-  font-family: 'Open Sans',Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-size: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -18,9 +18,16 @@ body {
 .layout {
   min-height: 100vh;
   flex: 1 0 auto;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  /* box-shadow: 2px 3px #b7b1ac */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

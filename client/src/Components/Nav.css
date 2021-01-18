@@ -1,0 +1,29 @@
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333333;
+}
+
+nav .nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  width: 30%;
+}
+.nav-title {
+  text-decoration: none;
+  color: #1a0303;
+  font-size: 25px;
+}
+.nav-title:hover {
+  color: #1a0303;
+  font-weight: 700;
+}
+.nav-title:focus {
+  text-decoration: none;
+  border-bottom: #1a0303 solid 1px;
+}
