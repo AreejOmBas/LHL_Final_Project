@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS surveys CASCADE;
 DROP TABLE IF EXISTS responses CASCADE;
 DROP TABLE IF EXISTS survey_questions CASCADE;
 DROP TABLE IF EXISTS questions CASCADE;
-DROP TABLE IF EXISTS possible_answers CASCADE;
 
 
 CREATE TABLE clients(
@@ -46,14 +45,5 @@ CREATE TABLE questions(
    id SERIAL PRIMARY KEY NOT NULL,
     question_text VARCHAR(255) NOT NULL,
      type  VARCHAR(25) NOT NULL,
-     answer_id INTEGER REFRENCES possible_answers(id) ON DELETE CASCADE,
-     isFollowup  VARCHAR(25) NOT NULL,
-     hasFollowup  VARCHAR(25) NOT NULL
-);
-
-
-CREATE TABLE possible_answers(
-  id SERIAL PRIMARY KEY NOT NULL,
-  answer VARCHAR(255) NOT NULL,
-  question_id INTEGER REFRENCES questions(id) ON DELETE CASCADE
+     answer_id INTEGER REFRENCES possible_answers(id) ON DELETE CASCADE
 );
