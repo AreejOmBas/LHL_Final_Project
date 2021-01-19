@@ -7,14 +7,14 @@ DROP TABLE IF EXISTS possible_answers CASCADE;
 
 
 CREATE TABLE clients(
-   id SERIAL PRIMARY KEY NOT NULL,
-   first_name VARCHAR(255) NOT NULL,
-   last_name VARCHAR(255) NOT NULL,
-   email VARCHAR(255) NOT NULL,
-   password VARCHAR(255) NOT NULL,
-   Phone_num VARCHAR (10) NOT NULL,
-  tratment_start_date  DATE  NOT NULL,
-  tratment_end_date  DATE  NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone_num VARCHAR (10) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  treatment_start_date  DATE  NOT NULL,
+  treatment_end_date  DATE  NOT NULL,
   signup_date DATE NOT NULL,
   next_survey_date DATE NOT NULL
 );
