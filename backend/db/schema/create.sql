@@ -45,5 +45,4 @@ CREATE TABLE questions(
    id SERIAL PRIMARY KEY NOT NULL,
     question_text VARCHAR(255) NOT NULL,
      type  VARCHAR(25) NOT NULL,
-     answer_id INTEGER REFRENCES possible_answers(id) ON DELETE CASCADE
 );
