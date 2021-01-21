@@ -55,7 +55,7 @@ export default function App () {
   return ( 
 
     <>
-  <Router >
+  {/* <Router >
 
      {( user.email !== '') ? (<Nav profile="logged"/> ) : (<Nav profile=""/> )}
 
@@ -73,7 +73,12 @@ export default function App () {
                           </Switch>
                 </div>
         </main>
-  </Router>
+  </Router> */}
+
+<main className="layout">
+  <Survey/>
+  </main>
+
     <div className="push" ></div>
     <Footer/>
     </>

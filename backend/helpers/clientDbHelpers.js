@@ -1,15 +1,21 @@
 module.exports = (db) => {
+
   const getClients = () => {
-      const query = {
-          text: 'SELECT first_name, last_name, email FROM clients',
-      };
+    const query = {
+      text: `SELECT id, first_name, last_name, email FROM clients ` ,
+  
+  }
 
-      return db
-          .query(query)
-          .then((result) => result.rows)
-          .catch((err) => err);
-  };
+  return db
+      .query(query)
+      .then(result =>{ 
+        result.rows
+      console.log(result.rows)})
+      .catch((err) => err);
+}
 
+  
+ 
   const getClientByEmail = email => {
 
       const query = {
@@ -19,9 +25,7 @@ module.exports = (db) => {
 
       return db
           .query(query)
-          .then(result =>{ 
-            result.rows[0]
-          console.log(result.rows[0])})
+          .then(result => result.rows[0])
           .catch((err) => err);
   }
 

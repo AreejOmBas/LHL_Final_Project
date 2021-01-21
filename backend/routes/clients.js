@@ -1,62 +1,98 @@
 const express = require('express');
 const router = express.Router();
-const {
-    getPostsByUsers
-} = require('../helpers/dataHelpers');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const accessTokenSecret = require('../helpers/auth-secret.js')
+
+
 
 module.exports = ({
   getClients,
   getClientByEmail,
   addClient,
-  
+
 }) => {
-    /* GET users listing. */
-    router.get('/users', (req, res) => {
-      getClients()
-            .then((users) => res.json(users))
-            .catch((err) => res.json({
-                error: err.message
-            }));
-    });
+  router.get('/clients', (req, res) => {
+    getClients()
+        .then((clients) => res.json(clients))
+        .catch((err) => res.json({
+            error: err.message
+        }));
+});
+  /* Client log in and authorize */
+  router.post('/login', (req, res) => {
 
-    router.get('/posts', (req, res) => {
-        getUsersPosts()
-            .then((usersPosts) => {
-                const formattedPosts = getPostsByUsers(usersPosts);
-                res.json(formattedPosts);
-            })
-            .catch((err) => res.json({
-                error: err.message
-            }));
-    });
+    const { email, password } = req.body;
+    getClientByEmail(email)
+      .then((client) => {
 
-    router.post('/', (req, res) => {
+        console.log(client);
+        // validate client if email not exists or incorrect password return err msg
+        if (!(client)/*  || !bcrypt.compareSync(password, client.password) */) {
 
-        const {
-            first_name,
-            last_name,
-            email,
-            password
-        } = req.body;
+          res.json({
+            msg: 'Sorry, email/password not correct'
+          });
 
-        getClientByEmail(email)
-            .then(user => {
+        } else {
+          //const accessToken = jwt.sign({ email: client.email}, accessTokenSecret);
 
-                if (user) {
-                    res.json({
-                        msg: 'Sorry, a user account with this email already exists'
-                    });
-                } else {
-                    return addUser(first_name, last_name, email, password)
-                }
+          res.json({
+           // accessToken,
+            client
+          });
 
-            })
-            .then(newUser => res.json(newUser))
-            .catch(err => res.json({
-                error: err.message
-            }));
+        }
+      })
+      .catch((err) => res.json({ error: err.message }));
+  });
 
-    })
+  // Client registration
+  router.post('/register', (req, res) => {
 
-    return router;
+    const {
+      firstName, lastName, email, phone_num, password,
+      treatment_start_date, treatment_end_date
+    } = req.body;
+
+    //const next_survey_date = date
+
+    // to get the date only as string new Date().toDateString()
+
+    getClientByEmail(email)
+      .then(client => {
+
+        if (client) {
+          res.json({
+            msg: 'Sorry, an account with this email already exists'
+          });
+        } else {
+          // values: [firstName, lastName, email, phone_num, password, treatment_start_date, treatment_end_date, signup_date, next_survey_date]
+          const hashedPassword = bcrypt.hashSync(password, 10);
+          return addClient(firstName, lastName, phone_num, email, hashedPassword,
+            treatment_start_date, treatment_end_date);
+        }
+
+      })
+      .then(newClient => res.json(newClient))
+      .catch(err => res.json({
+        error: err.message
+      }));
+
+  })
+
+  return router;
 };
+
+/* {
+	"first_name":"Sam",
+	"last_name":"Jr",
+	"email":"sam@jr.com",
+	"phone_num": "613-222-3333",
+	"password":"password",
+	"treatment_start_date":"01-05-2019",
+	"treatment_end_date":"25-01-2021"
+	
+}
+ */
