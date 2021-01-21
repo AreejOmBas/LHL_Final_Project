@@ -35,7 +35,7 @@ module.exports = (db) => {
       let nextMonth = now.setMonth(now.getMonth() + 1, 1);
       const tret_start= new Date(treatment_start_date).toDateString('yyyy-mm-dd');
      const trest_end = new Date(treatment_end_date).toDateString();
-console.log(tret_start);
+    console.log(tret_start);
       const next_survey_date = new Date(nextMonth).toDateString();
         //console.log(firstName, lastName, email, phone_num , password,  treatment_start_date, treatment_end_date, signup_date, next_survey_date
           //)
@@ -51,11 +51,27 @@ console.log(tret_start);
           .catch(err => err);
   }
 
+
+  const getClientsEmails = () => {
+    const query = {
+      text: `SELECT email FROM clients ` ,
+  
+  }
+
+  return db
+      .query(query)
+      .then(result =>{ 
+        return result.rows
+      //console.log(result.rows)
+    })
+      .catch((err) => err);
+}
  
 
   return {
     getClients,
     getClientByEmail,
-    addClient
+    addClient,
+    getClientsEmails
   };
 };

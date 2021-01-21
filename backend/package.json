@@ -8,6 +8,7 @@
     "db:reset": "node ./db/reset.js"
   },
   "dependencies": {
+    "@types/mailgun-js": "^0.22.11",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
@@ -18,7 +19,10 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "mailgun-js": "^0.22.0",
     "morgan": "~1.9.1",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.17",
     "pg": "^8.3.0",
     "pg-native": "^3.0.0"
   },
