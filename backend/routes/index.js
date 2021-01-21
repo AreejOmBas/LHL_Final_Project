@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cron= require('node-cron');
-const nodemainler= require('nodemailer');
+const nodemailer= require('nodemailer');
 
 const MailConfig = require('../config/email');
 const gmailTransport = MailConfig.GmailTransport;
@@ -47,23 +47,23 @@ const {getClientsEmails}= require('../helpers/clientDbHelpers')(db);
     html: '<html><body>We would like to chank you for choosing Cedar House,and we hope you enjoyed your stay at Cedar House</body></html>'
   };
 
-  getClientsEmails().then((email) => {
-    const EmailList= email.map(({ email }) => email);
-    mailOptions.to='fayzadaoudifr@gmail.com,foufadaoudi@gmail.com';
+  // getClientsEmails().then((email) => {
+  //   const EmailList= email.map(({ email }) => email);
+  //   mailOptions.to='fayzadaoudifr@gmail.com,foufadaoudi@gmail.com';
 
-      //cron.schedule('1 * *  * *',()=>{
-      //cron.schedule('0 13 1/1  * *',()=>{
-        gmailTransport.sendMail(mailOptions, (error,info) => {
-          if(error) {
-            console.log(error);
-            res.json(error);
-          }
-          console.log("email is send");
-          console.log(info);
-          res.json(info)
-        });  
-      //})
-  } );
+  //     //cron.schedule('1 * *  * *',()=>{
+  //     //cron.schedule('0 13 1/1  * *',()=>{
+  //       gmailTransport.sendMail(mailOptions, (error,info) => {
+  //         if(error) {
+  //           console.log(error);
+  //           res.json(error);
+  //         }
+  //         console.log("email is send");
+  //         console.log(info);
+  //         res.json(info)
+  //       });  
+  //     //})
+  // } );
 
 
   return router;
