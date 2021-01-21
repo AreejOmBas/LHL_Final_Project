@@ -6,10 +6,11 @@ const logger = require('morgan');
 const db = require('./db');
 const accessTokenSecret =  require('./helpers/auth-secret');
 
-const dbHelpers = require('./helpers/clientDbHelpers')(db);
-//const indexRouter = require('./routes/index');
-const clientRouter = require('./routes/clients');
+const clientDbHelpers = require('./helpers/clientDbHelpers')(db);
+const sentSurveyDbHelpers = require('./helpers/sentSurveyDbHelpers')(db);
 
+const clientRouter = require('./routes/clients');
+const sentSurveyRouter =  require('./routes/sentSurvey');
 
 
 const jwt = require('jsonwebtoken');
@@ -29,8 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.json());
 // app.use('/', indexRouter(db));
-app.use('/api', clientRouter(dbHelpers));
-
+app.use('/api', clientRouter(clientDbHelpers));
+app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers))
 app.use(function(req, res, next) {
   next(createError(404));
 });
