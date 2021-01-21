@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const accessTokenSecret = require('../helpers/auth-secret.js')
+const {secret} = require('../helpers/auth-secret.js');
 
 
 
@@ -29,18 +29,19 @@ module.exports = ({
 
         console.log(client);
         // validate client if email not exists or incorrect password return err msg
-        if (!(client)/*  || !bcrypt.compareSync(password, client.password) */) {
+        if (!(client) || !bcrypt.compareSync(password, client.password) ) {
 
           res.json({
             msg: 'Sorry, email/password not correct'
           });
 
         } else {
-          //const accessToken = jwt.sign({ email: client.email}, accessTokenSecret);
+          //console.log(accessTokenSecret)
+          const accessToken = jwt.sign( {id:client.id}, secret);
 
           res.json({
-           // accessToken,
-            client
+          accessToken,
+            
           });
 
         }
@@ -52,9 +53,10 @@ module.exports = ({
   router.post('/register', (req, res) => {
 
     const {
-      firstName, lastName, email, phone_num, password,
-      treatment_start_date, treatment_end_date
+      first_name, last_name, email, phone_num, password, treatment_start_date, 
+            treatment_end_date
     } = req.body;
+    console.log('inside clients',req.body);
 
     //const next_survey_date = date
 
@@ -70,12 +72,12 @@ module.exports = ({
         } else {
           // values: [firstName, lastName, email, phone_num, password, treatment_start_date, treatment_end_date, signup_date, next_survey_date]
           const hashedPassword = bcrypt.hashSync(password, 10);
-          return addClient(firstName, lastName, phone_num, email, hashedPassword,
-            treatment_start_date, treatment_end_date);
+          return addClient(first_name, last_name, email, phone_num, hashedPassword, 
+            treatment_start_date, treatment_end_date) ;
         }
 
       })
-      .then(newClient => res.json(newClient))
+      .then(newClient => {res.json(newClient); console.log(newClient)})
       .catch(err => res.json({
         error: err.message
       }));
@@ -96,3 +98,15 @@ module.exports = ({
 	
 }
  */
+
+
+// curl --header "Content-Type: application/json" \
+// --request POST \
+// --data '{	"firstname":"Sam",
+// "lastname":"Jr",
+// "email":"sam@jr.com",
+// "phonenum": "613-222-3333",
+// "password":"password",
+// "treatmentstartdate":"01-05-2019",
+// "treatmentenddate":"25-01-2021"}' \
+// http://localhost:3002/api/register
