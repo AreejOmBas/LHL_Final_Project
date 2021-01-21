@@ -64,10 +64,3 @@ const {getClientsEmails}= require('../helpers/clientDbHelpers')(db);
         });  
       //})
   } );
-
-
-  return router;
-
-};
-
-
