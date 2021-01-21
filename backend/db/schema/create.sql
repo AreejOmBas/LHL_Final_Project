@@ -12,8 +12,8 @@ CREATE TABLE clients(
   email VARCHAR(255) NOT NULL,
   phone_num VARCHAR (15) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  treatment_start_date  DATE  NOT NULL,
-  treatment_end_date  DATE  NOT NULL,
+  treatment_start_date  DATE NOT NULL,
+  treatment_end_date DATE NOT NULL,
   signup_date DATE NOT NULL,
   next_survey_date DATE 
 );
