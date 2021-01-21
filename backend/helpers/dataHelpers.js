@@ -22,6 +22,31 @@ const getPostsByUsers = (usersPosts) => {
   return Object.values(postsByUsers);
 };
 
+const setIntervalDateUponSignUp = () => {
+  let nextSurveyDate;
+  let now = new Date();
+  //console.log('now is ', now)
+  let nextMonth = now.setMonth(now.getMonth() + 1, 1);
+  let monthAfterNext = now.setMonth(now.getMonth() + 2, 1);
+
+  nextMonth = new Date(nextMonth);
+
+  //console.log(nextMonth)
+  now = new Date();
+  const diffTime = Math.abs(nextMonth - now);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  if (diffDays > 20) {
+    nextSurveyDate = nextMonth;
+  } else {
+    nextSurveyDate = monthAfterNext;
+  }
+
+  return nextSurveyDate;
+}
+
+
+
+
 module.exports = {
   getPostsByUsers,
 };
