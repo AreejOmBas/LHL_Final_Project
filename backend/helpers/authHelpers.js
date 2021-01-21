@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const {secret} = require('../helpers/auth-secret.js')
 
-module.exports = () => {
+
 
 const hashPassword = password => {
   return bcrypt.hashSync(password, 10);
@@ -42,11 +42,8 @@ const authenticateJWT = (req, res, next) => {
 
 
 
-  return{
+module.exports ={
     authenticateJWT,
     hashPassword
 
   }
-
-
-}
