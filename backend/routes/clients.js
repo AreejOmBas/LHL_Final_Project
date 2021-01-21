@@ -49,7 +49,7 @@ module.exports = ({
       .catch((err) => res.json({ error: err.message }));
   });
 
-  // Client registration
+  // Client registration form submit
   router.post('/register', (req, res) => {
 
     const {
@@ -58,11 +58,7 @@ module.exports = ({
     } = req.body;
     console.log('inside clients',req.body);
 
-    //const next_survey_date = date
-
-    // to get the date only as string new Date().toDateString()
-
-    getClientByEmail(email)
+     getClientByEmail(email)
       .then(client => {
 
         if (client) {
@@ -70,13 +66,11 @@ module.exports = ({
             msg: 'Sorry, an account with this email already exists'
           });
         } else {
-          // values: [firstName, lastName, email, phone_num, password, treatment_start_date, treatment_end_date, signup_date, next_survey_date]
           const hashedPassword = bcrypt.hashSync(password, 10);
           return addClient(first_name, last_name, email, phone_num, hashedPassword, 
             treatment_start_date, treatment_end_date) ;
         }
-
-      })
+    })
       .then(newClient => {res.json(newClient); console.log(newClient)})
       .catch(err => res.json({
         error: err.message
