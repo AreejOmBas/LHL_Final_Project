@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const {secret} = require('../helpers/auth-secret.js')
 
 module.exports = () => {
 
@@ -21,11 +21,30 @@ const generateToken = (id) => {
   return token;
 };
 
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+      const token = authHeader.split(' ')[1];
+
+      jwt.verify(token, secret, (err, client) => {
+          if (err) {
+              return res.sendStatus(403);
+          }
+
+          req.client = client;
+          next();
+      });
+  } else {
+      res.sendStatus(401);
+  }
+};
+
 
 
   return{
-
-    hashPassword,
+    authenticateJWT,
+    hashPassword
 
   }
 
