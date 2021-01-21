@@ -1,46 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-//const authenticateJWT = require('../helpers/authHelpers.js').authenticateJWT;
+const {authenticateJWT} = require('../helpers/authHelpers.js');
 
 
 const {secret} = require('../helpers/auth-secret.js');
 
 
-const authenticateJWT = (req, res, next) => {
-  const authHeader = req.headers.authorization;
 
-  if (authHeader) {
-      const token = authHeader.split(' ')[1];
-
-      jwt.verify(token, secret, (err, client) => {
-          if (err) {
-              return res.sendStatus(403);
-          }
-
-          req.client = client;
-          next();
-      });
-  } else {
-      res.sendStatus(401);
-  }
-};
 
 module.exports = ({
-
   getSentSurvey,
   getSentSurveyByID,
+  addNewSentSurvey,
+  getClientIdFromSentSurvey,
+  addClientResponse
+  
+  
 }) => {
-  router.get('/survey', authenticateJWT , (req, res) => {
+
+  router.get('/survey/:sentSurveyId',authenticateJWT , (req, res) => {
     
-    const {sentSurveyId} = req.body;
-    getSentSurveyByID(1)
+  const sentSurveyId = req.params.sentSurveyId;
+      getSentSurveyByID(sentSurveyId)
         .then((survey) => 
         {
-          res.json({msg: 'query was successfull' });
-
-
-
+          res.json({msg: 'query was successfull', survey });
         }
     )
     .catch((err) => res.json({
@@ -48,6 +33,29 @@ module.exports = ({
     }));
 });
 
+router.post('/survey/:sentSurveyId', (req, res) => {
+
+
+  const sentSurveyId = req.params.sentSurveyId;
+  //let clientId ;
+console.log(sentSurveyId, req.params)
+
+  getClientIdFromSentSurvey(sentSurveyId)
+  .then(id => 
+    
+   //res.json({msg: `client id ${id.client_id}`})
+    addClientResponse(sentSurveyId,id.client_id)
+   ).then()
+  .catch((err) => res.json({
+    error: err.message
+  }));
+ 
+
+
+  //add client responses to  responses table 
+
+
+});
 
   return router;
 };
