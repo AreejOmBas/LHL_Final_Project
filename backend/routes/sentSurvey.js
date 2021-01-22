@@ -18,7 +18,7 @@ module.exports = ({
 }) => {
 
   // Route to access a survey sent with specific id
-  router.get('/survey/:sentSurveyId',  (req, res) => {
+  router.get('/survey/:sentSurveyId', authenticateJWT ,(req, res) => {
     const sentSurveyId = req.params.sentSurveyId;
 
     getSentSurveyByID(sentSurveyId)
