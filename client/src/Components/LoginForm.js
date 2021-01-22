@@ -7,12 +7,13 @@ import "./form.css";
 import "./LandingPage.css";
 
 export default function LoginForm (props) {
-  const [details, setDetails] = useState({ email: '', password: '' })
+  const [userDetails, setUserDetails] = useState({ email: '', password: '' })
   const { Login, error } = props
   
   const submitHandler = e => {
     e.preventDefault()
-    Login(details)
+    
+    props.login(userDetails)
   }
 
   return (
@@ -31,8 +32,8 @@ export default function LoginForm (props) {
                     name="email"
                     id="email"
                     placeholder="Email or Phone Number"
-                    onChange={e => setDetails({ ...details, email: e.target.value })}
-                    value={details.email}
+                    onChange={e => setUserDetails({ ...userDetails, email: e.target.value })}
+                    value={userDetails.email}
               />
           </Form.Group>
 
@@ -43,8 +44,8 @@ export default function LoginForm (props) {
               name="password"
               id="password"
               placeholder="Password"
-              onChange={e => setDetails({ ...details, password: e.target.value })}
-              value={details.password}/>
+              onChange={e => setUserDetails({ ...userDetails, password: e.target.value })}
+              value={userDetails.password}/>
           </Form.Group>
 
           <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Log in</Button>
