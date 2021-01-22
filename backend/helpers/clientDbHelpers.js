@@ -49,6 +49,7 @@ module.exports = (db) => {
 
   const addClient = (firstName, lastName, email, phone_num, password,
     treatment_start_date, treatment_end_date) => {
+
     let now = new Date();
     const signup_date = new Date().toDateString('yyyy-mm-dd');
     let nextMonth = now.setMonth(now.getMonth() + 1, 1);
@@ -62,7 +63,7 @@ module.exports = (db) => {
       text: `INSERT INTO clients(first_name, last_name, email, phone_num, password, treatment_start_date, 
             treatment_end_date, signup_date, next_survey_date) VALUES
              ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *` ,
-      values: [firstName, lastName, email, phone_num, password, tret_start,  tret_end, signup_date, tret_end]
+      values: [firstName, lastName, email, phone_num, password, tret_start, tret_end, signup_date, tret_end]
     }
 
     return db.query(query)
@@ -72,10 +73,27 @@ module.exports = (db) => {
 
 
 
+  const getClientsEmails = () => {
+    const query = {
+      text: `SELECT email FROM clients `,
+
+    }
+
+    return db
+      .query(query)
+      .then(result => {
+        return result.rows
+        //console.log(result.rows)
+      })
+      .catch((err) => err);
+  }
+
+
   return {
     getClients,
     getClientById,
     getClientByEmail,
-    addClient
+    addClient,
+    getClientsEmails
   };
 };

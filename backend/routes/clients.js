@@ -27,22 +27,24 @@ module.exports = ({
     getClientByEmail(email)
       .then((client) => {
 
-        console.log(client);
         // validate client if email not exists or incorrect password return err msg
         if (!(client) || !bcrypt.compareSync(password, client.password) ) {
 
-          res.json({
-            msg: 'Sorry, email/password not correct'
-          });
+         
+            res.status(400).json({
+              accessToken:null,
+              message: "Sorry, email/password not correct"});
+       
+            return;
+         
 
         } else {
           //console.log(accessTokenSecret)
-          const accessToken = jwt.sign( {id:client.id}, secret);
-
-          res.json({
-          accessToken,
-            
-          });
+          const accessToken = jwt.sign( {id:client.id}, secret, {expiresIn: 300});
+          res.cookie('token', accessToken, { httpOnly: true });
+          res.status(200).send({
+            accessToken,
+            message: "Log in successful"});
 
         }
       })
@@ -81,26 +83,3 @@ module.exports = ({
   return router;
 };
 
-/* {
-	"first_name":"Sam",
-	"last_name":"Jr",
-	"email":"sam@jr.com",
-	"phone_num": "613-222-3333",
-	"password":"password",
-	"treatment_start_date":"01-05-2019",
-	"treatment_end_date":"25-01-2021"
-	
-}
- */
-
-
-// curl --header "Content-Type: application/json" \
-// --request POST \
-// --data '{	"firstname":"Sam",
-// "lastname":"Jr",
-// "email":"sam@jr.com",
-// "phonenum": "613-222-3333",
-// "password":"password",
-// "treatmentstartdate":"01-05-2019",
-// "treatmentenddate":"25-01-2021"}' \
-// http://localhost:3002/api/register
