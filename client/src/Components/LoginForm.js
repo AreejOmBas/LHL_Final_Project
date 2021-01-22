@@ -1,19 +1,53 @@
 import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, Button } from 'react-bootstrap'
-import { BrowserRouter as Router, Route, Link,Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link,Switch, useHistory } from 'react-router-dom';
 
 import "./form.css";
 import "./LandingPage.css";
 
 export default function LoginForm (props) {
   const [userDetails, setUserDetails] = useState({ email: '', password: '' })
-  const { Login, error } = props
+  const { Login, error } = props;
+  const history = useHistory();
   
   const submitHandler = e => {
     e.preventDefault()
     
     props.login(userDetails)
+    .then((response) => {
+     
+      if (response.status === 200) {
+        if(response.data.surveyId){
+          history.push(`/survey/${response.data.surveyId}`);
+
+        }else {
+          history.push('/');
+
+        }
+
+      } 
+      //else {
+      //   const error = new Error(response.error);
+      //   throw error;
+      // }
+    })
+    .catch(error => {
+      if (error.response) {
+        console.log(error.response);
+
+
+      } else if (error.request) {
+        console.log(error.request);
+
+      } else if (error.message) {
+        console.log(error.message);
+        //do something other than the other two
+
+      }
+      console.error(error);
+      //alert('Error logging in please try again');
+    });
   }
 
   return (
