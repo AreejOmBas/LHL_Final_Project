@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cron= require('node-cron');
-const nodemainler= require('nodemailer');
+const nodemailer= require('nodemailer');
 
 const MailConfig = require('../config/email');
 const gmailTransport = MailConfig.GmailTransport;
