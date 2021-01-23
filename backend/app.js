@@ -7,8 +7,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const db = require('./db');
+
 const { authenticateJWT } = require('./helpers/authHelpers.js');
 
+const accessTokenSecret =  require('./helpers/auth-secret');
+const indexRouter = require('./routes/index'); 
 
 const clientDbHelpers = require('./helpers/clientDbHelpers')(db);
 const sentSurveyDbHelpers = require('./helpers/sentSurveyDbHelpers')(db);
@@ -36,12 +39,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.json());
 
+
  app.use('/', indexRouter(db));
 app.use('/api/', clientRouter(clientDbHelpers));
 app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers));
 app.get('/checkToken', authenticateJWT, function(req, res) {
   res.sendStatus(200);
 });
+
 app.use(function(req, res, next) {
   next(createError(404));
 });

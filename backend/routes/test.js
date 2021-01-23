@@ -12,7 +12,6 @@ module.exports =  db => {
 const {getClientsEmails}= require('../helpers/clientDbHelpers')(db);
 const {addNewSentSurvey}= require('../helpers/sentSurveyDbHelpers')(db);
 const {getClientIdByEmail}= require('../helpers/clientDbHelpers')(db);
-const {getFirstNameById}= require('../helpers/clientDbHelpers')(db);
 
   /* GET home page. */
   router.get('/', function(req, res, next) {
@@ -25,16 +24,17 @@ const {getFirstNameById}= require('../helpers/clientDbHelpers')(db);
   }));
 
   getClientsEmails().then((email) => {
-   console.log(email)
-
+   console.log(email);
     const EmailList= email.map(({ email }) => email);
+
       //cron.schedule('1 * *  * *',()=>{
       //cron.schedule('0 13 1/1  * *',()=>{
        
         EmailList.forEach(email => {
+
           getClientIdByEmail(email).then((clientId) => {
+            //  const EmailList= email.map(({ email }) => email);
             addNewSentSurvey(clientId.id).then((sentSurveyId) => {
-              getFirstNameById(clientId.id).then((name) => {
               //console.log(sentSurveyId)
               //mailOptions.to = email;
              // console.log(Object.values(clientId));
@@ -45,7 +45,6 @@ const {getFirstNameById}= require('../helpers/clientDbHelpers')(db);
                     template: 'index',
                     context: {
                       sentSurveyId: sentSurveyId.id,
-                      first_name : name.first_name
                     } ,
                     
                   }
@@ -60,10 +59,6 @@ const {getFirstNameById}= require('../helpers/clientDbHelpers')(db);
                   res.json(info);
               });  
 
-              });
-
-            
-
             });
             
           });
@@ -77,5 +72,4 @@ const {getFirstNameById}= require('../helpers/clientDbHelpers')(db);
   return router;
 
 };
-
 

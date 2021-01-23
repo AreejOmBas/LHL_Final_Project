@@ -74,26 +74,61 @@ module.exports = (db) => {
 
 
   const getClientsEmails = () => {
-    const query = {
-      text: `SELECT email FROM clients `,
+        const query = {
+          text: `SELECT email FROM clients ` ,
+      
+      }
 
+      return db
+          .query(query)
+          .then(result =>{ 
+            return result.rows
+          //console.log(result.rows)
+        })
+          .catch((err) => err);
+  }
+
+  
+  const getClientIdByEmail = email => {
+
+      const query = {
+        text: `SELECT id FROM clients WHERE email = $1`,
+        values: [email]
+      }
+
+      return db
+        .query(query)
+        .then(result => {
+          return result.rows[0]
+        })
+        .catch((err) => err);
+  }
+
+  const getFirstNameById = clientId => {
+
+    const query = {
+      text: `SELECT first_name FROM clients WHERE id = $1`,
+      values: [clientId]
     }
 
     return db
       .query(query)
       .then(result => {
-        return result.rows
-        //console.log(result.rows)
+
+        return result.rows[0]
       })
       .catch((err) => err);
   }
-
+  
 
   return {
     getClients,
     getClientById,
     getClientByEmail,
     addClient,
-    getClientsEmails
+    getClientsEmails,
+    getClientIdByEmail,
+    getFirstNameById
+
   };
 };

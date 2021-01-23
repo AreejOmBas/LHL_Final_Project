@@ -41,7 +41,7 @@ module.exports = ({
         } else {
         
           const accessToken = jwt.sign( {id:client.email}, secret, {expiresIn: 300});
-         // res.cookie('token', accessToken, { httpOnly: true });
+         res.cookie('token', accessToken, { httpOnly: true });
           res.status(200).json({
             accessToken,
             message: "Log in successful"});
