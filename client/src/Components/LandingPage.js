@@ -22,8 +22,8 @@ export default function LandinPage (props) {
             </Col>
 
             <Col md={1}>
-                      <div class="outer">
-                      <div class="inner"></div>
+                      <div className="outer">
+                      <div className="inner"></div>
                       </div>
             </Col>
 

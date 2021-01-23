@@ -36,4 +36,5 @@ export default function SurveyHandler(props) {
 
       )
   }, []);
+  return null;
 }

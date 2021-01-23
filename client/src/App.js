@@ -12,13 +12,13 @@ import Footer from './Components/Footer';
 import Nav from './Components/Nav';
 
 import LandingPage from './Components/LandingPage';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch,Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import auth from './helpers/auth-helpers'
 import SurveyHandler from './Components/SurveyHandler';
-//import routes from './helpers/routes'
 
+//import routes from './helpers/routes'
 
 // const apiUrl = 'http://localhost:3002';
 // axios.interceptors.request.use(
@@ -37,11 +37,12 @@ import SurveyHandler from './Components/SurveyHandler';
 // );
 
 export default function App() {
+  
 
   const storedJwt = localStorage.getItem('token');
   const [jwt, setJwt] = useState(storedJwt || null);
   const [message, setMessage] = useState();
-
+  const [isAuth, setAuth]= useState(false);
   const adminUser = {
     email: 'admin@admin.com',
     password: 'admin'
@@ -83,6 +84,16 @@ export default function App() {
   //     email: ''
   //   })
   // }
+  const PrivateRoute =({component: Component, isAuth, ...rest}) => {
+    return (
+      <Route
+        {...rest}
+        render={(props) => isAuth === true
+          ? <Component {...props} />
+          : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+      />
+    )
+  }
 
   return (
 
@@ -94,11 +105,11 @@ export default function App() {
         <main className="layout">
           <div className="container">
             <Switch >
-              <Route path="/login" render={(props) => <LoginForm login={login} error={error} {...props} />} />
+              <Route path="/login" render={(props) => <LoginForm  Auth= {setAuth} location={props.location} login={login} error={error} {...props} />} />
               <Route path="/register" render={(props) => <RegisterForm Register={Register} error={error} {...props} />} />
               <Route path="/home-client-profile" component={LandingPage} />
               <Route path="/client-profile" component={LandingPage} />
-              <Route exact path="/survey/:id" component={SurveyHandler} />
+              <PrivateRoute isAuth={isAuth}  component={Survey} path="/survey/:id" exact />
               <Route path="/survey" component={LandingPage} />
               <Route path="/forgot-password" component={ForgetPassword} />
               <Route path="/" component={LandingPage} />

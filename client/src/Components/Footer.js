@@ -25,7 +25,7 @@ export default function Footer() {
           <Col className="social-col" >
             <Row xs={12} md={6} className="social-icons" >
 
-              <a className="icons-link" href="https://www.facebook.com/CedarHouseLCC"><i class="fab fa-facebook-f"></i></a>
+              <a className="icons-link" href="https://www.facebook.com/CedarHouseLCC"><i className="fab fa-facebook-f"></i></a>
               <a className="icons-link" href="https://www.twitter.com/CedarHouseLCC"><i className="fab fa-twitter"></i> </a>
               <a  className="icons-link" href="https://www.instagram.com/cedarhouselifechangecenter"><i className="fab fa-instagram"></i> </a>
               <a className="icons-link" href="https://www.youtube.com/channel/UCfftnknDAYhOBU8UtH6PaCw?view_as=subscriber" ><i className="fab fa-youtube"></i> </a>

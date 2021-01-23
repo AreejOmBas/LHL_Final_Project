@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, Button } from 'react-bootstrap'
-import { BrowserRouter as Router, Route, Link,Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link,Switch, useHistory,useLocation } from 'react-router-dom';
 
 import "./form.css";
 import "./LandingPage.css";
 
 export default function LoginForm (props) {
   const [userDetails, setUserDetails] = useState({ email: '', password: '' })
-  const { Login, error } = props;
-  const history = useHistory();
-  
+  let history = useHistory();
+  let location = useLocation();
+
+  const { Login, error} = props;
+  let { from } = location.state || { from: { pathname: "/" } };
+
   const submitHandler = e => {
     e.preventDefault()
     
@@ -18,15 +21,21 @@ export default function LoginForm (props) {
     .then((response) => {
      
       if (response.status === 200) {
-        if(response.data.surveyId){
-          history.push(`/survey/${response.data.surveyId}`);
+     //   if(response.data.surveyId){
+         // history.push(`/survey/${response.data.surveyId}`);
+         props.Auth(true);
+
+         history.replace(from);
+         console.log(history);
+         console.log(from);
+         console.log(location);
 
         }else {
           history.push('/');
 
         }
 
-      } 
+    //  } 
       //else {
       //   const error = new Error(response.error);
       //   throw error;
