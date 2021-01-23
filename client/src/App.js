@@ -19,31 +19,15 @@ import auth from './helpers/auth-helpers'
 import SurveyHandler from './Components/SurveyHandler';
 import PrivateRoute from './Components/PrivateRoute';
 
-//import routes from './helpers/routes'
-
-// const apiUrl = 'http://localhost:3002';
-// axios.interceptors.request.use(
-//   config => {
-//     const { origin } = new URL(config.url);
-//     const allowedOrigins = [apiUrl];
-//     const token = localStorage.getItem('token');
-//     if (allowedOrigins.includes(origin)) {
-//       config.headers.authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   }
-// );
 
 export default function App() {
   
 
   const storedJwt = localStorage.getItem('token');
-  const [jwt, setJwt] = useState(storedJwt || null);
+  
   const [message, setMessage] = useState();
   const [isAuth, setAuth]= useState(false);
+  
   const adminUser = {
     email: 'admin@admin.com',
     password: 'admin'

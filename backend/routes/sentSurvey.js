@@ -22,7 +22,7 @@ module.exports = ({
     const sentSurveyId = req.params.sentSurveyId;
 
     getSentSurveyByID(sentSurveyId)
-      .then((survey) =>
+      .then( res =>
         getQuestionsBySurveyId(1)
       ).then(questions => res.json({ questions }))
       .catch((err) => res.json({
