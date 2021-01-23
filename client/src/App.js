@@ -17,24 +17,8 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import auth from './helpers/auth-helpers'
 import SurveyHandler from './Components/SurveyHandler';
+import PrivateRoute from './Components/PrivateRoute';
 
-//import routes from './helpers/routes'
-
-// const apiUrl = 'http://localhost:3002';
-// axios.interceptors.request.use(
-//   config => {
-//     const { origin } = new URL(config.url);
-//     const allowedOrigins = [apiUrl];
-//     const token = localStorage.getItem('token');
-//     if (allowedOrigins.includes(origin)) {
-//       config.headers.authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   }
-// );
 
 export default function App() {
   
@@ -79,22 +63,12 @@ export default function App() {
   //   }
   // }
 
-  const Logout = details => {
-   
-    setUser({
-      email: ''
-    })
-  }
-  const PrivateRoute =({component: Component, isAuth, ...rest}) => {
-    return (
-      <Route
-        {...rest}
-        render={(props) => isAuth === true
-          ? <Component {...props} />
-          : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
-      />
-    )
-  }
+  // const Logout = details => {
+  //   console.log('LOGOUT')
+  //   setUser({
+  //     email: ''
+  //   })
+  // }
 
   return (
 

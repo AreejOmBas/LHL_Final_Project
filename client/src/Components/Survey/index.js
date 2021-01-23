@@ -85,7 +85,7 @@ const questions = [
 
 export default function Survey(props) {
 
-  const { id } = useParams();
+  const { SentSurveyId } = useParams();
   const [validated, setValidated] = useState(false);
 
   const [surveyResponse,setSurveyResponse] = useState({});
