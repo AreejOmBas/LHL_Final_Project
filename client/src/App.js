@@ -40,9 +40,10 @@ export default function App() {
   
 
   const storedJwt = localStorage.getItem('token');
-  const [jwt, setJwt] = useState(storedJwt || null);
+  
   const [message, setMessage] = useState();
   const [isAuth, setAuth]= useState(false);
+  
   const adminUser = {
     email: 'admin@admin.com',
     password: 'admin'
@@ -78,12 +79,12 @@ export default function App() {
   //   }
   // }
 
-  // const Logout = details => {
-  //   console.log('LOGOUT')
-  //   setUser({
-  //     email: ''
-  //   })
-  // }
+  const Logout = details => {
+   
+    setUser({
+      email: ''
+    })
+  }
   const PrivateRoute =({component: Component, isAuth, ...rest}) => {
     return (
       <Route

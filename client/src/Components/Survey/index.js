@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useEffect, useState} from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -6,7 +6,7 @@ import RadioQuestion from './RadioInput';
 import RangeInput from './RangeInput';
 import TextInput from './TextInput';
 import { useParams } from 'react-router';
-
+import axios from 'axios';
 
 import './Survey.css';
 
@@ -91,9 +91,22 @@ export default function Survey(props) {
   const [surveyResponse,setSurveyResponse] = useState({});
   const [selectedRange,setSelectedRange] = useState();
   const [showFollowUpQ,setFollowUpQ] = useState(true);
+const token = localStorage.getItem('token');
+  console.log(id);
+
+  useEffect(()=>{
+    console.log('inside survey')
+  console.log(id);
+
+    axios.get(`/survey/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+      .then(response => console.log(response))
+
+  },[]);
+
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+
     event.preventDefault();
     if (form.checkValidity() === false) {
       
@@ -124,9 +137,14 @@ export default function Survey(props) {
 
   }
 
-  return (
+  return ( <p>hello </p>)
 
-    <main className="survey-main">
+
+
+
+}
+
+/* <main className="survey-main">
       <h1>Cedar House survey</h1>
       <h3> Pleas help us to follow your achievements and help you when you need to </h3>
       <Form noValidate validated={validated} 
@@ -145,20 +163,13 @@ export default function Survey(props) {
          handelChange = {handelRadioInput}  />
 
          <RangeInput  id= {questions[5].id} question= {questions[5].question} handelClick = {handelRangeButtonClick} options = {[1,2,3,4,5]}  selected={selectedRange}  />
-         {/* */}
+         {/* */
 
-         <TextInput question={questions[6].question} />
+         {/* <TextInput question={questions[6].question} />
 
          <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
 
         
       </Form>
 
-    </main>
-
-  )
-
-
-
-
-}
+    </main> */ }

@@ -23,7 +23,12 @@ export default function LoginForm (props) {
       if (response.status === 200) {
      //   if(response.data.surveyId){
          // history.push(`/survey/${response.data.surveyId}`);
+         const { accessToken } = response.data;
+         //console.log(response.data);
+
          props.Auth(true);
+         localStorage.setItem('token',accessToken);
+         console.log(localStorage.getItem('token'))
 
          history.replace(from);
          console.log(history);
