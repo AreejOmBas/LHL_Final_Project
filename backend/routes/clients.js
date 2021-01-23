@@ -40,7 +40,7 @@ module.exports = ({
 
         } else {
         
-          const accessToken = jwt.sign( {id:client.email}, secret, {expiresIn: 300});
+          const accessToken = jwt.sign( {id:client.email}, secret, {expiresIn: '12hr'});
          res.cookie('token', accessToken, { httpOnly: true });
           res.status(200).json({
             accessToken,

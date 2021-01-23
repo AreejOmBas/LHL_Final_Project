@@ -11,7 +11,6 @@ const db = require('./db');
 const { authenticateJWT } = require('./helpers/authHelpers.js');
 
 const accessTokenSecret =  require('./helpers/auth-secret');
-const indexRouter = require('./routes/index'); 
 
 const clientDbHelpers = require('./helpers/clientDbHelpers')(db);
 const sentSurveyDbHelpers = require('./helpers/sentSurveyDbHelpers')(db);
