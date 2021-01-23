@@ -49,7 +49,7 @@ module.exports = (db) => {
 
   const addClient = (firstName, lastName, email, phone_num, password,
     treatment_start_date, treatment_end_date) => {
-      
+
     let now = new Date();
     const signup_date = new Date().toDateString('yyyy-mm-dd');
     let nextMonth = now.setMonth(now.getMonth() + 1, 1);
@@ -114,11 +114,13 @@ module.exports = (db) => {
     return db
       .query(query)
       .then(result => {
+
         return result.rows[0]
       })
       .catch((err) => err);
   }
   
+
   return {
     getClients,
     getClientById,
@@ -127,5 +129,6 @@ module.exports = (db) => {
     getClientsEmails,
     getClientIdByEmail,
     getFirstNameById
+
   };
 };

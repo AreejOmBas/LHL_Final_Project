@@ -12,76 +12,103 @@ import Footer from './Components/Footer';
 import Nav from './Components/Nav';
 
 import LandingPage from './Components/LandingPage';
-import { BrowserRouter as Router, Route, Link,Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import axios from 'axios';
+import auth from './helpers/auth-helpers'
+import SurveyHandler from './Components/SurveyHandler';
+//import routes from './helpers/routes'
 
 
+// const apiUrl = 'http://localhost:3002';
+// axios.interceptors.request.use(
+//   config => {
+//     const { origin } = new URL(config.url);
+//     const allowedOrigins = [apiUrl];
+//     const token = localStorage.getItem('token');
+//     if (allowedOrigins.includes(origin)) {
+//       config.headers.authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   error => {
+//     return Promise.reject(error);
+//   }
+// );
+
+export default function App() {
+
+  const storedJwt = localStorage.getItem('token');
+  const [jwt, setJwt] = useState(storedJwt || null);
+  const [message, setMessage] = useState();
+
+  const adminUser = {
+    email: 'admin@admin.com',
+    password: 'admin'
+  }
+
+  const [user, setUser] = useState({ email: '' })
+  const [error, setError] = useState('')
+  const [profile, setProfile] = useState('')
+  const history = useHistory();
+
+  const login = (user) => {
+    const { email, password } = user;
+    return axios
+      .post("http://localhost:3002/api/login", { email, password })
+    
+  };
 
 
-export default function App () {
-      const adminUser = {
-        email: 'admin@admin.com',
-        password: 'admin'
-      }
+  const Register = details => {
+    console.log(details)
+  }
 
-      const [user, setUser] = useState({ email: '' })
-      const [error, setError] = useState('')
-      const [profile, setProfile] = useState('')
+  // const Login = details => {
+  //   console.log(details)
+  //   if (details.email === adminUser.email && details.password === adminUser.password) {
+  //     console.log('logged in')
+  //     setUser({
+  //       email: details.name
+  //     })
+  //   } else {
+  //     console.log('Not match')
+  //     setError('Error')
+  //   }
+  // }
 
+  // const Logout = details => {
+  //   console.log('LOGOUT')
+  //   setUser({
+  //     email: ''
+  //   })
+  // }
 
-      const Register = details => {
-        console.log(details)
-      }
-
-      const Login = details => {
-        console.log(details)
-        if (details.email === adminUser.email && details.password === adminUser.password) {
-          console.log('logged in')
-          setUser({
-            email: details.name
-          })
-        } else {
-          console.log('Not match')
-          setError('Error')
-        }
-      }
-
-      const Logout = details => {
-        console.log('LOGOUT')
-        setUser({
-          email: ''
-        })
-      }
-
-  return ( 
+  return (
 
     <>
-  {/* <Router >
+      <Router >
 
-     {( user.email !== '') ? (<Nav profile="logged"/> ) : (<Nav profile=""/> )}
+        {(user.email !== '') ? (<Nav profile="logged" />) : (<Nav profile="" />)}
 
         <main className="layout">
-                <div className="container">   
-                          <Switch >
-                              <Route path="/login" render={(props) => <LoginForm Login={Login} error={error} {...props} />} />
-                              <Route path="/register" render={(props) => <RegisterForm  Register={Register} error={error} {...props} />} />
-                              <Route path="/home-client-profile" component={LandingPage} />
-                              <Route path="/client-profile" component={LandingPage} />
-                              <Route path="/surveys" component={LandingPage} />
-                              <Route path="/forgot-password" component={ForgetPassword} />
-                              <Route path="/" component={LandingPage} />
+          <div className="container">
+            <Switch >
+              <Route path="/login" render={(props) => <LoginForm login={login} error={error} {...props} />} />
+              <Route path="/register" render={(props) => <RegisterForm Register={Register} error={error} {...props} />} />
+              <Route path="/home-client-profile" component={LandingPage} />
+              <Route path="/client-profile" component={LandingPage} />
+              <Route exact path="/survey/:id" component={SurveyHandler} />
+              <Route path="/survey" component={LandingPage} />
+              <Route path="/forgot-password" component={ForgetPassword} />
+              <Route path="/" component={LandingPage} />
 
-                          </Switch>
-                </div>
+            </Switch>
+          </div>
         </main>
-  </Router> */}
-
-<main className="layout">
-  <Survey/>
-  </main>
-
-    <div className="push" ></div>
-    <Footer/>
+      </Router>
+      <Footer />
     </>
-    );
+  );
 }
 

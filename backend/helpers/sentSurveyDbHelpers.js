@@ -13,14 +13,14 @@ module.exports = (db) => {
         console.log(result.rows)
       })
       .catch((err) => err);
-  }
+  };
 
   const getSentSurveyByID = id => {
 
     const query = {
       text: `SELECT * FROM sent_surveys WHERE id = $1`,
       values: [id]
-    }
+    };
 
     return db
       .query(query)
@@ -44,7 +44,7 @@ module.exports = (db) => {
   };
 
   const getClientIdFromSentSurvey = sentSurveyId => {
-    
+
     const query = {
       text: `SELECT client_id FROM sent_surveys WHERE id = $1`,
       values: [sentSurveyId]
@@ -57,7 +57,7 @@ module.exports = (db) => {
   };
 
   const getQuestionsBySurveyId = (survey_id) => {
-    
+
     const query = {
       text: `SELECT id as question_id, question_text, type as question_type FROM questions WHERE survey_id = $1 `,
       values: [survey_id]
@@ -68,14 +68,11 @@ module.exports = (db) => {
       .query(query)
       .then(result => { console.log(result.rows); return result.rows; })
       .catch((err) => err);
-  }
+  };
 
   const addClientResponse = (sentSurveyId, responses) => {
 
     const respondDate = new Date().toDateString('yyyy-mm-dd'); // the date of sending the survey (today date)
-    var sql = "INSERT INTO Test (name, email, n) VALUES ?";
-
-    const questionIds = Object.keys(responses);
     let values = [];
 
     for (let questionId in responses) {
@@ -84,10 +81,11 @@ module.exports = (db) => {
 
       )
     }
+    
     const query = {
       text: `INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ?`,
       values: values
-    }
+    };
 
     return db
       .query(query)

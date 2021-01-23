@@ -20,9 +20,6 @@ module.exports = ({
             error: err.message
         }));
 });
-  router.get('/logout', (req,res) => {
-
-  })
   /* Client log in and authorize */
   router.post('/login', (req, res) => {
 
@@ -30,22 +27,24 @@ module.exports = ({
     getClientByEmail(email)
       .then((client) => {
 
-        console.log(client);
         // validate client if email not exists or incorrect password return err msg
         if (!(client) || !bcrypt.compareSync(password, client.password) ) {
-          
-          res.json({
-            msg: 'Sorry, email/password not correct'
-          });
+
+         
+            res.status(400).json({
+              accessToken:null,
+              message: "Sorry, email/password not correct"});
+       
+            return;
+         
 
         } else {
-       
-          const accessToken = jwt.sign( {id:client.id}, secret, { expiresIn: 1200 });
-
-          res.json({
-          accessToken,
-            
-          });
+        
+          const accessToken = jwt.sign( {id:client.email}, secret, {expiresIn: 300});
+         res.cookie('token', accessToken, { httpOnly: true });
+          res.status(200).json({
+            accessToken,
+            message: "Log in successful"});
 
         }
       })
@@ -59,8 +58,9 @@ module.exports = ({
       first_name, last_name, email, phone_num, password, treatment_start_date, 
             treatment_end_date
     } = req.body;
+    console.log('inside clients',req.body);
 
-    getClientByEmail(email)
+     getClientByEmail(email)
       .then(client => {
 
         if (client) {

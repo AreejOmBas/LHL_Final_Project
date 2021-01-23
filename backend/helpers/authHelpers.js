@@ -12,38 +12,28 @@ const comparePassword = (hashPassword, password) => {
   return bcrypt.compareSync(password, hashPassword);
 };
 
-const generateToken = (id) => {
-  const token = jwt.sign({
-    userId: id
-  },
-    process.env.SECRET, { expiresIn: '7d' }
-  );
-  return token;
-};
 
-const authenticateJWT = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  if (authHeader) {
-      const token = authHeader.split(' ')[1];
-
-      jwt.verify(token, secret, (err, client) => {
-          if (err) {
-              return res.sendStatus(403);
-          }
-
-          req.client = client;
-          next();
-      });
+const authenticateJWT = function(req, res, next) {
+  const token = req.cookies.token;
+  if (!token) {
+    res.status(401).send('Unauthorized: No token provided');
   } else {
-      res.sendStatus(401);
+    jwt.verify(token, secret, function(err, decoded) {
+      if (err) {
+        res.status(401).send('Unauthorized: Invalid token');
+      } else {
+        req.email = decoded.email;
+        next();
+      }
+    });
   }
-};
-
+}
+;
 
 
 module.exports ={
-    authenticateJWT,
-    hashPassword
+    
+    hashPassword,
+    authenticateJWT
 
   }

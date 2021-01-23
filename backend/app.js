@@ -1,13 +1,22 @@
 const createError = require('http-errors');
 const express = require('express');
+const cors = require('cors')
+
+
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const db = require('./db');
+
+const { authenticateJWT } = require('./helpers/authHelpers.js');
+
 const accessTokenSecret =  require('./helpers/auth-secret');
 const indexRouter = require('./routes/index'); 
+
 const clientDbHelpers = require('./helpers/clientDbHelpers')(db);
 const sentSurveyDbHelpers = require('./helpers/sentSurveyDbHelpers')(db);
+
+const indexRouter = require('./routes/index');
 
 const clientRouter = require('./routes/clients');
 const sentSurveyRouter =  require('./routes/sentSurvey');
@@ -17,7 +26,7 @@ const jwt = require('jsonwebtoken');
 const bodyparser = require('body-parser');
 
 const app = express();
-
+app.use(cors()) ;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -29,9 +38,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.json());
-app.use('/', indexRouter(db));
+
+
+ app.use('/', indexRouter(db));
 app.use('/api/', clientRouter(clientDbHelpers));
-app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers))
+app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers));
+app.get('/checkToken', authenticateJWT, function(req, res) {
+  res.sendStatus(200);
+});
 
 app.use(function(req, res, next) {
   next(createError(404));

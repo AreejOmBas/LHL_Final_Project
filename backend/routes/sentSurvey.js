@@ -6,9 +6,6 @@ const { authenticateJWT } = require('../helpers/authHelpers.js');
 const { secret } = require('../helpers/auth-secret.js');
 
 
-
-
-
 module.exports = ({
   getSentSurvey,
   getSentSurveyByID,
@@ -21,7 +18,7 @@ module.exports = ({
 }) => {
 
   // Route to access a survey sent with specific id
-  router.get('/survey/:sentSurveyId', authenticateJWT, (req, res) => {
+  router.get('/survey/:sentSurveyId', authenticateJWT ,(req, res) => {
     const sentSurveyId = req.params.sentSurveyId;
 
     getSentSurveyByID(sentSurveyId)
@@ -47,4 +44,3 @@ module.exports = ({
 
   return router;
 };
-

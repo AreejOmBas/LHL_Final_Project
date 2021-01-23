@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import RadioQuestion from './RadioInput';
 import RangeInput from './RangeInput';
 import TextInput from './TextInput';
-
+import { useParams } from 'react-router';
 
 
 import './Survey.css';
@@ -85,7 +85,7 @@ const questions = [
 
 export default function Survey(props) {
 
-
+  const { id } = useParams();
   const [validated, setValidated] = useState(false);
 
   const [surveyResponse,setSurveyResponse] = useState({});

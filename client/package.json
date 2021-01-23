@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8002",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -63,5 +62,6 @@
     "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
     "storybook": "^6.1.14"
-  }
+  },
+  "proxy": "http://localhost:3002"
 }
