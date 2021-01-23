@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import auth from './helpers/auth-helpers'
 import SurveyHandler from './Components/SurveyHandler';
+import PrivateRoute from './Components/PrivateRoute';
 
 //import routes from './helpers/routes'
 
@@ -84,16 +85,6 @@ export default function App() {
   //     email: ''
   //   })
   // }
-  const PrivateRoute =({component: Component, isAuth, ...rest}) => {
-    return (
-      <Route
-        {...rest}
-        render={(props) => isAuth === true
-          ? <Component {...props} />
-          : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
-      />
-    )
-  }
 
   return (
 
