@@ -22,7 +22,6 @@ module.exports = ({
 });
   router.get('/logout', (req,res) => {
 
-
   })
   /* Client log in and authorize */
   router.post('/login', (req, res) => {

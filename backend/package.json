@@ -23,6 +23,7 @@
     "morgan": "~1.9.1",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.17",
+    "nodemailer-express-handlebars": "^4.0.0",
     "pg": "^8.3.0",
     "pg-native": "^3.0.0"
   },

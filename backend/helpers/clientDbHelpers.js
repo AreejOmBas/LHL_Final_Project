@@ -104,12 +104,28 @@ module.exports = (db) => {
         .catch((err) => err);
   }
 
+  const getFirstNameById = clientId => {
+
+    const query = {
+      text: `SELECT first_name FROM clients WHERE id = $1`,
+      values: [clientId]
+    }
+
+    return db
+      .query(query)
+      .then(result => {
+        return result.rows[0]
+      })
+      .catch((err) => err);
+  }
+  
   return {
     getClients,
     getClientById,
     getClientByEmail,
     addClient,
     getClientsEmails,
-    getClientIdByEmail
+    getClientIdByEmail,
+    getFirstNameById
   };
 };

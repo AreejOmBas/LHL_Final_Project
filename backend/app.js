@@ -30,8 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.json());
 app.use('/', indexRouter(db));
-app.use('/api', clientRouter(clientDbHelpers));
+app.use('/api/', clientRouter(clientDbHelpers));
 app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers))
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
