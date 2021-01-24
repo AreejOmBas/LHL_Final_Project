@@ -146,36 +146,7 @@ console.log('responses before post',surveyResponse)
      </main>
 
      )
-     
 
 }
 
-/* <main className="survey-main">
-      <h1>Cedar House survey</h1>
-      <h3> Pleas help us to follow your achievements and help you when you need to </h3>
-      <Form noValidate validated={validated} 
-        onSubmit={handleSubmit}>
 
-        <RadioQuestion question={questions[0].question}
-         id={questions[0].id} options={questions[0].answers} 
-         handelChange = {handelRadioInput}  />
-
-         {showFollowUpQ && <RadioQuestion question={questions[7].question}
-         id={questions[7].id} options={questions[7].answers} 
-         handelChange = {handelRadioInput}  />}
-
-        <RadioQuestion question={questions[1].question}
-         id={questions[1].id} options={questions[1].answers} 
-         handelChange = {handelRadioInput}  />
-
-         <RangeInput  id= {questions[5].id} question= {questions[5].question} handelClick = {handelRangeButtonClick} options = {[1,2,3,4,5]}  selected={selectedRange}  />
-         {/* */
-
-{/* <TextInput question={questions[6].question} />
-
-         <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
-
-        
-      </Form>
-
-    </main> */ }
