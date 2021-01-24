@@ -40,7 +40,9 @@ module.exports = ({
     const sentSurveyId = req.params.sentSurveyId;
     const responses = req.body.surveyResponse;
     console.log(responses);
-    addClientResponse(sentSurveyId, responses).then(
+    addClientResponse(sentSurveyId, responses).then(results => 
+      
+     
       res.json({ msg: 'done insert responses' })
     );
   });

@@ -73,7 +73,7 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
-  const addClientResponse = (sentSurveyId, responses) => {
+  const addClientResponse = async (sentSurveyId, responses) => {
 
 
     const pool = new Pool();
@@ -89,20 +89,16 @@ module.exports = (db) => {
 
       )
     }
-    console.log(values);
-    const query = {
-      text: "INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ?",
-      values: values
-    };
+    
     let i = 0;
     for (let value of values) {
-      db.query('INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ($1, $2,$3,$4) RETURNING *',
+      await db.query('INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ($1, $2,$3,$4)',
         [value[0], value[1], value[2], value[3]], (error, results) => {
           if (error) {
             console.log(error)
             throw error
           } else {
-            console.log("Rows " + JSON.stringify(results.rows));
+       
           }
         });
     }
