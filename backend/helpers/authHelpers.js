@@ -14,15 +14,27 @@ const comparePassword = (hashPassword, password) => {
 
 
 const authenticateJWT = function(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) {
+  //const token = req.cookies.jwt;
+  //console.log(token);
+  const headerToken = JSON.stringify(req.headers.authorization)
+  //const headerToken = req.headers['authorization']
+  console.log(headerToken);
+  console.log(req.ig);
+
+  //console.log(JSON.stringify(req.headers));
+  if (!headerToken) {
+  console.log('notoken');
+
     res.status(401).send('Unauthorized: No token provided');
   } else {
-    jwt.verify(token, secret, function(err, decoded) {
+    jwt.verify(headerToken, secret, function(err, decoded) {
       if (err) {
+        
+        console.log('invalid');
+
         res.status(401).send('Unauthorized: Invalid token');
       } else {
-        req.email = decoded.email;
+        req.id = decoded.email;
         next();
       }
     });

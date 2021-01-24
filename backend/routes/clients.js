@@ -40,8 +40,9 @@ module.exports = ({
 
         } else {
         
-          const accessToken = jwt.sign( {id:client.email}, secret, {expiresIn: '12hr'});
-         res.cookie('token', accessToken, { httpOnly: true });
+          const accessToken = jwt.sign( {id:client.id}, secret, {expiresIn: '12hr'});
+          //res.cookie('jwt',accessToken, { httpOnly: true, secure: false, maxAge: 3600000 })
+        
           res.status(200).json({
             accessToken,
             message: "Log in successful"});

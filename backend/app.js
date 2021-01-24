@@ -1,7 +1,8 @@
 const createError = require('http-errors');
 const express = require('express');
-const cors = require('cors')
-
+const cors = require('cors');
+const jsonwebtoken = require('jsonwebtoken');
+const expressjwt = require('express-jwt');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -21,7 +22,7 @@ const clientRouter = require('./routes/clients');
 const sentSurveyRouter =  require('./routes/sentSurvey');
 
 
-const jwt = require('jsonwebtoken');
+
 const bodyparser = require('body-parser');
 
 const app = express();
@@ -37,14 +38,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.json());
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Authorization, Content-Type, Accept");
+  next();
+});
+// app.use(expressjwt({
+//   secret:  accessTokenSecret,
+//    algorithms: ['RS256'] ,
+  
+// }));
 
  app.use('/', indexRouter(db));
 app.use('/api/', clientRouter(clientDbHelpers));
 app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers));
-app.get('/checkToken', authenticateJWT, function(req, res) {
-  res.sendStatus(200);
-});
+
 
 app.use(function(req, res, next) {
   next(createError(404));

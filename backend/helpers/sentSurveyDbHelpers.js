@@ -1,3 +1,6 @@
+const { response } = require("express");
+const { Pool } = require('pg');
+
 module.exports = (db) => {
 
   const getSentSurvey = () => {
@@ -72,25 +75,43 @@ module.exports = (db) => {
 
   const addClientResponse = (sentSurveyId, responses) => {
 
+
+    const pool = new Pool();
+
     const respondDate = new Date().toDateString('yyyy-mm-dd'); // the date of sending the survey (today date)
     let values = [];
+    console.log(responses);
 
     for (let questionId in responses) {
+    
       values.push(
-        [sentSurveyId, questionId, responses.questionId, respondDate],
+        [sentSurveyId, questionId, responses[questionId], respondDate]
 
       )
     }
-    
+    console.log(values);
     const query = {
-      text: `INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ?`,
+      text: "INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ?",
       values: values
     };
-
-    return db
-      .query(query)
-      .then(result => { console.log(result.rows); return result.rows; })
-      .catch((err) => err);
+    let i = 0;
+    for (let value of values) {
+      db.query('INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ($1, $2,$3,$4) RETURNING *',
+        [value[0], value[1], value[2], value[3]], (error, results) => {
+          if (error) {
+            console.log(error)
+            throw error
+          } else {
+            console.log("Rows " + JSON.stringify(results.rows));
+          }
+        });
+    }
+  
+    
+    // return db
+    //   .query(query)
+    //   .then(result => { console.log('response inserted'); return result.rows; })
+    //   .catch((err) => console.log(err));
   }
 
 

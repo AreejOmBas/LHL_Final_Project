@@ -19,59 +19,59 @@ const {getFirstNameById}= require('../helpers/clientDbHelpers')(db);
     res.render('index', { title: 'Express' });
   });
 
-  gmailTransport.use('compile', hbs({
-  viewEngine: 'express-handlebars',
-  viewPath: './views/'
-  }));
+  // gmailTransport.use('compile', hbs({
+  // viewEngine: 'express-handlebars',
+  // viewPath: './views/'
+  // }));
 
-  getClientsEmails().then((email) => {
-   console.log(email)
+  // getClientsEmails().then((email) => {
+  //  console.log(email)
 
-    const EmailList= email.map(({ email }) => email);
-      //cron.schedule('1 * *  * *',()=>{
-      //cron.schedule('0 13 1/1  * *',()=>{
+  //   const EmailList= email.map(({ email }) => email);
+  //     //cron.schedule('1 * *  * *',()=>{
+  //     //cron.schedule('0 13 1/1  * *',()=>{
        
-        EmailList.forEach(email => {
-          getClientIdByEmail(email).then((clientId) => {
-            addNewSentSurvey(clientId.id).then((sentSurveyId) => {
-              getFirstNameById(clientId.id).then((name) => {
-              //console.log(sentSurveyId)
-              //mailOptions.to = email;
-             // console.log(Object.values(clientId));
-                  const mailOptions ={
-                    from :'cedarhouse.lighthouselabs@gmail.com',
-                    to : email,
-                    subject :'Cedar House survey',
-                    template: 'index',
-                    context: {
-                      sentSurveyId: sentSurveyId.id,
-                      first_name : name.first_name
-                    } ,
+  //       EmailList.forEach(email => {
+  //         getClientIdByEmail(email).then((clientId) => {
+  //           addNewSentSurvey(clientId.id).then((sentSurveyId) => {
+  //             getFirstNameById(clientId.id).then((name) => {
+  //             //console.log(sentSurveyId)
+  //             //mailOptions.to = email;
+  //            // console.log(Object.values(clientId));
+  //                 const mailOptions ={
+  //                   from :'cedarhouse.lighthouselabs@gmail.com',
+  //                   to : email,
+  //                   subject :'Cedar House survey',
+  //                   template: 'index',
+  //                   context: {
+  //                     sentSurveyId: sentSurveyId.id,
+  //                     first_name : name.first_name
+  //                   } ,
                     
-                  }
-              //mailOptions.html = 'your client Id is ' + sentSurveyId.id
-                 gmailTransport.sendMail(mailOptions, (error,info) => {
-                  if(error) {
-                    console.log(error);
-                    res.json(error);
-                  }
-                  console.log("email is send");
-                  console.log(info);
-                  res.json(info);
-              });  
+  //                 }
+  //             //mailOptions.html = 'your client Id is ' + sentSurveyId.id
+  //                gmailTransport.sendMail(mailOptions, (error,info) => {
+  //                 if(error) {
+  //                   console.log(error);
+  //                   res.json(error);
+  //                 }
+  //                 console.log("email is send");
+  //                 console.log(info);
+  //                 res.json(info);
+  //             });  
 
-              });
+  //             });
 
             
 
-            });
+  //           });
             
-          });
+  //         });
          
-        });
+  //       });
         
-      //})
-  } );
+  //     //})
+  // } );
 
 
   return router;
