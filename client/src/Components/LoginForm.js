@@ -14,23 +14,27 @@ export default function LoginForm (props) {
   const { Login, error} = props;
   let { from } = location.state || { from: { pathname: "/" } };
 
-  const submitHandler = e => {
+  const submitHandler =  e => {
     e.preventDefault()
     
-    props.login(userDetails)
-    .then((response) => {
+       props.login(userDetails)
+       .then((response) => {
      
       if (response.status === 200) {
      //   if(response.data.surveyId){
          // history.push(`/survey/${response.data.surveyId}`);
+       //  const { accessToken } = response.data;
+         console.log(response.data);
+
+         //props.setAuth(true);
+         //console.log(localStorage.ge'tItem('token))
          const { accessToken } = response.data;
-         //console.log(response.data);
-
-         props.Auth(true);
+         props.setUser(accessToken);
          localStorage.setItem('token',accessToken);
-         console.log(localStorage.getItem('token'))
-
+ 
          history.replace(from);
+       //  props.token(accessToken);
+
          console.log(history);
          console.log(from);
          console.log(location);
@@ -39,7 +43,7 @@ export default function LoginForm (props) {
           history.push('/');
 
         }
-
+       
     //  } 
       //else {
       //   const error = new Error(response.error);

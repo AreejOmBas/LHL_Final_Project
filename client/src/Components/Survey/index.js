@@ -85,25 +85,23 @@ const questions = [
 
 export default function Survey(props) {
 
-  const { SentSurveyId } = useParams();
+  const { id } = useParams();
   const [validated, setValidated] = useState(false);
 
   const [surveyResponse,setSurveyResponse] = useState({});
   const [selectedRange,setSelectedRange] = useState();
   const [showFollowUpQ,setFollowUpQ] = useState(true);
-const token = localStorage.getItem('token');
-  console.log(id);
-
+  const token = localStorage.getItem('token');
+/*
   useEffect(()=>{
     console.log('inside survey')
-  console.log(id);
-
+    console.log("use effect ",token);
     axios.get(`/survey/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
       .then(response => console.log(response))
 
   },[]);
-
-
+*/
+  
   const handleSubmit = (event) => {
     const form = event.currentTarget;
 
@@ -137,39 +135,40 @@ const token = localStorage.getItem('token');
 
   }
 
-  return ( <p>hello </p>)
+  return (
+    <main className="survey-main">
+    <h1>Cedar House survey</h1>
+    <h3> Pleas help us to follow your achievements and help you when you need to </h3>
+    <Form noValidate validated={validated} 
+      onSubmit={handleSubmit}>
+
+      <RadioQuestion question={questions[0].question}
+       id={questions[0].id} options={questions[0].answers} 
+       handelChange = {handelRadioInput}  />
+
+       {showFollowUpQ && <RadioQuestion question={questions[7].question}
+       id={questions[7].id} options={questions[7].answers} 
+       handelChange = {handelRadioInput}  />}
+
+      <RadioQuestion question={questions[1].question}
+       id={questions[1].id} options={questions[1].answers} 
+       handelChange = {handelRadioInput}  />
+
+       <RangeInput  id= {questions[5].id} question= {questions[5].question} handelClick = {handelRangeButtonClick} options = {[1,2,3,4,5]}  selected={selectedRange}  />
+       
+
+        <TextInput question={questions[6].question} />
+
+       <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
+
+      
+    </Form>
+
+  </main>  
+   )
 
 
 
 
 }
 
-/* <main className="survey-main">
-      <h1>Cedar House survey</h1>
-      <h3> Pleas help us to follow your achievements and help you when you need to </h3>
-      <Form noValidate validated={validated} 
-        onSubmit={handleSubmit}>
-
-        <RadioQuestion question={questions[0].question}
-         id={questions[0].id} options={questions[0].answers} 
-         handelChange = {handelRadioInput}  />
-
-         {showFollowUpQ && <RadioQuestion question={questions[7].question}
-         id={questions[7].id} options={questions[7].answers} 
-         handelChange = {handelRadioInput}  />}
-
-        <RadioQuestion question={questions[1].question}
-         id={questions[1].id} options={questions[1].answers} 
-         handelChange = {handelRadioInput}  />
-
-         <RangeInput  id= {questions[5].id} question= {questions[5].question} handelClick = {handelRangeButtonClick} options = {[1,2,3,4,5]}  selected={selectedRange}  />
-         {/* */
-
-         {/* <TextInput question={questions[6].question} />
-
-         <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
-
-        
-      </Form>
-
-    </main> */ }
