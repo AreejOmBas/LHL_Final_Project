@@ -36,6 +36,7 @@ module.exports = (db) => {
     const sendingDate = new Date().toDateString('yyyy-mm-dd'); // the date of sending the survey (today date)
 
     const query = {
+
       text: `INSERT INTO sent_surveys(survey_id,client_id,date) VALUES ($1,$2,$3) RETURNING *`,
       values: [1, clientId, sendingDate]
     }
@@ -110,7 +111,86 @@ module.exports = (db) => {
     //   .catch((err) => console.log(err));
   }
 
+  const seedResponses= async () => {
 
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+    function randomDate(start, end) {
+      var date = new Date(+start + Math.random() * (end - start));
+      // var hour = startHour + Math.random() * (endHour - startHour) | 0;
+      //date.setHours(hour);
+      return date.toISOString().slice(0, 10);
+    }
+    function getRandomArbitrary(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    }
+
+
+    let responsesSeeds = [];
+
+    let yesOrNo = ['Yes', 'No'];
+    let comment = [' ', 'No further comments', 'My stay was grate and helped me to recover and live a good life', 
+                    'I love the survey app'];
+
+    let i, j;
+    for (i = 1; i < 50; i++) {
+      let date = randomDate(new Date(2020, 10, 1), new Date(2020, 11, 31));
+      for (j = 1; j < 7; j++) {
+        if (j === 5) {
+          responsesSeeds.push([i, j, getRandomArbitrary(1, 6), date]);
+
+        }
+        else if (j === 6) {
+          responsesSeeds.push([i, j, comment[getRandomInt(4)], date]);
+
+        }
+        else {
+          responsesSeeds.push([i, j, yesOrNo[getRandomInt(2)], date]);
+        }
+
+      }
+    }
+    let sentSurveySeeds = [];
+  
+ let e =21;
+    for(i = 1 ; i < 50 ; i ++ ){
+      sentSurveySeeds.push([1,e+i]);
+
+    }
+
+     
+    for (let value of sentSurveySeeds) {
+      console.log(value)
+      await db.query('INSERT INTO sent_surveys(survey_id,client_id) VALUES ($1,$2)',
+        [value[0], value[1]], (error, results) => {
+          if (error) {
+            console.log(error)
+            throw error
+          } else {
+       
+          }
+        });
+    }
+    
+    for (let value of responsesSeeds) {
+      console.log(value)
+      await db.query('INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ($1, $2,$3,$4)',
+        [value[0], value[1], value[2], value[3]], (error, results) => {
+          if (error) {
+            console.log(error)
+            throw error
+          } else {
+       
+          }
+        });
+    }
+
+
+
+
+
+  }
 
 
   return {
@@ -119,6 +199,7 @@ module.exports = (db) => {
     addNewSentSurvey,
     getClientIdFromSentSurvey,
     addClientResponse,
-    getQuestionsBySurveyId
+    getQuestionsBySurveyId,
+    seedResponses
   };
 };

@@ -13,7 +13,8 @@ module.exports = ({
   addNewSentSurvey,
   getClientIdFromSentSurvey,
   addClientResponse,
-  getQuestionsBySurveyId
+  getQuestionsBySurveyId,
+  seedResponses
 
 
 }) => {
@@ -46,6 +47,12 @@ module.exports = ({
       res.json({ msg: 'done insert responses' })
     );
   });
+
+  router.get('/generate', (req,res) => {
+
+    seedResponses().then(result => res.json('success')).catch(error => console.log(error))
+
+  })
 
   return router;
 };
