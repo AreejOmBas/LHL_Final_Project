@@ -1,8 +1,9 @@
-import React , {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl'
 
-import RadioQuestion from './RadioInput';
+import RadioInput from './RadioInput';
 import RangeInput from './RangeInput';
 import TextInput from './TextInput';
 import { useParams } from 'react-router';
@@ -11,136 +12,141 @@ import axios from 'axios';
 import './Survey.css';
 
 
-
-
-/* 
--Have you stayed sober since completing treatment? If yes, Well Done!... question #2; If no, are you currently on track or do you need assistance?
--Have you found adequate housing? yes or no 
--Are you currently employed? yes or no
--Have your family dynamics improved since coming home from treatment? yes or no
--How likely are you to refer a friend or loved one to Cedar House for treatment?   (1-5 – 5 being the highest rating)
--A field where they can offer optional comments
-
-
-*/
-
-
-
-const questions = [
-
-
-  {
-    id: 'q1',
-    question: "Have you stayed sober since completing treatment?",
-    type: 'radio',
-    answers:["yes","no"],
-    hasFollowUp: 'q6',
-    isFollowUp:false
-  },
-  {
-    id: 'q2',
-    question: "Have you found adequate housing?",
-    type: 'radio',
-    answers:["yes","no"]
-  },
-  {
-    id: 'q3',
-    question: "Are you currently employed?",
-    type: 'radio',
-    answers:["yes","no"]
-  },
-  {
-    id: 'q4',
-    question: "Have your family dynamics improved since coming home from treatment? ",
-    type: 'radio',
-    answers:["yes","no"]
-  },
-  {
-    id: 'q5',
-    question: "Have you found adequate housing?",
-    type: 'radio',
-    answers:["yes","no"]
-
-  },
-  {
-    id: 'q6',
-    question: "How likely are you to refer a friend or loved one to Cedar House for treatment?",
-    type: 'range',
-    answers:["1","2","3","4","5"]
-
-  },
-  {
-    id: 'q7',
-    question: "Do you have any additional comments to share with us?",
-    type: 'text',
-    
-  },
-  {
-    id:'q8',
-    question:"Are you currently on track or do you need assistance?",
-    answers:['Yes I am on track', 'No I need assistance'],
-    isFollowUp:true
- }
-]
-
 export default function Survey(props) {
 
-  const { SentSurveyId } = useParams();
+  const { id } = useParams();
   const [validated, setValidated] = useState(false);
 
-  const [surveyResponse,setSurveyResponse] = useState({});
-  const [selectedRange,setSelectedRange] = useState();
-  const [showFollowUpQ,setFollowUpQ] = useState(true);
-const token = localStorage.getItem('token');
-  console.log(id);
+  const [surveyResponse, setSurveyResponse] = useState({});
+  const [selectedRange, setSelectedRange] = useState();
+  const [showFollowUpQ, setFollowUpQ] = useState(true);
+  const [questionsData,setQuestionsData] = useState({});
+
+  const [isBusy, setBusy] = useState(true)
 
   useEffect(()=>{
     console.log('inside survey')
-  console.log(id);
+    //console.log("use effect ",token);
+    axios.get(`/survey/${id}`)
+    .then(response => { console.log(response);
+      setQuestionsData(response.data);
+    
+    setBusy(false);
+    }
+    
+    )
+    
+    },[]);
 
-    axios.get(`/survey/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
-      .then(response => console.log(response))
-
-  },[]);
-
+ 
+    
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
-
-    event.preventDefault();
+    
     if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
       
-      console.log("not valid")
-      return;
+    }else {
+console.log('responses before post',surveyResponse)
+      axios.post(`/survey/${id}`,{surveyResponse}).then(()=> console.log('thank you'));
+
     }
     setValidated(true);
+    event.preventDefault();
+
+
+
   };
 
-  const handelRadioInput = (event,id) => {
-   
+  const handelRadioInput = (event, id) => {
+
     const value = event.target.value;
-    console.log(value,event.target)
-
-   
-    setSurveyResponse({...surveyResponse, [id]:value});
-
-    
-
+    console.log(value, event.target)
+    setSurveyResponse({ ...surveyResponse, [id]: value });
   }
-  const handelRangeButtonClick = (event,id) => {
- 
-    
+  const handelRangeButtonClick = (event, id) => {
+
     console.log(event.target.innerText)
-    setSurveyResponse({...surveyResponse, [id]:event.target.innerText})
-    
+    setSurveyResponse({ ...surveyResponse, [id]: event.target.innerText })
+
     setSelectedRange(parseInt(event.target.innerText));
 
   }
 
-  return ( <p>hello </p>)
+  const handelTextInput = (event, id) => {
+    console.log(event.target.value )
+    setSurveyResponse({ ...surveyResponse, [id]: event.target.value })
+
+  }
+
+
+  const parseQData = (data) => {
+
+    const results = data.questions.map(q => {
+
+      if (q.question_type === 'radio') {
+        if (q.question_id != 7) {
+          return (<>
+   
+            <RadioInput key={q.question_id } question={q.question_text}
+              id={q.question_id} options={["Yes", "No"]}
+              handelChange={handelRadioInput}
+            />
+         
+          </>
+          )
+        }
+
+
+      } else if (q.question_type === 'range') {
+        return <>
+          <RangeInput key={q.question_id } question={q.question_text}
+            id={q.question_id} options={[1, 2, 3, 4, 5]}
+            handelClick={handelRangeButtonClick}
+            selected={selectedRange}
+          />
+          <Form.Control.Feedback>
+            Please choose an answer.
+            </Form.Control.Feedback>
+        </>
+      } else if (q.question_type === 'text') {
+        return <TextInput key={q.question_id } id={q.question_id} question={q.question_text} handelChange={handelTextInput} />
+      }
 
 
 
+    })
+    return results;
+
+  }
+
+  return (
+
+
+    <main className="survey-main">
+      <h1>Cedar House survey</h1>
+      <h3> Pleas help us to follow your achievements and help you when you need to </h3>
+    {
+      isBusy ? 
+        (
+           <h4>LOADING</h4>
+        )
+          :
+
+     ( <Form noValidate validated={validated} onSubmit={handleSubmit}>
+   
+       
+            { questionsData && parseQData(questionsData) }
+        
+     <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
+     </Form>)
+}
+     </main>
+
+     )
+     
 
 }
 
@@ -165,7 +171,7 @@ const token = localStorage.getItem('token');
          <RangeInput  id= {questions[5].id} question= {questions[5].question} handelClick = {handelRangeButtonClick} options = {[1,2,3,4,5]}  selected={selectedRange}  />
          {/* */
 
-         {/* <TextInput question={questions[6].question} />
+{/* <TextInput question={questions[6].question} />
 
          <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
 
