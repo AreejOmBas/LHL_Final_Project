@@ -20,6 +20,7 @@ import axios from 'axios';
 import auth from './helpers/auth-helpers'
 import SurveyHandler from './Components/SurveyHandler';
 import PrivateRoute from './Components/PrivateRoute';
+import ConfirmationPage from './Components/ConfirmationPage';
 
 
 export default function App() {
@@ -59,6 +60,7 @@ export default function App() {
   const Register = details => {
     console.log(details)
   }
+  
 
   // const Login = details => {
   //   console.log(details)
@@ -80,7 +82,7 @@ export default function App() {
   //   })
   // }
  
-console.log("from app.js", isAuth);
+
 
 
   return (
@@ -99,7 +101,7 @@ console.log("from app.js", isAuth);
               <Route path="/home-client-profile" component={LandingPage} />
               <Route path="/client-profile" component={LandingPage} />
              <PrivateRoute isAuth={isAuth}  user={user} setAuth= {setAuth} component={Survey} path="/survey/:id"  />
-              <Route path="/survey" component={LandingPage} />
+              <Route path="/confirmation" component={ConfirmationPage}/>
               <Route path="/forgot-password" component={ForgetPassword} />
               <Route path="/" component={Welcome} />
 

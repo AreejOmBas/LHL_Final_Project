@@ -32,14 +32,9 @@ export default function Survey(props) {
       setQuestionsData(response.data);
     
     setBusy(false);
-    }
-    
-    )
+    }).catch(error => console.log(error));
     
     },[]);
-
- 
-    
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -48,13 +43,13 @@ export default function Survey(props) {
       event.preventDefault();
       event.stopPropagation();
       
-    }else {
-console.log('responses before post',surveyResponse)
-      axios.post(`/survey/${id}`,{surveyResponse}).then(()=> console.log('thank you'));
+    } else {
+      console.log('responses before post',surveyResponse)
+      axios.post(`/survey/${id}`,{surveyResponse}).then(()=> console.log('thank you')).catch(error => console.log(error));
 
     }
     setValidated(true);
-    event.preventDefault();
+   
 
 
 
