@@ -9,3 +9,9 @@ article.radio-q {
 label.radio-label {
   margin-left: 25px;
 }
+.hidden-q{
+  display:none;
+}
+#follow-up{
+  order: 2;
+}

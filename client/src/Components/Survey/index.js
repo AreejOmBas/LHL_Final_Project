@@ -19,7 +19,7 @@ export default function Survey(props) {
 
   const [surveyResponse, setSurveyResponse] = useState({});
   const [selectedRange, setSelectedRange] = useState();
-  const [showFollowUpQ, setFollowUpQ] = useState(true);
+  const [showFollowUpQ, setFollowUpQ] = useState(false);
   const [questionsData,setQuestionsData] = useState({});
 
   const [isBusy, setBusy] = useState(true)
@@ -58,7 +58,12 @@ export default function Survey(props) {
   const handelRadioInput = (event, id) => {
 
     const value = event.target.value;
-    console.log(value, event.target)
+    console.log(value, event.target, id)
+    if(id === 1 && value === 'No'){
+      setFollowUpQ(true);
+    } else if(id === 1 && value === 'Yes') {
+      setFollowUpQ(false)
+    }
     setSurveyResponse({ ...surveyResponse, [id]: value });
   }
   const handelRangeButtonClick = (event, id) => {
@@ -86,26 +91,29 @@ export default function Survey(props) {
           return (<>
    
             <RadioInput key={q.question_id } question={q.question_text}
-              id={q.question_id} options={["Yes", "No"]}
+              id={q.question_id} options={["Yes", "No"]} show={true}
               handelChange={handelRadioInput}
             />
          
           </>
           )
+        } else {
+          return (<RadioInput key={q.question_id } question={q.question_text}
+          id={q.question_id}  show={showFollowUpQ} options={["Yes", "No"]}
+          handelChange={handelRadioInput}
+        />)
         }
 
 
       } else if (q.question_type === 'range') {
-        return <>
+        return( <>
           <RangeInput key={q.question_id } question={q.question_text}
             id={q.question_id} options={[1, 2, 3, 4, 5]}
             handelClick={handelRangeButtonClick}
             selected={selectedRange}
           />
-          <Form.Control.Feedback>
-            Please choose an answer.
-            </Form.Control.Feedback>
-        </>
+      
+        </>)
       } else if (q.question_type === 'text') {
         return <TextInput key={q.question_id } id={q.question_id} question={q.question_text} handelChange={handelTextInput} />
       }
@@ -130,7 +138,7 @@ export default function Survey(props) {
         )
           :
 
-     ( <Form noValidate validated={validated} onSubmit={handleSubmit}>
+     ( <Form noValidate validated={validated} onSubmit={handleSubmit} className="survey-form">
    
        
             { questionsData && parseQData(questionsData) }

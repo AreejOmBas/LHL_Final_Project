@@ -6,8 +6,22 @@
   align-items: center;
 
 }
+.survey-form{
+  display:flex;
+  flex-direction: column;
+}
+
 .survey-main form .btn-login{
   width: auto;
   margin-left: auto;
   margin-right: auto;
 }
+
+.survey-form :nth-child(1) { order: 2; }
+.survey-form :nth-child(2) { order: 3; }
+.survey-form :nth-child(3) { order: 3; }
+.survey-form :nth-child(4) { order: 4; }
+.survey-form :nth-child(5) { order: 5; }
+.survey-form :nth-child(6) { order: 6; }
+.survey-form :nth-child(7) { order: 1; }
+.survey-form :nth-child(8) { order: 8; }
