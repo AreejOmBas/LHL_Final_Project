@@ -17,6 +17,7 @@ const clientDbHelpers = require('./helpers/clientDbHelpers')(db);
 const sentSurveyDbHelpers = require('./helpers/sentSurveyDbHelpers')(db);
 
 const indexRouter = require('./routes/index');
+const indexReport = require('./report/reportSender');
 
 const clientRouter = require('./routes/clients');
 const sentSurveyRouter =  require('./routes/sentSurvey');
@@ -48,8 +49,8 @@ app.use((req, res, next) => {
 //    algorithms: ['RS256'] ,
   
 // }));
-
- app.use('/', indexRouter(db));
+app.use('/report', indexReport(db));
+app.use('/', indexRouter(db));
 app.use('/api/', clientRouter(clientDbHelpers));
 app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers));
 

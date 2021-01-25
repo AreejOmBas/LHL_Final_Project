@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+      <link rel="stylesheet" href="template.css">
+
+        <style type="text/css">
+
+                main {
+                  background: #fafafa url(https://jackrugile.com/images/misc/noise-diagonal.png);
+                  color: #444;
+                  font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
+                  text-shadow: 0 1px 0 #fff;
+                }
+
+                strong {
+                  font-weight: bold; 
+                }
+
+               
+
+                table {
+                  background: #f5f5f5;
+                  border-collapse: separate;
+                  box-shadow: inset 0 1px 0 #fff;
+                  font-size: 12px;
+                  line-height: 24px;
+                  margin: 30px auto;
+                  text-align: left;
+                  width: 800px;
+                }	
+
+                th {
+                  background: url(https://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
+                  border-left: 1px solid #555;
+                  border-right: 1px solid #777;
+                  border-top: 1px solid #555;
+                  border-bottom: 1px solid #333;
+                  box-shadow: inset 0 1px 0 #999;
+                  color: #fff;
+                  font-weight: bold;
+                  padding: 10px 15px;
+                  position: relative;
+                  text-shadow: 0 1px 0 #000;	
+                }
+
+                th:after {
+                  background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+                  content: '';
+                  display: block;
+                  height: 25%;
+                  left: 0;
+                  margin: 1px 0 0 0;
+                  position: absolute;
+                  top: 25%;
+                  width: 100%;
+                }
+
+                th:first-child {
+                  border-left: 1px solid #777;	
+                  box-shadow: inset 1px 1px 0 #999;
+                }
+
+                th:last-child {
+                  box-shadow: inset -1px 1px 0 #999;
+                }
+
+                td {
+                  border-right: 1px solid #fff;
+                  border-left: 1px solid #e8e8e8;
+                  border-top: 1px solid #fff;
+                  border-bottom: 1px solid #e8e8e8;
+                  padding: 10px 15px;
+                  position: relative;
+                  transition: all 300ms;
+                }
+
+                td:first-child {
+                  box-shadow: inset 1px 0 0 #fff;
+                }	
+
+                td:last-child {
+                  border-right: 1px solid #e8e8e8;
+                  box-shadow: inset -1px 0 0 #fff;
+                }	
+
+                tr {
+                  background: url(https://jackrugile.com/images/misc/noise-diagonal.png);	
+                }
+
+                tr:nth-child(odd) td {
+                  background: #f1f1f1 url(https://jackrugile.com/images/misc/noise-diagonal.png);	
+                }
+
+                tr:last-of-type td {
+                  box-shadow: inset 0 -1px 0 #fff; 
+                }
+
+                tr:last-of-type td:first-child {
+                  box-shadow: inset 1px -1px 0 #fff;
+                }	
+
+                tr:last-of-type td:last-child {
+                  box-shadow: inset -1px -1px 0 #fff;
+                }	
+
+             
+
+               
+        </style>
+
+    </head>
+    <body>
+      <img src="./logo.png" width="250px"/>
+
+
+        <main> 
+        <table>
+
+         
+
+          <tbody>
+
+            <tr>
+              <td>Number of clients responded YES, family dynamics have improved</td>
+              <td><strong>{{anwsers.0.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients responded NO, family dynamics have improved</td>
+              <td><strong>{{anwsers.1.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{anwsers.2.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{anwsers.3.count}}</strong></td>
+            </tr>					
+            <tr>
+              <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{anwsers.4.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{anwsers.5.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered YES for : Are you currently employed</td>
+              <td><strong>{{anwsers.6.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered NO for : Are you currently employed</td>
+              <td><strong>{{anwsers.7.count}}</strong></td>
+            </tr>
+   
+          </tbody>
+
+        </table>
+        </main>
+         
+          <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    </body>
+</html>
