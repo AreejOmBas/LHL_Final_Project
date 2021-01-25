@@ -40,7 +40,7 @@ module.exports = ({
 
         } else {
         
-          const accessToken = jwt.sign( {id:client.id}, secret, {expiresIn: '12hr'});
+          const accessToken = jwt.sign( {id:client.id}, secret, {expiresIn: '1hr'});
           //res.cookie('jwt',accessToken, { httpOnly: true, secure: false, maxAge: 3600000 })
         
           res.status(200).json({
@@ -54,32 +54,41 @@ module.exports = ({
 
   // Client registration form submit
   router.post('/register', (req, res) => {
-
+     
     const {
-      first_name, last_name, email, phone_num, password, treatment_start_date, 
-            treatment_end_date
-    } = req.body;
+      firstName, lastName, email, phoneNum, password, treatmentStartDate, 
+      treatmentEndDate
+    } = req.body
     console.log('inside clients',req.body);
 
      getClientByEmail(email)
       .then(client => {
 
         if (client) {
-          res.json({
-            msg: 'Sorry, an account with this email already exists'
+          res.status(400).json({
+            message: 'Sorry, an account with this email already exists'
           });
         } else {
           const hashedPassword = bcrypt.hashSync(password, 10);
-          return addClient(first_name, last_name, email, phone_num, hashedPassword, 
-            treatment_start_date, treatment_end_date) ;
-        }
-    })
-      .then(newClient => {res.json(newClient); console.log(newClient)})
-      .catch(err => res.json({
-        error: err.message
-      }));
 
-  })
+          return addClient(firstName, lastName, email, phoneNum, hashedPassword, 
+            treatmentStartDate, treatmentEndDate) 
+            .then(newClient => {
+              res.status(200).json({
+                message: 'Thank you!'
+              });
+              
+              console.log('newClient',newClient)})
+            .catch(err => res.json({
+                  error: err.message
+                  }));
+        }
+      })
+      
+
+  });
+
+  
 
   return router;
 };

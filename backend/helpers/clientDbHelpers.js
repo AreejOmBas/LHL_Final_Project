@@ -48,13 +48,13 @@ module.exports = (db) => {
   }
 
   const addClient = (firstName, lastName, email, phone_num, password,
-    treatment_start_date, treatment_end_date) => {
+    treatmentStartDate, treatmentEndDate) => {
 
     let now = new Date();
     const signup_date = new Date().toDateString('yyyy-mm-dd');
     let nextMonth = now.setMonth(now.getMonth() + 1, 1);
-    const tret_start = new Date(treatment_start_date).toDateString('yyyy-mm-dd');
-    const tret_end = new Date(treatment_end_date).toDateString('yyyy-mm-dd');
+    const tret_start = new Date(treatmentStartDate).toDateString('yyyy-mm-dd');
+    const tret_end = new Date(treatmentEndDate).toDateString('yyyy-mm-dd');
     console.log(tret_start);
     const next_survey_date = new Date(nextMonth).toDateString('yyyy-mm-dd');
     //console.log(firstName, lastName, email, phone_num , password,  treatment_start_date, treatment_end_date, signup_date, next_survey_date
