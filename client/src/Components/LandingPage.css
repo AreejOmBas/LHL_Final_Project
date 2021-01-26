@@ -20,11 +20,13 @@
 .landing-col{
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center;  */
-  /* width: 100%; */
-}
 
+}
+.landing-col > h2 ,.landing-col > p {
+ 
+  align-self: center;
+
+}
 .landing-col> a {
   text-decoration: none;
   color: #1a0303;

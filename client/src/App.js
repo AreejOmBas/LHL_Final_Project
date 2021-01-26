@@ -87,7 +87,8 @@ export default function App() {
               <Route path="/home-client-profile" component={LandingPage} />
               <Route path="/client-profile" component={LandingPage} />
              <PrivateRoute isAuth={isAuth}  token={token} setAuth= {setAuth} component={Survey} path="/survey/:id"  />
-              <Route path="/confirmation" name={user} component={ConfirmationPage}/>
+              <Route path="/confirmation" name={user} render={(props) => <ConfirmationPage {...props}/>}/>
+             {/* <Route path="/confirmation" name={user} render={props} component={ConfirmationPage}/> */}
               <Route path="/forgot-password" component={ForgetPassword} />
               <Route path="/" component={LandingPage} />
 

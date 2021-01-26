@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import MessageDialog from './MessageDialog'
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
-import { useHistory} from 'react-router-dom';
+import { useHistory,Redirect} from 'react-router-dom';
 
 export default function RegistrationForm(props) {
 
@@ -15,7 +15,7 @@ export default function RegistrationForm(props) {
   const { Register, error } = props;
   const [errorMsg, SetErrorMsg] = useState('');
   const [validated, setValidated] = useState(false);
-  const [confirmationMsg, SetConfiramationMsg] = useState();
+ /// const [confirmationMsg, SetConfiramationMsg] = useState('');
   let history = useHistory();
 
 
@@ -32,10 +32,14 @@ export default function RegistrationForm(props) {
       console.log('responses before post', registerInformation)
       axios.post(`/register/`, { ...registerInformation })
         .then((response) => {
-          
-          SetConfiramationMsg(response.data.message)
-
-          history.push('/confirmation', { confirmationMsg })
+          const confirmationMsg = response.data.message;
+    
+          console.log(confirmationMsg);
+       
+         history.push({
+          pathname: '/confirmation', 
+          state: {register: confirmationMsg} 
+        })
         }
         )
         .catch(error => {
@@ -131,6 +135,7 @@ export default function RegistrationForm(props) {
             <DatePicker
               className="form-input form-input-date form-control-lg"
               placeholderText="Treatment Start Date"
+              dateFormat="yyyy/MM/dd"
               selected={registerInformation.treatmentStartDate} onChange={(date) =>
                 setregisterInformation({ ...registerInformation, treatmentStartDate: date })
               }

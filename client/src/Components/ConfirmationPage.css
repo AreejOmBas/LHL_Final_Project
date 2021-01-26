@@ -1,4 +1,4 @@
-.confirmation-msg{
+.confirmation-msg, .confirmation-msg div {
   display: flex;
   flex-direction: column;
   justify-content: center;

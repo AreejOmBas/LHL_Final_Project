@@ -14,7 +14,7 @@ export default function TextInput(props) {
     <Form.Group controlId="comments-area" >
       <Form.Label>{props.question}</Form.Label>
       <Form.Control name={props.id} 
-              onChange={event => props.handelChange(event, props.id)} as="textarea" rows={3} className="text-comment"/>
+             placeholder="Optional" onChange={event => props.handelChange(event, props.id)} as="textarea" rows={3} className="text-comment"/>
     </Form.Group>
     </article>
 
