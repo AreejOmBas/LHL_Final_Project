@@ -1,29 +1,48 @@
-nav .container {
+.navbar  {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #333333;
+  box-shadow:0px 3px 4px #80808094;
+  padding:10px;
 }
 
-nav .nav-links {
+.navbar .nav-links {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.navbar {
-  width: 30%;
+.navbar-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.nav-title {
+/* .navbar-links >span , .navbar-links > {
+
+} */
+.navbar-links > a {
   text-decoration: none;
   color: #1a0303;
   font-size: 25px;
+  margin:15px;
 }
-.nav-title:hover {
+.navbar-links > a:hover {
   color: #1a0303;
   font-weight: 700;
 }
-.nav-title:focus {
+.navbar-links > a:focus {
   text-decoration: none;
   border-bottom: #1a0303 solid 1px;
+}
+
+@media only screen and (max-width: 545px) {
+
+  .navbar {
+ 
+    flex-direction: column;
+    align-items: center;
+  
+  }
+  
 }

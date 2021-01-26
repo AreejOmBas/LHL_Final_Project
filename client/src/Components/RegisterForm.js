@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import MessageDialog from './MessageDialog'
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
-import { useHistory, useLocation, Redirect } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 
 export default function RegistrationForm(props) {
 
@@ -32,6 +32,7 @@ export default function RegistrationForm(props) {
       console.log('responses before post', registerInformation)
       axios.post(`/register/`, { ...registerInformation })
         .then((response) => {
+          
           SetConfiramationMsg(response.data.message)
 
           history.push('/confirmation', { confirmationMsg })

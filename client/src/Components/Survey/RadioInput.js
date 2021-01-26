@@ -18,7 +18,8 @@ export default function RadioInput(props) {
             <input name="q1" required="" type="radio" id={props.id} className="form-check-input"
               name={props.id} value={option}
               onChange={event => props.handelChange(event, props.id)}
-              required />
+             
+               />
             {option}
           </label>
         );

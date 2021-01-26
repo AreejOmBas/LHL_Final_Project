@@ -7,6 +7,7 @@ import RadioInput from './RadioInput';
 import RangeInput from './RangeInput';
 import TextInput from './TextInput';
 import { useParams } from 'react-router';
+import { useHistory,useLocation} from 'react-router-dom';
 import axios from 'axios';
 
 import './Survey.css';
@@ -21,9 +22,12 @@ export default function Survey(props) {
   const [selectedRange, setSelectedRange] = useState();
   const [showFollowUpQ, setFollowUpQ] = useState(false);
   const [questionsData,setQuestionsData] = useState({});
-
+  const [confirmationMsg, SetConfiramationMsg] = useState();
   const [isBusy, setBusy] = useState(true)
 
+  let history = useHistory();
+  
+  let location = useLocation();
   useEffect(()=>{
     console.log('inside survey')
     //console.log("use effect ",token);
@@ -44,12 +48,25 @@ export default function Survey(props) {
       event.stopPropagation();
       
     } else {
+     
       console.log('responses before post',surveyResponse)
-      axios.post(`/survey/${id}`,{surveyResponse}).then(()=> console.log('thank you')).catch(error => console.log(error));
+      axios.post(`/survey/${id}`,{surveyResponse})
+      .then((response)=>  
+      {
+        console.log(response.data.message)
+        SetConfiramationMsg(response.data.message)
+
+        history.push('/confirmation', { confirmationMsg })
+        // console.log(history);
+        // SetConfiramationMsg(response.data.message)
+        // history.push('/confirmation', { confirmationMsg })
+      })
+     .catch(error => console.log(error));
 
     }
     setValidated(true);
-   
+    event.preventDefault();
+  
 
 
 
@@ -93,6 +110,7 @@ export default function Survey(props) {
             <RadioInput key={q.question_id } question={q.question_text}
               id={q.question_id} options={["Yes", "No"]} show={true}
               handelChange={handelRadioInput}
+              required
             />
          
           </>

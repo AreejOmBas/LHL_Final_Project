@@ -33,23 +33,19 @@ export default function LoginForm(props) {
         .then((response) => {
 
           if (response.status === 200) {
-            console.log(response.data);
+           
             const { accessToken } = response.data;
-            props.setUser(accessToken);
             localStorage.setItem('token', accessToken);
-
+            props.token(accessToken);
+            props.setUser(response.data.client);
+            console.log(response.data.client)
             history.replace(from);
           } else {
             history.push('/');
-
-
           }
         })
         .catch(error => {
           if (error.response) {
-            // console.log(error.response);
-
-
             SetErrorMsg(error.response.data.message)
           } else if (error.request) {
             console.log(error.request);
@@ -91,9 +87,7 @@ export default function LoginForm(props) {
               value={userDetails.email}
               required
             />
-            <Form.Control.Feedback>
-              Please choose an answer.
-            </Form.Control.Feedback>
+           
           </Form.Group>
 
           <Form.Group className="form-input-container">
@@ -106,9 +100,7 @@ export default function LoginForm(props) {
               onChange={e => setUserDetails({ ...userDetails, password: e.target.value })}
               value={userDetails.password}
               required />
-            <Form.Control.Feedback>
-              Please choose an answer.
-            </Form.Control.Feedback>
+         
           </Form.Group>
 
           <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Log in</Button>
