@@ -44,7 +44,7 @@ module.exports = ({
     addClientResponse(sentSurveyId, responses).then(results => 
       
      
-      res.json({ msg: 'done insert responses' })
+      res.json({ message: 'done insert responses' })
     );
   });
 

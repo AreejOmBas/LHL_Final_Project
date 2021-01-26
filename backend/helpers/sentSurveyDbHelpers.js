@@ -73,24 +73,35 @@ module.exports = (db) => {
       .then(result => { console.log(result.rows); return result.rows; })
       .catch((err) => err);
   };
+  const getResponseBySurveyId = (sentSurveyId) => {
 
+    const query = {
+      text: `SELECT * FROM responses WHERE sent_survey_id = $1 `,
+      values: [sentSurveyId]
+    }
+
+
+    return db
+      .query(query)
+      .then(result => { console.log(result.rows); return result.rows; })
+      .catch((err) => err);
+
+  }
   const addClientResponse = async (sentSurveyId, responses) => {
 
-
-    const pool = new Pool();
 
     const respondDate = new Date().toDateString('yyyy-mm-dd'); // the date of sending the survey (today date)
     let values = [];
     console.log(responses);
 
     for (let questionId in responses) {
-    
+
       values.push(
         [sentSurveyId, questionId, responses[questionId], respondDate]
 
       )
     }
-    
+
     let i = 0;
     for (let value of values) {
       await db.query('INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ($1, $2,$3,$4)',
@@ -99,19 +110,13 @@ module.exports = (db) => {
             console.log(error)
             throw error
           } else {
-       
+
           }
         });
     }
-  
-    
-    // return db
-    //   .query(query)
-    //   .then(result => { console.log('response inserted'); return result.rows; })
-    //   .catch((err) => console.log(err));
   }
 
-  const seedResponses= async () => {
+  const seedResponses = async () => {
 
     function getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max));
@@ -126,12 +131,11 @@ module.exports = (db) => {
       return Math.floor(Math.random() * (max - min) + min);
     }
 
-
     let responsesSeeds = [];
 
     let yesOrNo = ['Yes', 'No'];
-    let comment = [' ', 'No further comments', 'My stay was grate and helped me to recover and live a good life', 
-                    'I love the survey app'];
+    let comment = [' ', 'No further comments', 'My stay was grate and helped me to recover and live a good life',
+      'I love the survey app'];
 
     let i, j;
     for (i = 1; i < 50; i++) {
@@ -152,14 +156,14 @@ module.exports = (db) => {
       }
     }
     let sentSurveySeeds = [];
-  
- let e =21;
-    for(i = 1 ; i < 50 ; i ++ ){
-      sentSurveySeeds.push([1,e+i]);
+
+    let e = 21;
+    for (i = 1; i < 50; i++) {
+      sentSurveySeeds.push([1, e + i]);
 
     }
 
-     
+
     for (let value of sentSurveySeeds) {
       console.log(value)
       await db.query('INSERT INTO sent_surveys(survey_id,client_id) VALUES ($1,$2)',
@@ -168,11 +172,11 @@ module.exports = (db) => {
             console.log(error)
             throw error
           } else {
-       
+
           }
         });
     }
-    
+
     for (let value of responsesSeeds) {
       console.log(value)
       await db.query('INSERT INTO responses(sent_survey_id,question_id,client_response,date) VALUES ($1, $2,$3,$4)',
@@ -181,7 +185,7 @@ module.exports = (db) => {
             console.log(error)
             throw error
           } else {
-       
+
           }
         });
     }

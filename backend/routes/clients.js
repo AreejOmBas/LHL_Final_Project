@@ -24,6 +24,7 @@ module.exports = ({
   router.post('/login', (req, res) => {
 
     const { email, password } = req.body;
+    console.log(req.body)
     getClientByEmail(email)
       .then((client) => {
 
@@ -45,7 +46,9 @@ module.exports = ({
         
           res.status(200).json({
             accessToken,
-            message: "Log in successful"});
+            message: "Log in successful",
+            client
+          });
 
         }
       })
@@ -75,7 +78,8 @@ module.exports = ({
             treatmentStartDate, treatmentEndDate) 
             .then(newClient => {
               res.status(200).json({
-                message: 'Thank you!'
+                message: 'Thank you!',
+                client: newClient
               });
               
               console.log('newClient',newClient)})
