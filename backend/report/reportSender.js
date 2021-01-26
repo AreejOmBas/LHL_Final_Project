@@ -16,7 +16,7 @@ module.exports  =  db => {
   //app.use(express.static('report/images')); 
   app.use(express.static(__dirname+'/images'));
 
-  const {getClientsInfoForQ1,getYes,getNo,getClientsneedsHelp}= require('../helpers/reportDbHelpers')(db);
+  const {getClientsInfoForQ1,getYes,getNo,getClientsneedsHelp,q5Aanswsers}= require('../helpers/reportDbHelpers')(db);
 
   const {pdfBuilder}= require('./pdfBuilder');
   const {pdfCreator}= require('./pdfCreator');
@@ -59,15 +59,17 @@ module.exports  =  db => {
               };
               const date=previousMonth();
 
-              Promise.all([getYes(),getNo(),getClientsInfoForQ1(),getClientsneedsHelp()]).then((values) => {
+              Promise.all([getYes(),getNo(),getClientsInfoForQ1(),getClientsneedsHelp(),q5Aanswsers()]).then((values) => {
                 let yesAnwsers= values[0];
                 let noAnwsers= values[1];
                 let clientsInfo= values[2];
                 let needsHelp = values[3];
-                console.log(needsHelp);
-                 pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date).then((res) => {
+                let q5Aanswsers = values[4];
+
+                let count =  { count: noAnwsers.length + yesAnwsers.length};
+                 pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,count,q5Aanswsers).then((res) => {
                         //cron.schedule('0 13 1/1  * *',()=>{
-                              gmailTransport.sendMail(mailOptions, (error,info) => {
+                       /*       gmailTransport.sendMail(mailOptions, (error,info) => {
                                 if(error) {
                                   console.log(error);
                                   res.json(error);
@@ -77,7 +79,7 @@ module.exports  =  db => {
                                 res.json(info);
                            
                               });  
-                             
+                       */      
                         //})
 
                 })

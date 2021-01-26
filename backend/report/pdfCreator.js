@@ -1,7 +1,7 @@
 let pdf = require("pdf-creator-node");
 let fs = require('fs');
 
-function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date) {
+function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,count,q5Aanswsers) {
 
         // Read HTML Template
         let html = fs.readFileSync('./report/template.html', 'utf8');
@@ -17,11 +17,13 @@ function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date) {
         let document = {
             html: html,
             data: {
-                 yesAnwsers: yesAnwsers,
-                 noAnwsers : noAnwsers,
-                 clientsInfo : clientsInfo,
-                 needsHelp :needsHelp,
-                 date, date,
+                 yesAnwsers,
+                 noAnwsers ,
+                 clientsInfo ,
+                 needsHelp ,
+                  date,
+                  count,
+                  q5Aanswsers,
                  logo: 'file://' + __dirname + '/images/cedarHouse_logo.png',
               //   dates : dates,
   

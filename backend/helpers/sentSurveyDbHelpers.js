@@ -146,7 +146,16 @@ module.exports = (db) => {
 
         }
         else {
-          responsesSeeds.push([i, j, yesOrNo[getRandomInt(2)], date]);
+          let resQ7=yesOrNo[getRandomInt(2)]; 
+          if (j===1 && resQ7==='No'){
+            responsesSeeds.push([i, j, resQ7, date]);
+            responsesSeeds.push([i, 7, yesOrNo[getRandomInt(2)], date]);
+            
+          }
+          else {
+            responsesSeeds.push([i, j,resQ7, date]);
+          }
+
         }
 
       }

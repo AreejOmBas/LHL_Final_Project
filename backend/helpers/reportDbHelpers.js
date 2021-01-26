@@ -60,11 +60,25 @@ module.exports = (db) => {
       .catch((err) => err);
   }
 
+  const q5Aanswsers = id => {
+    const query = {
+      text: `select client_response , count(*) as count from responses where question_id=5 group by client_response order by client_response`,
+    }
+
+    return db
+      .query(query)
+      .then(result => {
+       return result.rows
+      //  console.log(result.rows[0])
+      })
+      .catch((err) => err);
+  }
   return {
     getClientsInfoForQ1,
     getYes,
     getNo,
-    getClientsneedsHelp
+    getClientsneedsHelp,
+    q5Aanswsers,
 
   };
 };
