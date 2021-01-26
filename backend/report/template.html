@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+      <link rel="stylesheet" href="template.css">
+      <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
+        <style type="text/css">
+
+            body {
+                font:15px arial,sans-serif;
+            }
+            h1 {
+                margin: 0 0 10px 0;
+                padding: 5px;
+                font-size: 24px;
+                background-color: #999;
+                color: #fff;
+            }
+            table {
+                margin: 10px;
+            }
+            th, td {
+                padding: 5px;
+                border: 1px solid #999;
+            }
+            th {
+                background: #ccc;
+            }
+            tr:nth-child(odd) {
+                background: #eee;
+            }
+            td a {
+                color: #000;
+                text-decoration: underline;
+            }  
+                          p {
+                            font-size: smaller;
+                          }
+                          
+                    </style>
+
+                </head>
+    <body>
+
+
+
+        <tr>
+          <td> <img class='logo' src={{{logo}}}  width="250px"/></td>     
+
+        </tr>
+
+        <br></br> 
+        <br></br> 
+        <br></br>  
+  
+
+        <h3>Report {{date.date}}</h3>
+
+
+        <main> 
+        <table>
+          <th>Number of clients who anwsered the survey</th>
+          <th>{{count.count}}</th>
+
+          <tbody>
+            <tr>
+              <td>Number of clients responded YES, family dynamics have improved</td>
+              <td><strong>{{yesAnwsers.0.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients responded NO, family dynamics have improved</td>
+              <td><strong>{{noAnwsers.0.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{yesAnwsers.1.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{noAnwsers.1.count}}</strong></td>
+            </tr>					
+            <tr>
+              <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{yesAnwsers.2.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
+              <td><strong>{{noAnwsers.2.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered YES for : Are you currently employed</td>
+              <td><strong>{{yesAnwsers.3.count}}</strong></td>
+            </tr>
+            <tr>
+              <td>Number of clients anwsered NO for : Are you currently employed</td>
+              <td><strong>{{noAnwsers.3.count}}</strong></td>
+            </tr>
+   
+          </tbody>
+        </table>
+        </main>
+
+        <div style="page-break-after: always;"></div>
+
+        <br></br> 
+        <h3>List of clients who elapsed</h3>
+
+        <table>
+          <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Treatment start date</th>
+                <th>Treatment end date</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {{#each clientsInfo}}
+              <tr>
+                {{#each this}}
+                  <td>{{this}}</td>
+                {{/each}}
+              </tr>
+            {{/each}}
+          </tbody>
+          </table>
+      
+    <div style="page-break-after: always;"></div>
+
+    <br></br> 
+    <h3>List of people who needs help</h3>
+
+    <table>
+      <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Treatment start date</th>
+            <th>Treatment end date</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {{#each needsHelp}}
+          <tr>
+            {{#each this}}
+              <td>{{this}}</td>
+            {{/each}}
+          </tr>
+        {{/each}}
+      </tbody>
+      </table>
+
+          
+    <div style="page-break-after: always;"></div>
+
+    <br></br> 
+    <h3>Clients rating for Cedar House services</h3>
+
+    <table>
+      <thead>
+        <tr>
+            <th>Rating</th>
+            <th>How many clients</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each q5Aanswsers}}
+          <tr>
+            {{#each this}}
+              <td>{{this}}</td>
+            {{/each}}
+          </tr>
+        {{/each}}
+      </tbody>
+      </table>
+         
+         
+          <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    </body>
+</html>
