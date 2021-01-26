@@ -1,7 +1,7 @@
 let pdf = require("pdf-creator-node");
 let fs = require('fs');
 
-function pdfCreator(anwsers) {
+function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date) {
 
         // Read HTML Template
         let html = fs.readFileSync('./report/template.html', 'utf8');
@@ -9,34 +9,27 @@ function pdfCreator(anwsers) {
         let options = {
             format: "A3",
             orientation: "portrait",
-            border: "10mm"
+            border: "10mm",
+            logo: './report/images/logo.png',
         };
 
-      /*  let users = [
-            {
-                name:"Shyam",
-                age:"26" 
-            },
-            {
-                name:"Navjot",
-                age:"26" 
-            },
-            {
-                name:"Vitthal",
-                age:"26" 
-            }
-            
-        ]
-        */
+      
         let document = {
             html: html,
             data: {
-                 anwsers:anwsers
+                 yesAnwsers: yesAnwsers,
+                 noAnwsers : noAnwsers,
+                 clientsInfo : clientsInfo,
+                 needsHelp :needsHelp,
+                 date, date,
+                 logo: 'file://' + __dirname + '/images/cedarHouse_logo.png',
+              //   dates : dates,
+  
             },
-            path: "./report/report1.pdf"
+            path: "./report/report.pdf",
+
         };
 
-        console.log("anwserscc",anwsers);
         return  pdf.create(document, options)
             .then(res => {
                 console.log(res)

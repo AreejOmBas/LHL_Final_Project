@@ -3,11 +3,11 @@
 <html>
     <head>
       <link rel="stylesheet" href="template.css">
-
+      <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
         <style type="text/css">
 
                 main {
-                  background: #fafafa url(https://jackrugile.com/images/misc/noise-diagonal.png);
                   color: #444;
                   font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
                   text-shadow: 0 1px 0 #fff;
@@ -31,13 +31,12 @@
                 }	
 
                 th {
-                  background: url(https://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
                   border-left: 1px solid #555;
                   border-right: 1px solid #777;
                   border-top: 1px solid #555;
                   border-bottom: 1px solid #333;
                   box-shadow: inset 0 1px 0 #999;
-                  color: #fff;
+                  color: rgb(10, 0, 0);
                   font-weight: bold;
                   padding: 10px 15px;
                   position: relative;
@@ -45,7 +44,6 @@
                 }
 
                 th:after {
-                  background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
                   content: '';
                   display: block;
                   height: 25%;
@@ -85,11 +83,9 @@
                 }	
 
                 tr {
-                  background: url(https://jackrugile.com/images/misc/noise-diagonal.png);	
                 }
 
                 tr:nth-child(odd) td {
-                  background: #f1f1f1 url(https://jackrugile.com/images/misc/noise-diagonal.png);	
                 }
 
                 tr:last-of-type td {
@@ -103,61 +99,151 @@
                 tr:last-of-type td:last-child {
                   box-shadow: inset -1px -1px 0 #fff;
                 }	
-
-             
-
-               
+                
+                .logo {
+                  background-image: url("logo.png");
+                }
+             .container{
+              width: 500px;
+              }
+              .logo{
+                float: left; width: 200px;
+              }
+              .title{
+                float: left; width: 300px;
+              }
+              .adress{
+                float: left; width: 200px;
+              }   
+              p {
+                font-size: smaller;
+              }
+              
         </style>
 
     </head>
     <body>
-      <img src="./logo.png" width="250px"/>
 
+
+
+        <tr style="all: unset;">
+          <td style="all: unset;"> <img class='logo' src={{{logo}}}  width="250px"/></td>
+
+
+          <td style="all: unset;"> <h3 class='title'>Report {{date.date}}</h3></td>
+     
+
+          <td style="all: unset;">  <div class="adress">
+                <p>Cedar House</p>
+                <p>18612 Santa Ana Ave</p>
+                <p>Bloomington, CA 92316, us</p>
+                </div>
+          </td>
+
+        </tr>
+
+        <br></br> 
+        <br></br> 
+        <br></br>  
+        <br></br> 
+        <br></br> 
+        <br></br>  
 
         <main> 
         <table>
-
-         
-
           <tbody>
-
             <tr>
               <td>Number of clients responded YES, family dynamics have improved</td>
-              <td><strong>{{anwsers.0.count}}</strong></td>
+              <td><strong>{{yesAnwsers.0.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients responded NO, family dynamics have improved</td>
-              <td><strong>{{anwsers.1.count}}</strong></td>
+              <td><strong>{{noAnwsers.0.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{anwsers.2.count}}</strong></td>
+              <td><strong>{{yesAnwsers.1.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{anwsers.3.count}}</strong></td>
+              <td><strong>{{noAnwsers.1.count}}</strong></td>
             </tr>					
             <tr>
               <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{anwsers.4.count}}</strong></td>
+              <td><strong>{{yesAnwsers.2.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{anwsers.5.count}}</strong></td>
+              <td><strong>{{noAnwsers.2.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered YES for : Are you currently employed</td>
-              <td><strong>{{anwsers.6.count}}</strong></td>
+              <td><strong>{{yesAnwsers.3.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered NO for : Are you currently employed</td>
-              <td><strong>{{anwsers.7.count}}</strong></td>
+              <td><strong>{{noAnwsers.3.count}}</strong></td>
             </tr>
    
           </tbody>
-
         </table>
         </main>
+
+        <div style="page-break-after: always;"></div>
+
+        <br></br> 
+        <h3>List of clients who elapsed</h3>
+
+        <table>
+          <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Treatment start date</th>
+                <th>Treatment end date</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {{#each clientsInfo}}
+              <tr>
+                {{#each this}}
+                  <td>{{this}}</td>
+                {{/each}}
+              </tr>
+            {{/each}}
+          </tbody>
+          </table>
+      
+    <div style="page-break-after: always;"></div>
+
+    <br></br> 
+    <h3>List of people who needs help</h3>
+
+    <table>
+      <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Treatment start date</th>
+            <th>Treatment end date</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {{#each needsHelp}}
+          <tr>
+            {{#each this}}
+              <td>{{this}}</td>
+            {{/each}}
+          </tr>
+        {{/each}}
+      </tbody>
+      </table>
          
           <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -53,6 +53,8 @@ app.use('/report', indexReport(db));
 app.use('/', indexRouter(db));
 app.use('/api/', clientRouter(clientDbHelpers));
 app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers));
+//app.use(express.static('report/images')); 
+app.use(express.static(__dirname+'/report/images'));
 
 
 app.use(function(req, res, next) {

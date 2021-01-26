@@ -2,136 +2,69 @@
 
 module.exports = (db) => {
 
-  const getQ1Yes = id => {
+  const getClientsInfoForQ1 = id => {
     const query = {
-      text: `select count(*) from responses WHERE question_id=1 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='Yes' `,
+      text: `Select first_name as FirstName,last_name,email,phone_num,to_char(treatment_start_date,'DD/MM/YYYY') as start_date,to_char(treatment_end_date,'DD/MM/YYYY')as end_date from clients inner join  sent_surveys on clients.id=sent_surveys.client_id inner join responses on sent_surveys.id=responses.sent_survey_id WHERE question_id=1 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='No' order by first_name`,
     }
 
     return db
       .query(query)
       .then(result => {
-       return result.rows[0]
+       return result.rows
       //  console.log(result.rows[0])
       })
       .catch((err) => err);
   }
 
-
-  const getQ1No = id => {
+  const getYes = id => {
     const query = {
-      text: `select count(*) from responses WHERE question_id=1 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='No' `,
+      text: `SELECT question_id, COUNT(question_id) from responses where client_response='Yes' 
+      and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) group by question_id order by question_id`,
     }
 
     return db
       .query(query)
       .then(result => {
-       return result.rows[0]
+       return result.rows
       //  console.log(result.rows[0])
       })
       .catch((err) => err);
   }
 
-  const getQ2Yes = id => {
+  const getNo = id => {
     const query = {
-      text: `select count(*) from responses WHERE question_id=2 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='Yes' `,
+      text: `SELECT question_id, COUNT(question_id) from responses where client_response='No' 
+      and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) group by question_id order by question_id`,
     }
 
     return db
       .query(query)
       .then(result => {
-       return result.rows[0]
+       return result.rows
       //  console.log(result.rows[0])
       })
       .catch((err) => err);
   }
 
-
-  const getQ2No = id => {
+  const getClientsneedsHelp = id => {
     const query = {
-      text: `select count(*) from responses WHERE question_id=2 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='No' `,
+      text: `Select first_name,last_name,email,phone_num,to_char(treatment_start_date,'DD/MM/YYYY') as start_date,to_char(treatment_end_date,'DD/MM/YYYY') as end_date from clients inner join  sent_surveys on clients.id=sent_surveys.client_id inner join responses on sent_surveys.id=responses.sent_survey_id WHERE question_id=7 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='No' order by first_name`,
     }
 
     return db
       .query(query)
       .then(result => {
-       return result.rows[0]
+       return result.rows
       //  console.log(result.rows[0])
       })
       .catch((err) => err);
   }
-
-
-  const getQ3Yes = id => {
-    const query = {
-      text: `select count(*) from responses WHERE question_id=3 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='Yes' `,
-    }
-
-    return db
-      .query(query)
-      .then(result => {
-       return result.rows[0]
-      //  console.log(result.rows[0])
-      })
-      .catch((err) => err);
-  }
-
-
-  const getQ3No = id => {
-    const query = {
-      text: `select count(*) from responses WHERE question_id=3 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='No' `,
-    }
-
-    return db
-      .query(query)
-      .then(result => {
-       return result.rows[0]
-      //  console.log(result.rows[0])
-      })
-      .catch((err) => err);
-  }
-
-
-  const getQ4Yes = id => {
-    const query = {
-      text: `select count(*) from responses WHERE question_id=4 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='Yes' `,
-    }
-
-    return db
-      .query(query)
-      .then(result => {
-       return result.rows[0]
-      //  console.log(result.rows[0])
-      })
-      .catch((err) => err);
-  }
-
-
-  const getQ4No = id => {
-    const query = {
-      text: `select count(*) from responses WHERE question_id=4 and responses.date >= date_trunc('month', current_date - interval '1 month') and responses.date < date_trunc('month', current_date) and client_response='No' `,
-    }
-
-    return db
-      .query(query)
-      .then(result => {
-       return result.rows[0]
-      //  console.log(result.rows[0])
-      })
-      .catch((err) => err);
-  }
-
-
-
-
 
   return {
-    getQ1Yes,
-    getQ1No,
-    getQ2Yes,
-    getQ2No,
-    getQ3Yes,
-    getQ3No,
-    getQ4Yes,
-    getQ4No,
+    getClientsInfoForQ1,
+    getYes,
+    getNo,
+    getClientsneedsHelp
+
   };
 };
