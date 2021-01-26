@@ -2,11 +2,11 @@ import  React from  "react";
 import { Route, Redirect } from  "react-router-dom";
 
 
-const PrivateRoute =({component: Component, user, ...rest}) => {
+const PrivateRoute =({component: Component, token, ...rest}) => {
   return (
     <Route
       {...rest}
-      render={(props) => user 
+      render={(props) => token 
         ? <Component {...props} />
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />

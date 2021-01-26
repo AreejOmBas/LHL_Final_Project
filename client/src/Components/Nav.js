@@ -7,27 +7,30 @@ export default function Nav(props) {
 
 
   return (
-    ( props.profile !== '') ? (
-        <nav className="nav">
-            <div className="container">
+    ( props.user) ? (
+        <nav className="navbar">
+       
                 <div className="logo">
+                    <a href="https://cedarhouse.org">
                     <img src="cedarHouse_logo.png" width="250px"/>
+                    </a>
                 </div>
-                <div className="navbar">
-                    <Link to="/home-client-profile" className="nav-title">Home</Link>
-                    <Link to="/client-profile" className="nav-title">Profile</Link>
-                    <Link to="/surveys" className="nav-title">Surveys</Link>                
+                <div className="navbar-links">
+                    <span> Logged in as {props.user.email} </span>
+                    <Link to="/" onClick={()=> props.logout()} className="navbar-links">Logout</Link>                
                 </div>
-            
-            </div>
         </nav> )
     :   
-    (<nav className="nav">
-            <div className="container">
+    (<nav className="navbar">
+         
                 <div className="logo">
                     <img src="cedarHouse_logo.png" width="250px"/>
                 </div>
-            </div>
+                <div className="navbar-links">
+                    <Link to='/login' >Login</Link>
+                    <Link to='/register'>Register</Link>
+                </div>
+         
      </nav> )
 )
 

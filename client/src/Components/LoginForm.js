@@ -1,116 +1,119 @@
 import React, { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, Button } from 'react-bootstrap'
-import { BrowserRouter as Router, Route, Link,Switch, useHistory,useLocation } from 'react-router-dom';
-
-import "./form.css";
+import { Router, Route, Link, Switch, useHistory, useLocation, Redirect } from 'react-router-dom';
+import MessageDialog from './MessageDialog';
+import "./Forms.css";
 import "./LandingPage.css";
 
-export default function LoginForm (props) {
+export default function LoginForm(props) {
+  
   const [userDetails, setUserDetails] = useState({ email: '', password: '' })
+  const [errorMsg, SetErrorMsg] = useState('');
+  const [validated, setValidated] = useState(false);
   let history = useHistory();
   let location = useLocation();
 
-  const { Login, error} = props;
+
+  const { Login, error } = props;
   let { from } = location.state || { from: { pathname: "/" } };
 
-  const submitHandler =  e => {
-    e.preventDefault()
-    
-       props.login(userDetails)
-       .then((response) => {
-     
-      if (response.status === 200) {
-     //   if(response.data.surveyId){
-         // history.push(`/survey/${response.data.surveyId}`);
-       //  const { accessToken } = response.data;
-         console.log(response.data);
+  const submitHandler = event => {
+    const form = event.currentTarget;
 
-         //props.setAuth(true);
-         //console.log(localStorage.ge'tItem('token))
-         const { accessToken } = response.data;
-         props.setUser(accessToken);
-         localStorage.setItem('token',accessToken);
- 
-         history.replace(from);
-       //  props.token(accessToken);
+    if (form.checkValidity() === false) {
 
-         console.log(history);
-         console.log(from);
-         console.log(location);
-
-        }else {
-          history.push('/');
-
-        }
-       
-    //  } 
-      //else {
-      //   const error = new Error(response.error);
-      //   throw error;
-      // }
-    })
-    .catch(error => {
-      if (error.response) {
-        console.log(error.response);
+      event.preventDefault();
+      event.stopPropagation();
 
 
-      } else if (error.request) {
-        console.log(error.request);
+    } else {
+      event.preventDefault()
 
-      } else if (error.message) {
-        console.log(error.message);
-        //do something other than the other two
+      props.login(userDetails)
+        .then((response) => {
 
-      }
-      console.error(error);
-      //alert('Error logging in please try again');
-    });
+          if (response.status === 200) {
+           
+            const { accessToken } = response.data;
+            localStorage.setItem('token', accessToken);
+            props.token(accessToken);
+            props.setUser(response.data.client);
+            console.log(response.data.client)
+            history.replace(from);
+          } else {
+            history.push('/');
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            SetErrorMsg(error.response.data.message)
+          } else if (error.request) {
+            console.log(error.request);
+
+
+          } else if (error.message) {
+            console.log(error.message);
+            //do something other than the other two
+
+          }
+          console.error(error);
+          //alert('Error logging in please try again');
+        });
+
+    }
+    setValidated(true)
+
   }
 
   return (
     <center>
-    <Form onSubmit={submitHandler} className="login-form">
-    <div className="form-inner">
-              <h1 className="text-center">Login</h1>
 
-              <h3 className="text-center">Please Log into access the Survey</h3>
-              {(error !== '') ? (<div className="error"> {error} </div>) : ''}
 
-          <Form.Group>
-              <Form.Control
-                  className="form-control form-control-lg"
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email or Phone Number"
-                    onChange={e => setUserDetails({ ...userDetails, email: e.target.value })}
-                    value={userDetails.email}
-              />
+      <Form noValidate validated={validated} onSubmit={submitHandler} className="login-form">
+        <div className="form-header">
+          <h1 className="text-center">Login</h1>
+
+          <h3 className="text-center">Please Log in to access the Survey</h3>
+          {errorMsg && <MessageDialog msg={errorMsg} />}
+
+          <Form.Group className="form-input-container">
+            <Form.Control
+              className="form-input form-control-lg"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email or Phone Number"
+              onChange={e => setUserDetails({ ...userDetails, email: e.target.value })}
+              value={userDetails.email}
+              required
+            />
+           
           </Form.Group>
 
-          <Form.Group>
-              <Form.Control
-              className="form-control form-control-lg"
+          <Form.Group className="form-input-container">
+            <Form.Control
+              className="form-input form-control-lg "
               type="password"
               name="password"
               id="password"
               placeholder="Password"
               onChange={e => setUserDetails({ ...userDetails, password: e.target.value })}
-              value={userDetails.password}/>
+              value={userDetails.password}
+              required />
+         
           </Form.Group>
 
           <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Log in</Button>
           <div className="form-bottom">
-              <Link to="/register" className="link-text">Not a member?</Link>                
-              <Link to="/forgot-password" className="link-text">Forgot Password?</Link>                
+            <Link to="/register" className="link-text">Not a member?</Link>
+            <Link to="/forgot-password" className="link-text">Forgot Password?</Link>
 
           </div>
 
-    </div>
-    
-  </Form>
-  </center>
+        </div>
+
+      </Form>
+    </center>
   )
 }
 

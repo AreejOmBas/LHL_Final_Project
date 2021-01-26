@@ -9,16 +9,15 @@ export default function LandinPage (props) {
  
   return (
 
-    <Container>
-        <Row>
-            <Col>
-                      <div className="">
-                      <h2 className="">New Client</h2>  
+    <Container className="landing-page">
+        <Row className="landing-row">
+            <Col className="landing-col first-col">
+            <h2 className="">Registered Client</h2>  
                       <p >Have an accout ? </p>  
                       <p >Sign in here</p>  
                       <Link to="/login"> <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Log in</Button> </Link>
 
-                    </div>
+                
             </Col>
 
             <Col md={1}>
@@ -27,14 +26,14 @@ export default function LandinPage (props) {
                       </div>
             </Col>
 
-            <Col>     
-                    <div className="">
-                    <h2 className="">Registered Client</h2>  
+            <Col className="landing-col">     
+            <h2 className="">New Client</h2>  
+                   
                       <p >New to Cedar House ?</p>  
                       <p >Create an account to get started today</p>  
                       <Link to="/register"> <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Sing Up</Button> </Link>
 
-                    </div>
+                
             </Col>
 
 

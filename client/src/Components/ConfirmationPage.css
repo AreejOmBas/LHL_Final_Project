@@ -1,0 +1,9 @@
+.confirmation-msg, .confirmation-msg div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  font-weight: 600;
+}
