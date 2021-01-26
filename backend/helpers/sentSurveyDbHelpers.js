@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { Pool } = require('pg');
+
 
 module.exports = (db) => {
 
@@ -8,7 +8,6 @@ module.exports = (db) => {
       text: `SELECT * FROM sent_surveys `,
 
     }
-
     return db
       .query(query)
       .then(result => {
@@ -115,7 +114,7 @@ module.exports = (db) => {
         });
     }
   }
-
+// Generates responses for test purposes
   const seedResponses = async () => {
 
     function getRandomInt(max) {
@@ -150,7 +149,18 @@ module.exports = (db) => {
 
         }
         else {
-          responsesSeeds.push([i, j, yesOrNo[getRandomInt(2)], date]);
+          let resQ7 = yesOrNo[getRandomInt(2)];
+   
+          if (j === 1 && resQ7 === 'No') {
+      
+            responsesSeeds.push([i, j, resQ7, date]);
+            responsesSeeds.push([i, 7, yesOrNo[getRandomInt(2)], date]);
+
+          }
+          else {
+            responsesSeeds.push([i, j, resQ7, date]);
+          }
+          
         }
 
       }
