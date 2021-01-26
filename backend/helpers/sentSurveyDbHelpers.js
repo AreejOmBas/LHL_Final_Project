@@ -122,8 +122,7 @@ module.exports = (db) => {
     }
     function randomDate(start, end) {
       var date = new Date(+start + Math.random() * (end - start));
-      // var hour = startHour + Math.random() * (endHour - startHour) | 0;
-      //date.setHours(hour);
+  
       return date.toISOString().slice(0, 10);
     }
     function getRandomArbitrary(min, max) {
@@ -206,6 +205,8 @@ module.exports = (db) => {
 
   }
 
+  
+
 
   return {
     getSentSurvey,
@@ -216,4 +217,4 @@ module.exports = (db) => {
     getQuestionsBySurveyId,
     seedResponses
   };
-};
+}
