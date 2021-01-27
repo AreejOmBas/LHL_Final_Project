@@ -9,7 +9,9 @@ module.exports.GmailTransport = nodemailer.createTransport({
     port: environment.GMAIL_SERVICE_PORT,
     auth: {
         user: environment.GMAIL_USER_NAME,
-        pass: environment.GMAIL_USER_PASSWORD
-    }
+        pass: environment.GMAIL_USER_PASSWORD,
+       
+    },
+    pool: true
 });
 

@@ -71,7 +71,20 @@ module.exports = (db) => {
       .catch(err => err);
   };
 
+const getClientsInfo = () => {
+  const query = {
+    text: `SELECT first_name, email, id FROM clients ` ,
 
+}
+
+return db
+    .query(query)
+    .then(result =>{ 
+      return result.rows
+    //console.log(result.rows)
+  })
+    .catch((err) => err);
+}
 
   const getClientsEmails = () => {
         const query = {
@@ -128,7 +141,8 @@ module.exports = (db) => {
     addClient,
     getClientsEmails,
     getClientIdByEmail,
-    getFirstNameById
+    getFirstNameById,
+    getClientsInfo
 
   };
 };
