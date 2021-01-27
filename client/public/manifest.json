@@ -3,7 +3,7 @@
   "name": "Cedar house Survey",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "cedarHouse_logo_icon.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
@@ -13,7 +13,7 @@
       "sizes": "192x93"
     },
     {
-      "src": "logo512.png",
+      "src": "cedarHouse_logo_icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
