@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Form, Input, InputGroup, InputGroupAddon } from "reactstrap";
 
+/* Component to reset password */
+
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
 
@@ -19,7 +21,7 @@ const ResetPassword = () => {
   return (
 
     <Form >
-    
+    <p>Coming Soon</p>
   </Form>
   );
 };
