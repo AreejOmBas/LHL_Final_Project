@@ -1,3 +1,5 @@
+/* CSS Styles for Footer component */
+
 .footer {
   flex-shrink: 0;
  
@@ -72,22 +74,22 @@
 
 @media only screen and (max-width: 926px) {
 
- .footer .footer-content-row{
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
- }
- .footer .links{
-   max-width: 100%;
-   justify-content: center;
+  .footer .footer-content-row{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .footer .links{
+     max-width: 100%;
+    justify-content: center;
 
- }
- .footer .social-col{
-  max-width: 100%;
-}
-.footer .social-icons{
-  justify-content: center;
-}
+  }
+  .footer .social-col{
+    max-width: 100%;
+  }
+  .footer .social-icons{
+    justify-content: center;
+  }
 }
 
 @media only screen and (max-width: 454px) {
@@ -104,4 +106,4 @@
   align-items: center;
     justify-content: center;
  }
- }
+}

@@ -1,11 +1,11 @@
-.survey-main{
+/* CSS Styles for main Survey Component (Survey/index.js) */
 
+.survey-main{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top:50px;
-
 }
 .survey-form{
   display:flex;
