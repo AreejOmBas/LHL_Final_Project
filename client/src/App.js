@@ -1,94 +1,70 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
+// required css
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
+//Custom components
 import Survey from './Components/Survey';
 import LoginForm from './Components/LoginForm';
 import RegisterForm from './Components/RegisterForm';
 import ForgetPassword from './Components/ForgetPassword';
-
-import Welcome from './Components/Welcome';
-
 import Footer from './Components/Footer';
 import Nav from './Components/Nav';
-
 import LandingPage from './Components/LandingPage';
-import { BrowserRouter as Router, Route, Link, Switch,Redirect } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
-import axios from 'axios';
-import auth from './helpers/auth-helpers'
-import SurveyHandler from './Components/SurveyHandler';
 import PrivateRoute from './Components/PrivateRoute';
 import ConfirmationPage from './Components/ConfirmationPage';
 
-
+// Main Component to  make the application
 export default function App() {
-  
 
-  
-  const [token,setToken]= useState(localStorage.getItem("token") || null);
-  const [message, setMessage] = useState();
-  const [isAuth, setAuth]= useState(false);
-  
-  const adminUser = {
-    email: 'admin@admin.com',
-    password: 'admin'
-  }
+  const [token, setToken] = useState(localStorage.getItem("token") || null); //JWT Token
 
-  const [user, setUser] =  useState();
-  
-  const [error, setError] = useState()
-/*   const [profile, setProfile] = useState('') */
+  const [user, setUser] = useState(localStorage.getItem("email") || null);//user email
+  const [error, setError] = useState();
+
   const history = useHistory();
 
-  const login =  (userData) => {
-    const { email, password } = userData;
-    return  axios
-      .post("http://localhost:3002/api/login", { email, password })
-    
-  };
-  
 
-  useEffect(() =>{
-    const token= localStorage.getItem("token");
-    if (token){
-     // const foundUser = JSON.parse(token);
+  const login = (userData) => {
+    const { email, password } = userData;
+    return axios
+      .post("http://localhost:3002/api/login", { email, password })
+  };
+
+  const logout = () => {
+    localStorage.setItem("token", "");
+    localStorage.setItem("email", "");
+    setUser(null);
+  }
+
+  //to get the token if valid
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
       setToken(token);
     }
 
-  },[]);
-
-  const Register = details => {
-    console.log(details)
-  }
-  
-  const logout= () =>{  
-    localStorage.setItem('token','');
-   setUser(null)
-  }
- 
+  }, []);
 
 
 
   return (
-
     <>
       <Router >
 
-        {(user) ? (<Nav profile="logged" user={user} logout={logout}/>) : (<Nav profile="" />)}
-        
+        {(user) ? (<Nav profile="logged" user={user} logout={logout} />) : (<Nav profile="" />)}
 
         <main className="layout">
           <div className="container">
             <Switch >
-              <Route path="/login" render={(props) => <LoginForm  setUser={setUser} token={setToken} setAuth= {setAuth} location={props.location} login={login} error={error} {...props} />} />
-              <Route path="/register" render={(props) => <RegisterForm Register={Register} error={error} {...props} />} />
-              <Route path="/home-client-profile" component={LandingPage} />
-              <Route path="/client-profile" component={LandingPage} />
-             <PrivateRoute isAuth={isAuth}  token={token} setAuth= {setAuth} component={Survey} path="/survey/:id"  />
-              <Route path="/confirmation" name={user} render={(props) => <ConfirmationPage {...props}/>}/>
-             {/* <Route path="/confirmation" name={user} render={props} component={ConfirmationPage}/> */}
+
+              <Route path="/login" render={(props) => <LoginForm setUser={setUser} token={setToken} location={props.location} login={login} error={error} {...props} />} />
+              <Route path="/register" render={(props) => <RegisterForm error={error} {...props} />} />
+              <PrivateRoute token={token} component={Survey} path="/survey/:id" />
+              <Route path="/confirmation" name={user} logout={logout} render={(props) => <ConfirmationPage logout={logout} {...props} />} />
               <Route path="/forgot-password" component={ForgetPassword} />
               <Route path="/" component={LandingPage} />
 
@@ -99,6 +75,6 @@ export default function App() {
       <Footer />
     </>
   );
-          
-  }
+
+}
 
