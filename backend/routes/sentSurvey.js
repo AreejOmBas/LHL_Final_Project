@@ -1,58 +1,64 @@
+/* 
+  all routes related to the survey (get and post)
+*/
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const { authenticateJWT } = require('../helpers/authHelpers.js');
-
-const { secret } = require('../helpers/auth-secret.js');
-const { response } = require('express');
 
 
 module.exports = ({
-  getSentSurvey,
-  getSentSurveyByID,
-  addNewSentSurvey,
   getClientIdFromSentSurvey,
   addClientResponse,
   getQuestionsBySurveyId,
-  seedResponses
-
-
+  getResponseBySurveyId,
 }) => {
 
-  // Route to access a survey sent with specific id
-  router.get('/survey/:sentSurveyId',(req, res) => {
+  // Route to access a survey sent with specific id only for authenticated users
+  router.get('/survey/:sentSurveyId', authenticateJWT, (req, res) => {
     const sentSurveyId = req.params.sentSurveyId;
-    
-    console.log("inside survey")
-    //const token = req.headers.
-    getSentSurveyByID(sentSurveyId)
-      .then( res =>
-        getQuestionsBySurveyId(1)
-      ).then(questions => res.json({ questions }))
-      .catch((err) => res.json({
-        error: err.message
-      }));
+
+    getClientIdFromSentSurvey(sentSurveyId).then(result => {
+
+      if (result.client_id !== req.id) {
+        res.status(401).json({ message: "Sorry, This survey does not belong to you" });
+        return;
+      } else {
+        // retrive the questions and responses if any
+        Promise.all([getQuestionsBySurveyId(1), getResponseBySurveyId(sentSurveyId)])
+          .then(values => {
+            res.json({
+              questions: values[0],
+              savedResponses: values[1]
+            })
+          })
+          .catch((error) => res.json({
+            message: error.message
+          }));
+      }
+
+    })
   });
 
   // Post route to save client response to specific sent survey
   router.post('/survey/:sentSurveyId', (req, res) => {
 
     /* response format : {question_id:value,....} */
+
     const sentSurveyId = req.params.sentSurveyId;
     const responses = req.body.surveyResponse;
-    console.log(responses);
-    addClientResponse(sentSurveyId, responses).then(results => 
-      
-     
-      res.json({ message: 'done insert responses' })
+
+    addClientResponse(sentSurveyId, responses).then(results =>
+
+      res.status(200).json({ message: 'done insert responses' })
     );
   });
 
-  router.get('/generate', (req,res) => {
-
-    seedResponses().then(result => res.json('success')).catch(error => console.log(error))
-
-  })
-
+  // Only to be used for Testing purposes
+  /*   router.get('/generate', (req, res) => {
+  
+      seedResponses().then(result => res.json('success')).catch(error => res.send(error))
+  
+    })
+   */
   return router;
 };
