@@ -18,7 +18,6 @@ CREATE TABLE clients(
   next_survey_date DATE 
 );
 
-
 CREATE TABLE surveys(
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(255) NOT NULL,

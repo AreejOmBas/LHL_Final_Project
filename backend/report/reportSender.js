@@ -26,28 +26,28 @@ module.exports  =  db => {
   });
    
  
-              // const mailOptions ={
-              //   from :'cedarhouse.lighthouselabs@gmail.com',
-              //   to : "areej.ombas@gmail.com",
-              //   subject :'Survey Report',
-              //   html: ' <h5>Hello</h5> <p>Please find attached the monthly report</p>',   
+              const mailOptions ={
+                from :'cedarhouse.lighthouselabs@gmail.com',
+                to : "areej.ombas@gmail.com",
+                subject :'Survey Report',
+                html: ' <h5>Hello</h5> <p>Please find attached the monthly report</p>',   
 
-              //   attachments: [{
-              //     filename: 'report.pdf',
-              //     path: path.join(__dirname, './report.pdf'), 
-              //     contentType: 'application/pdf'
-              //   }],
+                attachments: [{
+                  filename: 'report.pdf',
+                  path: path.join(__dirname, './report.pdf'), 
+                  contentType: 'application/pdf'
+                }],
 
-              //   function(err, info) {
-              //     if (err) {
-              //       console.error(err);
-              //       res.send(err);
-              //     } else {
-              //       console.log(info);
-              //       res.send(info);
-              //     }
-              //   }                          
-              // }        
+                function(err, info) {
+                  if (err) {
+                    console.error(err);
+                    res.send(err);
+                  } else {
+                    console.log(info);
+                    res.send(info);
+                  }
+                }                          
+              }        
               
               const previousMonth =() => {
                 const current = new Date();
@@ -68,7 +68,7 @@ module.exports  =  db => {
                
               
                  pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,q5Aanswsers).then((res) => {
-                        //cron.schedule('0 13 1/1  * *',()=>{
+                        cron.schedule('0 13 1/1  * *',()=>{
                             gmailTransport.sendMail(mailOptions, (error,info) => {
                                 if(error) {
                                   console.log(error);
@@ -80,7 +80,7 @@ module.exports  =  db => {
                            
                               });  
                        
-                        //})
+                        })
 
                 })
               });

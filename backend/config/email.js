@@ -15,3 +15,4 @@ module.exports.GmailTransport = nodemailer.createTransport({
     pool: true
 });
 
+/* Configration file for the email service */
