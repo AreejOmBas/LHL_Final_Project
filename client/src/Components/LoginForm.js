@@ -1,63 +1,58 @@
-import React, { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
-import { Router, Route, Link, Switch, useHistory, useLocation, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import {  BrowserRouter as Router, Route, Link, Switch,Redirect, useHistory, useLocation } from 'react-router-dom';
 import MessageDialog from './MessageDialog';
+
+
+
 import "./Forms.css";
-import "./LandingPage.css";
+
+/* Component for the Login page */
 
 export default function LoginForm(props) {
-  
-  const [userDetails, setUserDetails] = useState({ email: '', password: '' })
-  const [errorMsg, SetErrorMsg] = useState('');
-  const [validated, setValidated] = useState(false);
-  let history = useHistory();
-  let location = useLocation();
+
+  const [userDetails, setUserDetails] = useState({ email: '', password: '' }); //State to store user's input
+  const [errorMsg, SetErrorMsg] = useState(''); // To store error messages
+  const [validated, setValidated] = useState(false); //check for form validation
+
+  let history = useHistory(); // to save the history of the path 
+  let location = useLocation(); // to get location of url
 
 
-  const { Login, error } = props;
-  let { from } = location.state || { from: { pathname: "/" } };
 
-  const submitHandler = event => {
+  let { from } = location.state || { from: { pathname: "/" } }; // used to redirect if coming from email link and not logged in 
+
+  // Login Form submission
+  const handelSubmit = event => {
     const form = event.currentTarget;
 
     if (form.checkValidity() === false) {
-
       event.preventDefault();
       event.stopPropagation();
 
-
     } else {
-      event.preventDefault()
-
+      event.preventDefault();
       props.login(userDetails)
         .then((response) => {
 
           if (response.status === 200) {
-           
+
             const { accessToken } = response.data;
             localStorage.setItem('token', accessToken);
+            localStorage.setItem('email',response.data.email)
             props.token(accessToken);
-            props.setUser(response.data.client);
-            console.log(response.data.client)
+            props.setUser(response.data.email);
+           
             history.replace(from);
+
           } else {
             history.push('/');
           }
         })
         .catch(error => {
           if (error.response) {
-            SetErrorMsg(error.response.data.message)
-          } else if (error.request) {
-            console.log(error.request);
-
-
-          } else if (error.message) {
-            console.log(error.message);
-            //do something other than the other two
-
+            SetErrorMsg(error.response.data.message);
           }
-          console.error(error);
-          //alert('Error logging in please try again');
         });
 
     }
@@ -68,8 +63,7 @@ export default function LoginForm(props) {
   return (
     <center>
 
-
-      <Form noValidate validated={validated} onSubmit={submitHandler} className="login-form">
+      <Form noValidate validated={validated} onSubmit={handelSubmit} className="login-form">
         <div className="form-header">
           <h1 className="text-center">Login</h1>
 
@@ -87,7 +81,7 @@ export default function LoginForm(props) {
               value={userDetails.email}
               required
             />
-           
+
           </Form.Group>
 
           <Form.Group className="form-input-container">
@@ -100,7 +94,7 @@ export default function LoginForm(props) {
               onChange={e => setUserDetails({ ...userDetails, password: e.target.value })}
               value={userDetails.password}
               required />
-         
+
           </Form.Group>
 
           <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Log in</Button>
