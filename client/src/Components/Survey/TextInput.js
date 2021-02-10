@@ -1,8 +1,8 @@
 import React from 'react';
-import './RadioInput.css'
 import Form from 'react-bootstrap/Form';
 import './TextInput.css';
 
+/* Component for questions of type Text area */
 
 export default function TextInput(props) {
 

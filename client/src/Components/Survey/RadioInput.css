@@ -1,3 +1,4 @@
+/* CSS Styles for RadioInput component */
 article.radio-q {
   margin: 15px 0 15px 0;
   display: flex;
@@ -9,15 +10,17 @@ article.radio-q {
 label.radio-label {
   margin-left: 25px;
 }
+
 .hidden-q{
   display:none;
 }
+
 #follow-up{
   order: 2;
 }
-.radio-q::after{
+
+/* .radio-q::after{
   display: none;
   content: " Required";
-    color: red;
-  
-}
+  color: red;
+} */

@@ -1,14 +1,13 @@
+/* CSS Styles for TextInput component */
+
 .comments-txtarea{
   margin-top:25px;
   margin-bottom: 75px;
   padding:10px;
 }
 .text-comment{
-
-width:95%;
-border:1px solid #735742ff;
-
-
+  width:95%;
+  border:1px solid #735742ff;
 }
 
 .text-comment:focus{

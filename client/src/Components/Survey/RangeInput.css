@@ -1,14 +1,12 @@
-.range-q {
+/*CSS Styles for RangeInput */
 
+.range-q {
   margin: 15px 0 15px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: #f3f0ed; */
   padding: 10px;
-  /* box-shadow: 2px 2px 3px grey; */
-
 }
 .range-group-btn{
   width:100%;
@@ -29,7 +27,7 @@
   background-color: #b1a096;;
 }
 
- .selected,.selected:focus ,.selected:not(:disabled):not(.disabled):active{
+ .selected,.selected:focus ,.selected:not(:disabled):not(.disabled):active,.selected:disabled{
 
   border: 1px solid #735742ff;
   box-shadow: 2px 3px 2px 0 #b1a096;
@@ -37,6 +35,7 @@
   margin:5px;
   background-color: #254A4Cff;
   color: white;
+  
 }
 
 .range-btn-row .range-btn{
