@@ -1,189 +1,207 @@
 import React, { useEffect, useState } from 'react'
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { useParams } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
-
+/* Custom components */
 import RadioInput from './RadioInput';
 import RangeInput from './RangeInput';
 import TextInput from './TextInput';
-import { useParams } from 'react-router';
-import { useHistory, useLocation } from 'react-router-dom';
 import MessageDialog from '../MessageDialog';
-import axios from 'axios';
 
+/* Styles */
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import './Survey.css';
 
 
 export default function Survey(props) {
 
-  const { id } = useParams();
-  const [validated, setValidated] = useState(false);
+  const { id } = useParams(); // To get the survey id from the URL
+  const [validated, setValidated] = useState(false); // Check the validation of the form
 
-  const [surveyResponse, setSurveyResponse] = useState({});
-  const [selectedRange, setSelectedRange] = useState();
-  const [showFollowUpQ, setFollowUpQ] = useState(false);
-  const [questionsData, setQuestionsData] = useState({});
-  const [errorMsg, SetErrorMsg] = useState('');
+  const [surveyResponse, setSurveyResponse] = useState({});// Save user response
+  const [selectedRange, setSelectedRange] = useState(); //To Show the button selected in range question
 
-  const [isBusy, setBusy] = useState(true)
+  const [showFollowUpQ, setFollowUpQ] = useState(false); // To Change the state of the followup question
 
-  let history = useHistory();
+  const [questionsData, setQuestionsData] = useState([]); // holds the questions coming from the DB
+  const [errorMsg, SetErrorMsg] = useState(''); // error messages from server or validation
+  const [disableButton, setDisableButton] = useState(false);
+  const [isBusy, setBusy] = useState(true); // to wait for useEffect to finish fetching data from Server
 
-  let location = useLocation();
+  let history = useHistory(); // to redirect to other page after submission
+  const accessToken = localStorage.getItem("token");
+
+  // Fetch Questions from DB 
   useEffect(() => {
-    console.log('inside survey')
-    //console.log("use effect ",token);
-    axios.get(`/survey/${id}`)
-      .then(response => {
-        console.log(response);
-        setQuestionsData(response.data);
 
-        setBusy(false);
-      }).catch(error => console.log(error));
+    axios.get(`/survey/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    })
+      .then(response => {
+
+        if (response.status === 200) {
+          setQuestionsData(response.data.questions);
+
+          // id user accessing an old submitted form
+          if (response.data.savedResponses.length !== 0) {
+            setSurveyResponse({ ...response.data.savedResponses });
+            setDisableButton(true);
+          }
+          setBusy(false);
+        }
+      })
+      .catch(error => {
+
+        if (error.response.status === 401) {
+
+          SetErrorMsg(error.response.data.message);
+
+        } else if (error.response.status === 403) {
+
+          localStorage.setItem("token", "");
+          localStorage.setItem("email", "");
+          history.push('/login');
+        }
+      });
+
 
   }, []);
 
+  // Form submission handler
   const handleSubmit = (event) => {
+
     const form = event.currentTarget;
-    console.log(form)
+
+    if (!selectedRange) {
+      event.preventDefault();
+      event.stopPropagation();
+      SetErrorMsg('Error , please answer all required questions');
+      setValidated(true);
+      return;
+    }
+    // check if user filled all required fields
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      SetErrorMsg('Error , please fill in required fields');
-
+      SetErrorMsg('Error , please answer all required questions');
     } else {
-
-      console.log('responses before post', surveyResponse)
+      //send user's response to server
       axios.post(`/survey/${id}`, { surveyResponse })
         .then((response) => {
-
-          const confirmationMsg = response.data.message;
-
-          console.log(confirmationMsg);
-
+          const confirmationMsg = response.data.message;// message back from the server
           history.push({
             pathname: '/confirmation',
             state: { surveySubmit: confirmationMsg }
           })
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          if (error.response) {
+            SetErrorMsg(error.response.data.message);
+          }
+        });
 
     }
-    setValidated(true);
     event.preventDefault();
+    setValidated(true);
   };
-  const validateFields = (form) => {
 
-    for (let input of form) {
-      console.log(input)
-    }
-
-  }
-
+  // handle the radio input selection and save it to state
   const handelRadioInput = (event, id) => {
 
     const value = event.target.value;
-   console.log(value,id)
+
     if (id === 1 && value === 'No') {
       setFollowUpQ(true);
-    } else if (id === 1 && value === 'Yes') {
-      setFollowUpQ(false)
-    }
 
+    } else if (id === 1 && value === 'Yes') {
+      setFollowUpQ(false);
+    }
     setSurveyResponse({ ...surveyResponse, [id]: value });
   }
-
+  // handle button selection and save it to state
   const handelRangeButtonClick = (event, id) => {
 
-  
-    setSurveyResponse({ ...surveyResponse, [id]: event.target.value })
-
+    setSurveyResponse({ ...surveyResponse, [id]: event.target.value });
     setSelectedRange(parseInt(event.target.value));
-
   }
-
+  // handle textinput change and save it to state
   const handelTextInput = (event, id) => {
-    console.log(event.target.value)
-    setSurveyResponse({ ...surveyResponse, [id]: event.target.value })
 
+    setSurveyResponse({ ...surveyResponse, [id]: event.target.value });
   }
 
+  // map over the questions and assign in the right component
+  const prepareSurveyForm = (data) => {
 
-  const parseQData = (data) => {
-
-    const results = data.questions.map(q => {
+    const results = data.map((q, index) => {
+      let { answer } = surveyResponse[index] || ''; // if an old form, pre-fill answers
 
       if (q.question_type === 'radio') {
         if (q.question_id != 7) {
-          return (<>
-
+          return (
             <RadioInput key={q.question_id} question={q.question_text}
               id={q.question_id} options={["Yes", "No"]} show={true}
               handelChange={handelRadioInput}
-              required = {true}
-            
-             
+              answer={answer}
+              required={true}
             />
-
-          </>
-        
-          )
+          );
         } else {
-          return (<RadioInput key={q.question_id} question={q.question_text}
-            id={q.question_id} show={showFollowUpQ} options={["Yes", "No"]}
-            handelChange={handelRadioInput}
-            required={false}
-          />)
+          return (
+            <RadioInput key={q.question_id} question={q.question_text}
+              id={q.question_id} show={showFollowUpQ} options={["Yes", "No"]}
+              handelChange={handelRadioInput}
+              required={false}
+            />
+          );
         }
 
 
       } else if (q.question_type === 'range') {
-        return (<>
+        return (
           <RangeInput key={q.question_id} question={q.question_text}
             id={q.question_id} options={[1, 2, 3, 4, 5]}
             handelClick={handelRangeButtonClick}
-            selected={selectedRange}
+            selected={answer || selectedRange}
+            disabled={disableButton}
             required
           />
-
-        </>)
+        );
       } else if (q.question_type === 'text') {
         return <TextInput key={q.question_id} id={q.question_id} question={q.question_text} handelChange={handelTextInput} />
       }
-
-
-
-    })
+    });
     return results;
 
   }
 
+  //Survey Component
   return (
 
-
     <main className="survey-main">
-      <h1>Cedar House survey</h1>
-      <h3> Pleas help us to follow your achievements and help you when you need to </h3>
       {errorMsg && <MessageDialog msg={errorMsg} />}
       {
         isBusy ?
-          
-            <h4>LOADING</h4>
-          
+
+          <h4></h4>
           :
+          <>
+            <h1>Cedar House survey</h1>
+            <h3> Please help us to follow your achievements and help you when you need to </h3>
+            <Form noValidate validated={validated} onSubmit={handleSubmit} className="survey-form">
 
-          <Form  noValidate validated={validated} onSubmit={handleSubmit} className="survey-form">
+              {questionsData && prepareSurveyForm(questionsData)}
 
-
-            { questionsData && parseQData(questionsData)}
-
-            <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
-          </Form>
+              <Button disabled={disableButton} className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
+            </Form>
+          </>
       }
     </main>
-
-  )
-
-}
+  );
+};
 
 
