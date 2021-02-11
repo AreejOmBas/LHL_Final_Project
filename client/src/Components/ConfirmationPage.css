@@ -1,3 +1,6 @@
+
+/* CSS Styles for Confiramtion page component  */
+
 .confirmation-msg, .confirmation-msg div {
   display: flex;
   flex-direction: column;

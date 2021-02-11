@@ -1,5 +1,7 @@
 
-
+/* 
+  Database calls realted to client table
+*/
 module.exports = (db) => {
 
   const getClients = () => {
@@ -10,11 +12,8 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then(result => {
-        result.rows
-        console.log(result.rows)
-      })
-      .catch((err) => err);
+      .then(result => result.rows)
+      .catch(err => err);
   }
 
   const getClientById = id => {
@@ -25,14 +24,9 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then(result => {
-        result.rows
-        console.log(result.rows[0])
-      })
-      .catch((err) => err);
+      .then(result => result.rows)
+      .catch(err => err);
   }
-
-
 
   const getClientByEmail = email => {
 
@@ -44,26 +38,27 @@ module.exports = (db) => {
     return db
       .query(query)
       .then(result => result.rows[0])
-      .catch((err) => err);
+      .catch(err => err);
   }
 
   const addClient = (firstName, lastName, email, phone_num, password,
     treatmentStartDate, treatmentEndDate) => {
 
+    // this is to calculate the date of the next survey this client has to fill if needed
     let now = new Date();
     const signup_date = new Date().toDateString('yyyy-mm-dd');
     let nextMonth = now.setMonth(now.getMonth() + 1, 1);
+    const next_survey_date = new Date(nextMonth).toDateString('yyyy-mm-dd');
+
+    // format dates from the from to DB acceptable foramt
     const tret_start = new Date(treatmentStartDate).toDateString('yyyy-mm-dd');
     const tret_end = new Date(treatmentEndDate).toDateString('yyyy-mm-dd');
-    console.log(tret_start);
-    const next_survey_date = new Date(nextMonth).toDateString('yyyy-mm-dd');
-    //console.log(firstName, lastName, email, phone_num , password,  treatment_start_date, treatment_end_date, signup_date, next_survey_date
-    //)
+
     const query = {
       text: `INSERT INTO clients(first_name, last_name, email, phone_num, password, treatment_start_date, 
             treatment_end_date, signup_date, next_survey_date) VALUES
              ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *` ,
-      values: [firstName, lastName, email, phone_num, password, tret_start, tret_end, signup_date, tret_end]
+      values: [firstName, lastName, email, phone_num, password, tret_start, tret_end, signup_date, next_survey_date]
     }
 
     return db.query(query)
@@ -71,37 +66,45 @@ module.exports = (db) => {
       .catch(err => err);
   };
 
+  // used when generating report and sending surveys by email
+  const getClientsInfo = () => {
+    const query = {
+      text: `SELECT first_name, email, id FROM clients `,
+    }
 
-
-  const getClientsEmails = () => {
-        const query = {
-          text: `SELECT email FROM clients ` ,
-      
-      }
-
-      return db
-          .query(query)
-          .then(result =>{ 
-            return result.rows
-          //console.log(result.rows)
-        })
-          .catch((err) => err);
+    return db
+      .query(query)
+      .then(result => {
+        return result.rows
+        //console.log(result.rows)
+      })
+      .catch(err => err);
   }
 
-  
+  const getClientsEmails = () => {
+    const query = {
+      text: `SELECT email FROM clients `,
+
+    }
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  }
+
+
   const getClientIdByEmail = email => {
 
-      const query = {
-        text: `SELECT id FROM clients WHERE email = $1`,
-        values: [email]
-      }
+    const query = {
+      text: `SELECT id FROM clients WHERE email = $1`,
+      values: [email]
+    }
 
-      return db
-        .query(query)
-        .then(result => {
-          return result.rows[0]
-        })
-        .catch((err) => err);
+    return db
+      .query(query)
+      .then(result => result.rows[0] )
+      .catch(err => err);
   }
 
   const getFirstNameById = clientId => {
@@ -113,22 +116,21 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then(result => {
-
-        return result.rows[0]
-      })
+      .then(result => result.rows[0] )
       .catch((err) => err);
   }
-  
+
 
   return {
+    
     getClients,
     getClientById,
     getClientByEmail,
     addClient,
     getClientsEmails,
     getClientIdByEmail,
-    getFirstNameById
+    getFirstNameById,
+    getClientsInfo
 
   };
 };

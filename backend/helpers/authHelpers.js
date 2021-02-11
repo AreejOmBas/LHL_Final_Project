@@ -1,51 +1,30 @@
+/* 
+  Function to verify a user through the token sent back from the broweser 
+*/
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const {secret} = require('../helpers/auth-secret.js')
 
+// verify a user is logged in before displaying survey
+const authenticateJWT = function (req, res, next) {
 
+  let headerToken = JSON.stringify(req.headers.authorization)
 
-const hashPassword = password => {
-  return bcrypt.hashSync(password, 10);
-};
-
-const comparePassword = (hashPassword, password) => {
-  return bcrypt.compareSync(password, hashPassword);
-};
-
-
-const authenticateJWT = function(req, res, next) {
-  //const token = req.cookies.jwt;
-  //console.log(token);
-  const headerToken = JSON.stringify(req.headers.authorization)
-  //const headerToken = req.headers['authorization']
-  console.log(headerToken);
-  console.log(req.ig);
-
-  //console.log(JSON.stringify(req.headers));
   if (!headerToken) {
-  console.log('notoken');
-
     res.status(401).send('Unauthorized: No token provided');
   } else {
-    jwt.verify(headerToken, secret, function(err, decoded) {
-      if (err) {
-        
-        console.log('invalid');
 
-        res.status(401).send('Unauthorized: Invalid token');
+    headerToken = headerToken.split(' ')[1].replace('"', '');
+    jwt.verify(headerToken, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
+      if (err) {
+        res.status(403).json({ message: 'Unauthorized: Invalid token' });
       } else {
-        req.id = decoded.email;
+        req.id = decoded.id;
         next();
       }
     });
   }
+};
+
+
+module.exports = {
+  authenticateJWT
 }
-;
-
-
-module.exports ={
-    
-    hashPassword,
-    authenticateJWT
-
-  }

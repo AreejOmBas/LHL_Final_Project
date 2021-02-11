@@ -1,10 +1,11 @@
+/* 
+  All the routes related to a Client (user) e.g login / register
+  client here refer to a user. 
+*/
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
-const {secret} = require('../helpers/auth-secret.js');
-
 
 
 module.exports = ({
@@ -13,41 +14,41 @@ module.exports = ({
   addClient,
 
 }) => {
-  router.get('/clients', (req, res) => {
+  // can be used if there is an Admin page to list all the clients 
+/*   router.get('/clients', (req, res) => {
     getClients()
         .then((clients) => res.json(clients))
         .catch((err) => res.json({
             error: err.message
         }));
-});
-  /* Client log in and authorize */
+}); */
+
+  /* Client log in and authorize with JWT token */
   router.post('/login', (req, res) => {
 
     const { email, password } = req.body;
-    console.log(req.body)
+
     getClientByEmail(email)
       .then((client) => {
 
         // validate client if email not exists or incorrect password return err msg
         if (!(client) || !bcrypt.compareSync(password, client.password) ) {
-
          
             res.status(400).json({
               accessToken:null,
-              message: "Sorry, email/password not correct"});
+              message: 'Sorry, email/password not correct'});
        
             return;
-         
-
         } else {
         
-          const accessToken = jwt.sign( {id:client.id}, secret, {expiresIn: '1hr'});
-          //res.cookie('jwt',accessToken, { httpOnly: true, secure: false, maxAge: 3600000 })
-        
+          let accessToken = jwt.sign( {id:client.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1hr'});
+       
           res.status(200).json({
             accessToken,
-            message: "Log in successful",
-            client
+            message: 'Log in successful',
+            clientId : client.id,
+            firstName: client.firstName,
+            email: client.email
           });
 
         }
@@ -62,8 +63,7 @@ module.exports = ({
       firstName, lastName, email, phoneNum, password, treatmentStartDate, 
       treatmentEndDate
     } = req.body
-    console.log('inside clients',req.body);
-
+  
      getClientByEmail(email)
       .then(client => {
 
@@ -74,26 +74,20 @@ module.exports = ({
         } else {
           const hashedPassword = bcrypt.hashSync(password, 10);
 
-          return addClient(firstName, lastName, email, phoneNum, hashedPassword, 
-            treatmentStartDate, treatmentEndDate) 
+          return addClient(firstName, lastName, email, phoneNum, hashedPassword, treatmentStartDate, treatmentEndDate) 
             .then(newClient => {
               res.status(200).json({
                 message: 'Thank you!',
-                client: newClient
+                client: newClient.firstName
               });
-              
-              console.log('newClient',newClient)})
-            .catch(err => res.json({
-                  error: err.message
-                  }));
+            })
+            .catch(err => res.json({ error: err.message }));
         }
       })
       
 
   });
-
-  
-
+  // returns all the client related routes
   return router;
 };
 

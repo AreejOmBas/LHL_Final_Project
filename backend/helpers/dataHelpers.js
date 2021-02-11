@@ -1,52 +1,18 @@
-const getPostsByUsers = (usersPosts) => {
-  const postsByUsers = {};
+/* 
+ Misc. Helper functions 
+*/
 
-  for (let post of usersPosts) {
-      if (!postsByUsers[post.user_id]) {
-          postsByUsers[post.user_id] = {
-              userId: post.user_id,
-              firstName: post.first_name,
-              lastName: post.last_name,
-              email: post.email,
-              posts: [],
-          };
-      }
-
-      postsByUsers[post.user_id].posts.push({
-          title: post.title,
-          content: post.content,
-      });
-
-  }
-
-  return Object.values(postsByUsers);
+// functions to get the previous month from today
+const previousMonth =() => {
+  const current = new Date();
+  current.setMonth(current.getMonth()-1);
+  const previousMonth = current.toLocaleString('default', { month: 'long' });
+  const previousYear =current.getFullYear(); 
+  const date = previousMonth + ' ' +previousYear;
+  return {date};
 };
-
-const setIntervalDateUponSignUp = () => {
-  let nextSurveyDate;
-  let now = new Date();
-  //console.log('now is ', now)
-  let nextMonth = now.setMonth(now.getMonth() + 1, 1);
-  let monthAfterNext = now.setMonth(now.getMonth() + 2, 1);
-
-  nextMonth = new Date(nextMonth);
-
-  //console.log(nextMonth)
-  now = new Date();
-  const diffTime = Math.abs(nextMonth - now);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  if (diffDays > 20) {
-    nextSurveyDate = nextMonth;
-  } else {
-    nextSurveyDate = monthAfterNext;
-  }
-
-  return nextSurveyDate;
-}
-
-
 
 
 module.exports = {
-  getPostsByUsers,
-};
+  previousMonth
+}

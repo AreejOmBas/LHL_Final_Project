@@ -18,11 +18,25 @@ CREATE TABLE clients(
   next_survey_date DATE 
 );
 
-
 CREATE TABLE surveys(
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE questions(
+  id SERIAL PRIMARY KEY NOT NULL,
+  survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
+  question_text VARCHAR(255) NOT NULL,
+  type  VARCHAR(25) NOT NULL
+    
+);
+CREATE TABLE sent_surveys(
+  id SERIAL PRIMARY KEY NOT NULL,
+  survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
+  client_id INTEGER REFERENCES clients(id) ON DELETE CASCADE,
+  date DATE,
+  interval INTEGER
 );
 
 CREATE TABLE responses(
@@ -33,19 +47,7 @@ CREATE TABLE responses(
   date DATE
 );
 
-CREATE TABLE sent_surveys(
-  id SERIAL PRIMARY KEY NOT NULL,
-  survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
-  client_id INTEGER REFERENCES clients(id) ON DELETE CASCADE,
-  date DATE,
-  interval INTEGER
-);
 
 
-CREATE TABLE questions(
-  id SERIAL PRIMARY KEY NOT NULL,
-  survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
-  question_text VARCHAR(255) NOT NULL,
-  type  VARCHAR(25) NOT NULL
-    
-);
+
+

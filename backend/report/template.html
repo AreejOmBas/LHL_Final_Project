@@ -60,41 +60,41 @@
 
         <main> 
         <table>
-          <th>Number of clients who anwsered the survey</th>
-          <th>{{count.count}}</th>
+          <!-- <th>Number of clients who anwsered the survey</th>
+          <th>{{count.count}}</th> -->
 
           <tbody>
             <tr>
               <td>Number of clients responded YES, family dynamics have improved</td>
-              <td><strong>{{yesAnwsers.0.count}}</strong></td>
+              <td><strong>{{yesAnswers.0.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients responded NO, family dynamics have improved</td>
-              <td><strong>{{noAnwsers.0.count}}</strong></td>
+              <td><strong>{{noAnswers.0.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{yesAnwsers.1.count}}</strong></td>
+              <td><strong>{{yesAnswers.1.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{noAnwsers.1.count}}</strong></td>
+              <td><strong>{{noAnswers.1.count}}</strong></td>
             </tr>					
             <tr>
               <td>Number of clients anwsered YES for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{yesAnwsers.2.count}}</strong></td>
+              <td><strong>{{yesAnswers.2.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered NO for : Have you stayed sober since completing treatment</td>
-              <td><strong>{{noAnwsers.2.count}}</strong></td>
+              <td><strong>{{noAnswers.2.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered YES for : Are you currently employed</td>
-              <td><strong>{{yesAnwsers.3.count}}</strong></td>
+              <td><strong>{{yesAnswers.3.count}}</strong></td>
             </tr>
             <tr>
               <td>Number of clients anwsered NO for : Are you currently employed</td>
-              <td><strong>{{noAnwsers.3.count}}</strong></td>
+              <td><strong>{{noAnswers.3.count}}</strong></td>
             </tr>
    
           </tbody>
@@ -171,7 +171,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each q5Aanswsers}}
+        {{#each q5Answers}}
           <tr>
             {{#each this}}
               <td>{{this}}</td>
