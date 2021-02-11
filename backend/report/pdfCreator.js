@@ -25,7 +25,6 @@ function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,count,q5Aans
                   count,
                   q5Aanswsers,
                  logo: 'file://' + __dirname + '/images/cedarHouse_logo.png',
-              //   dates : dates,
   
             },
             path: "./report/report.pdf",

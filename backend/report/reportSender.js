@@ -11,14 +11,11 @@ const app = express();
 const MailConfig = require('../config/email');
 const gmailTransport = MailConfig.GmailTransport;
 
-
 module.exports  =  db => {
-  //app.use(express.static('report/images')); 
   app.use(express.static(__dirname+'/images'));
 
   const {getClientsInfoForQ1,getYes,getNo,getClientsneedsHelp,q5Aanswsers}= require('../helpers/reportDbHelpers')(db);
 
-  const {pdfBuilder}= require('./pdfBuilder');
   const {pdfCreator}= require('./pdfCreator');
 
   router.get('/report', function(req, res, next) {
@@ -28,7 +25,7 @@ module.exports  =  db => {
  
               const mailOptions ={
                 from :'cedarhouse.lighthouselabs@gmail.com',
-                to : "fayzadaoudifr@gmail.com",
+                to : "",
                 subject :'Survey Report',
                 html: ' <h5>Hello</h5> <p>Please find attached the monthly report</p>',   
 
@@ -68,19 +65,16 @@ module.exports  =  db => {
 
                 let count =  { count: noAnwsers.length + yesAnwsers.length};
                  pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,count,q5Aanswsers).then((res) => {
-                        //cron.schedule('0 13 1/1  * *',()=>{
-                       /*       gmailTransport.sendMail(mailOptions, (error,info) => {
+                        cron.schedule('0 13 1/1  * *',()=>{
+                             gmailTransport.sendMail(mailOptions, (error,info) => {
                                 if(error) {
-                                  console.log(error);
                                   res.json(error);
                                 }
-                                console.log("report is send");
-                                console.log(info);
                                 res.json(info);
                            
                               });  
-                       */      
-                        //})
+                             
+                        })
 
                 })
               });
