@@ -23,7 +23,7 @@ Backend was built with:-
 - ExpressJs
 - PostgreSQL
 - Nodemailer for sending emails
-- Pdf … to generate the report.
+- Pdf creator to generate the report.
 
 Frontend was built with :-
 - ReactJs

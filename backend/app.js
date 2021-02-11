@@ -4,7 +4,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const cors = require('cors');
-const helmet = require("helmet");
+const helmet = require('helmet');
 const bodyparser = require('body-parser');
 
 const path = require('path');
@@ -45,7 +45,7 @@ app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/report', indexReport(db));
+app.use(indexReport(db));
 app.use(emailScheduler(db));
 app.use('/api/', clientRouter(clientDbHelpers));
 app.use('/api/', sentSurveyRouter(sentSurveyDbHelpers));
