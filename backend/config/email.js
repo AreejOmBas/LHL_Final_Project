@@ -1,3 +1,9 @@
+/* 
+
+Configration file for the email service 
+
+*/
+
 let nodemailer = require('nodemailer');
 require('dotenv').config();
 let environment = process.env;
@@ -9,10 +15,7 @@ module.exports.GmailTransport = nodemailer.createTransport({
     port: environment.GMAIL_SERVICE_PORT,
     auth: {
         user: environment.GMAIL_USER_NAME,
-        pass: environment.GMAIL_USER_PASSWORD,
-       
+        pass: environment.GMAIL_USER_PASSWORD
     },
-    pool: true
+    pool : true
 });
-
-/* Configration file for the email service */

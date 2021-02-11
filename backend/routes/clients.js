@@ -36,7 +36,7 @@ module.exports = ({
          
             res.status(400).json({
               accessToken:null,
-              message: "Sorry, email/password not correct"});
+              message: 'Sorry, email/password not correct'});
        
             return;
         } else {
@@ -45,7 +45,7 @@ module.exports = ({
        
           res.status(200).json({
             accessToken,
-            message: "Log in successful",
+            message: 'Log in successful',
             clientId : client.id,
             firstName: client.firstName,
             email: client.email

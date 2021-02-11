@@ -14,10 +14,7 @@
       font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
       font-size: 14px;
       font-weight: 400;
-
     }
-
-
     .button {
       background-color: #725744;
       border: none;
@@ -33,10 +30,7 @@
       font-weight: 400;
       font-weight: 600;
       line-height: 150%;
-
-
     }
-
     .mainContainer {
       background-color: white;
       width: 45%;
@@ -46,7 +40,6 @@
       margin-right: auto;
       margin-top: auto;
       margin-bottom: auto;
-
     }
   </style>
 
@@ -57,19 +50,19 @@
   <center class="mainContainer">
 
 
-    <h3>Hello {{first_name}}</h3>
+    <h3>Hello {{firstName}}</h3>
 
     <p>
       We would like to thank you for choosing Cedar House,and we hope you enjoyed your stay
     </p>
     <p>
-      As you know your feedback is essential to help us undrstand your expectations.
+      As you know your feedback is essential to help us understand your expectations.
     </p>
     <p>
       Thank you for taking the time to fill in the survey.
     </p>
 
-    <a href="http://localhost:3002/survey/{{sentSurveyId}}">
+    <a href="{{webAddress}}/survey/{{sentSurveyId}}">
       <button class='button'>Start the Survey</button>
     </a>
     <center />

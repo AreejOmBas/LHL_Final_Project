@@ -17,7 +17,7 @@ const db = require('./db');
 const clientDbHelpers = require('./helpers/clientDbHelpers')(db);
 const sentSurveyDbHelpers = require('./helpers/sentSurveyDbHelpers')(db);
 
-const indexRouter = require('./routes/index');
+const emailScheduler = require('./routes/emailScheduler');
 const indexReport = require('./report/reportSender');
 
 const clientRouter = require('./routes/clients');
@@ -46,9 +46,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/report', indexReport(db));
-app.use('/', indexRouter(db));
+app.use(emailScheduler(db));
 app.use('/api/', clientRouter(clientDbHelpers));
-app.use('/api/',sentSurveyRouter(sentSurveyDbHelpers));
+app.use('/api/', sentSurveyRouter(sentSurveyDbHelpers));
 
 app.use(express.static(__dirname+'/report/images'));
 

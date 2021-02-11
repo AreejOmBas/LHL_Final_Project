@@ -1,33 +1,38 @@
-let pdf = require("pdf-creator-node");
+let pdf = require('pdf-creator-node');
 let fs = require('fs');
 
-function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,q5Aanswsers) {
+/* Function responsible for generating the report and save it as pdf file */
 
-        // Read HTML Template
+function pdfCreator(yesAnswers,noAnswers,clientsInfo,needsHelp,date,count,q5Answers) {
+
+    const reportDate = (date.date).replace(' ','_');
+   
+        // Read HTML File Template 
         let html = fs.readFileSync('./report/template.html', 'utf8');
 
+        // options for the pdf documents
         let options = {
-            format: "A3",
-            orientation: "portrait",
-            border: "10mm",
+            format: 'A3',
+            orientation: 'portrait',
+            border: '10mm',
             logo: './report/images/logo.png',
         };
 
-      
+      // values to use in the generation of the report
         let document = {
             html: html,
             data: {
-                 yesAnwsers,
-                 noAnwsers ,
-                 clientsInfo ,
-                 needsHelp ,
+                 yesAnswers,
+                 noAnswers,
+                 clientsInfo,
+                 needsHelp,
                   date,
-                  q5Aanswsers,
+                  count,
+                  q5Answers,
                  logo: 'file://' + __dirname + '/images/cedarHouse_logo.png',
-              //   dates : dates,
   
             },
-            path: "./report/report.pdf",
+            path: `./report/${reportDate}_report.pdf`,
 
         };
 
@@ -42,4 +47,3 @@ function pdfCreator(yesAnwsers,noAnwsers,clientsInfo,needsHelp,date,q5Aanswsers)
   }
 
   module.exports.pdfCreator=pdfCreator;
-  

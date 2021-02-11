@@ -84,7 +84,7 @@ module.exports = (db) => {
       .then(result => result.rows)
       .catch(err => err);
 
-  }
+  };
   // add the client(user) responses to the survey questions
   const addClientResponse = async (sentSurveyId, responses) => {
 
@@ -110,7 +110,7 @@ module.exports = (db) => {
           }
         });
     }
-  }
+  };
   // Generates responses for testing purposes ONLY
   /* const seedResponses = async () => {
 

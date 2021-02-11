@@ -20,7 +20,7 @@ module.exports = ({
     getClientIdFromSentSurvey(sentSurveyId).then(result => {
 
       if (result.client_id !== req.id) {
-        res.status(401).json({ message: "Sorry, This survey does not belong to you" });
+        res.status(401).json({ message: 'Sorry, This survey does not belong to you' });
         return;
       } else {
         // retrive the questions and responses if any
