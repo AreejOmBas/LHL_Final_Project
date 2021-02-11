@@ -76,3 +76,4 @@ Also, there is a follow up question to question 1 that only is shown when a user
 - Adding an admin profile page to get quick access to the clients (users) info and reports. 
 	
 ## License
+GNU GPLv3 
