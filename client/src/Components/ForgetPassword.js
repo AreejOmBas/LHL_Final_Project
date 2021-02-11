@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { Button, Form, Input, InputGroup, InputGroupAddon } from "reactstrap";
+import { Button, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
 /* Component to reset password */
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
 
   const history = useHistory();
 

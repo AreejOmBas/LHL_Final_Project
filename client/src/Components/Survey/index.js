@@ -31,7 +31,7 @@ export default function Survey(props) {
   const [isBusy, setBusy] = useState(true); // to wait for useEffect to finish fetching data from Server
 
   let history = useHistory(); // to redirect to other page after submission
-  const accessToken = localStorage.getItem("token");
+  const accessToken = localStorage.getItem('token');
 
   // Fetch Questions from DB 
   useEffect(() => {
@@ -62,8 +62,8 @@ export default function Survey(props) {
 
         } else if (error.response.status === 403) {
 
-          localStorage.setItem("token", "");
-          localStorage.setItem("email", "");
+          localStorage.setItem('token', '');
+          localStorage.setItem('email', '');
           history.push('/login');
         }
       });
@@ -144,7 +144,7 @@ export default function Survey(props) {
         if (q.question_id != 7) {
           return (
             <RadioInput key={q.question_id} question={q.question_text}
-              id={q.question_id} options={["Yes", "No"]} show={true}
+              id={q.question_id} options={['Yes', 'No']} show={true}
               handelChange={handelRadioInput}
               answer={answer}
               required={true}
@@ -153,7 +153,7 @@ export default function Survey(props) {
         } else {
           return (
             <RadioInput key={q.question_id} question={q.question_text}
-              id={q.question_id} show={showFollowUpQ} options={["Yes", "No"]}
+              id={q.question_id} show={showFollowUpQ} options={['Yes', 'No']}
               handelChange={handelRadioInput}
               required={false}
             />
@@ -182,7 +182,7 @@ export default function Survey(props) {
   //Survey Component
   return (
 
-    <main className="survey-main">
+    <main className='survey-main'>
       {errorMsg && <MessageDialog msg={errorMsg} />}
       {
         isBusy ?
@@ -192,11 +192,11 @@ export default function Survey(props) {
           <>
             <h1>Cedar House survey</h1>
             <h3> Please help us to follow your achievements and help you when you need to </h3>
-            <Form noValidate validated={validated} onSubmit={handleSubmit} className="survey-form">
+            <Form noValidate validated={validated} onSubmit={handleSubmit} className='survey-form'>
 
               {questionsData && prepareSurveyForm(questionsData)}
 
-              <Button disabled={disableButton} className="btn-lg btn-dark btn-block btn-login" type="submit">Submit Form</Button>
+              <Button disabled={disableButton} className='btn-lg btn-dark btn-block btn-login' type='submit'>Submit Form</Button>
             </Form>
           </>
       }

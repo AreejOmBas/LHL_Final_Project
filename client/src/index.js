@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./index.css"; 
+import './index.css'; 
 import axios from 'axios';
 
- axios.defaults.baseURL = "http://localhost:3002/api/";
+ axios.defaults.baseURL = 'http://localhost:3002/api/';
 
 ReactDOM.render(
   <React.StrictMode>

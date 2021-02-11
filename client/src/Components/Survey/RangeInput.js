@@ -11,10 +11,10 @@ export default function RangeInput(props) {
 
   const buttons = props.options.map(answerOption => {
     return (
-      <Form.Control type="button" value= {answerOption}
-        variant="light"
+      <Form.Control type='button' value= {answerOption}
+        variant='light'
         key={answerOption}
-        className={(parseInt(props.selected) === answerOption) ? "selected" : "range-btn"}
+        className={(parseInt(props.selected) === answerOption) ? 'selected' : 'range-btn'}
         onClick={event => props.handelClick(event, props.id)}
         required={true}
         disabled = {props.disabled}
@@ -25,9 +25,9 @@ export default function RangeInput(props) {
 
   return (
 
-   <article className="range-q">
-      <p>  <span className="required"> * </span> {props.question} </p>
-      <FormGroup className="range-group-btn range-btn-row" required >
+   <article className='range-q'>
+      <p>  <span className='required'> * </span> {props.question} </p>
+      <FormGroup className='range-group-btn range-btn-row' required >
         {buttons}
       </FormGroup>
   </article>

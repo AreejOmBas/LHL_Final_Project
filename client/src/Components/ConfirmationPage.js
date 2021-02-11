@@ -14,7 +14,7 @@ export default function ConfirmationPage(props) {
 
 
   return (
-    <article className="confirmation-msg">
+    <article className='confirmation-msg'>
 
       { props.location.state.register &&
         <div>

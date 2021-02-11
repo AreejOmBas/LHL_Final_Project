@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Form, Button } from "react-bootstrap";
+import { Form, Button } from 'react-bootstrap';
 
 import MessageDialog from './MessageDialog'
 import DatePicker from 'react-datepicker';
@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Link, Switch, Redirect, useHistory } from 'react-router-dom';
 
-import "./Forms.css";
+import './Forms.css';
 
 /* Component for the registartion page */
 
@@ -56,20 +56,20 @@ export default function RegistrationForm(props) {
   return (
     <center>
 
-      <Form noValidate validated={validated} onSubmit={handleSubmit} className="login-form">
-        <div className="form-header">
-          <h1 className="text-center">Registration Form</h1>
+      <Form noValidate validated={validated} onSubmit={handleSubmit} className='login-form'>
+        <div className='form-header'>
+          <h1 className='text-center'>Registration Form</h1>
 
-          <h3 className="text-center">Please Register to receive our monthly surveys</h3>
+          <h3 className='text-center'>Please Register to receive our monthly surveys</h3>
           {errorMsg && <MessageDialog msg={errorMsg} />}
 
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <Form.Control
-              className="form-input form-control-lg"
-              type="text"
-              name="FirstName"
-              id="FirstName"
-              placeholder="First Name"
+              className='form-input form-control-lg'
+              type='text'
+              name='FirstName'
+              id='FirstName'
+              placeholder='First Name'
               onChange={(e) =>
                 setregisterInformation({ ...registerInformation, firstName: e.target.value })
               }
@@ -77,13 +77,13 @@ export default function RegistrationForm(props) {
               required
             />
           </Form.Group>
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <Form.Control
-              className="form-input form-control-lg"
-              type="text"
-              name="LastName"
-              id="LastName"
-              placeholder="Last Name"
+              className='form-input form-control-lg'
+              type='text'
+              name='LastName'
+              id='LastName'
+              placeholder='Last Name'
               onChange={(e) =>
                 setregisterInformation({ ...registerInformation, lastName: e.target.value })
               }
@@ -92,46 +92,46 @@ export default function RegistrationForm(props) {
             />
           </Form.Group>
 
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <Form.Control
-              className="form-input form-control-lg"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
+              className='form-input form-control-lg'
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Email'
               onChange={e => setregisterInformation({ ...registerInformation, email: e.target.value })}
               value={registerInformation.email}
               required
             />
           </Form.Group>
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <Form.Control
-              className="form-input form-control-lg"
-              type="phone"
-              name="phone"
-              id="phone"
-              placeholder="Phone Number"
+              className='form-input form-control-lg'
+              type='phone'
+              name='phone'
+              id='phone'
+              placeholder='Phone Number'
               onChange={e => setregisterInformation({ ...registerInformation, phoneNum: e.target.value })}
               value={registerInformation.phoneNum}
             />
           </Form.Group>
 
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <Form.Control
-              className="form-input form-control-lg "
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
+              className='form-input form-control-lg '
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Password'
               onChange={e => setregisterInformation({ ...registerInformation, password: e.target.value })}
               value={registerInformation.password}
               required />
           </Form.Group>
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <DatePicker
-              className="form-input form-input-date form-control-lg"
-              placeholderText="Treatment Start Date"
-              dateFormat="yyyy/MM/dd"
+              className='form-input form-input-date form-control-lg'
+              placeholderText='Treatment Start Date'
+              dateFormat='yyyy/MM/dd'
               selected={registerInformation.treatmentStartDate} onChange={(date) =>
                 setregisterInformation({ ...registerInformation, treatmentStartDate: date })
               }
@@ -139,11 +139,11 @@ export default function RegistrationForm(props) {
               required
             />
           </Form.Group>
-          <Form.Group className="form-input-container">
+          <Form.Group className='form-input-container'>
             <DatePicker
-              className="form-input form-input-date form-control-lg"
-              placeholderText="Treatment End Date"
-              dateFormat="yyyy/MM/dd"
+              className='form-input form-input-date form-control-lg'
+              placeholderText='Treatment End Date'
+              dateFormat='yyyy/MM/dd'
               selected={registerInformation.treatmentEndDate} onChange={(date) =>
                 setregisterInformation({ ...registerInformation, treatmentEndDate: date })}
               required
@@ -151,10 +151,10 @@ export default function RegistrationForm(props) {
 
           </Form.Group>
 
-          <Button className="btn-lg btn-dark btn-block btn-login" type="submit">Register</Button>
-          <div className="form-bottom">
-            <Link to="/register" className="link-text">Not a member?</Link>
-            <Link to="/forgot-password" className="link-text">Forgot Password?</Link>
+          <Button className='btn-lg btn-dark btn-block btn-login' type='submit'>Register</Button>
+          <div className='form-bottom'>
+            <Link to='/register' className='link-text'>Not a member?</Link>
+            <Link to='/forgot-password' className='link-text'>Forgot Password?</Link>
 
           </div>
 

@@ -10,9 +10,9 @@ export default function RadioInput(props) {
 
     return (
 
-      <Form.Check label={option} className="radio-label"
+      <Form.Check label={option} className='radio-label'
         key={`radio-btn-${index}`}
-        type="radio"
+        type='radio'
         id={props.id}
         name={props.id}
         onChange={event => props.handelChange(event, props.id)}
@@ -26,11 +26,11 @@ export default function RadioInput(props) {
 
   return (
 
-    <article id={(props.id === 7) ? 'follow-up' : ''} className={(props.show) ? "radio-q" : "hidden-q"}>
+    <article id={(props.id === 7) ? 'follow-up' : ''} className={(props.show) ? 'radio-q' : 'hidden-q'}>
 
-      <p className="question-field" ><span className="required">*</span> {props.question} </p>
+      <p className='question-field' ><span className='required'>*</span> {props.question} </p>
         {input}
-      <Form.Control.Feedback type="invalid">Please choose answer</Form.Control.Feedback>
+      <Form.Control.Feedback type='invalid'>Please choose answer</Form.Control.Feedback>
     </article>
 
 
